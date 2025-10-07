@@ -1,9 +1,44 @@
-import React from 'react'
+import {
+  CheckIcon,
+  CreditCardIcon,
+  InfoIcon,
+  MailIcon,
+  SearchIcon,
+  StarIcon,
+} from "lucide-react";
 
-function Buscador() {
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { useEffect, useState } from "react";
+
+type BuscadorProps = {
+  onSearch: (query: string) => void;
+};
+
+function Buscador({ onSearch }: BuscadorProps) {
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    onSearch(search);
+  }, [search]);
+
   return (
-    <div className='sm:mr-10'>Buscador</div>
-  )
+    <div className="w-1/2 min-w-[250px]">
+      <InputGroup className="bg-card shadow py-5">
+        <InputGroupInput
+          placeholder="Buscar evento..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <InputGroupAddon>
+          <SearchIcon />
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+  );
 }
 
-export default Buscador
+export default Buscador;

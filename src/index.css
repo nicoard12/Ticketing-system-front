@@ -45,14 +45,14 @@
   --radius: 0.625rem;
   --background: oklch(89.143% 0.0001 271.152);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(97.015% 0.00011 271.152);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(37.238% 0.10331 249.515);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(18.22% 0.00002 271.152);
+  --secondary-foreground: oklch(100% 0.00011 271.152);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -117,4 +117,15 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  @apply appearance-none m-0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield; /* saca las flechitas en Firefox */
 }
