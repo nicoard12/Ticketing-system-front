@@ -11,9 +11,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="evento/:id" element={<UnEvento />} />
           <Route path="registrar-evento" element={<RegistrarEvento />} />
           <Route path="editar-evento/:id" element={<EditarEvento />} />
-          <Route path="evento/:id" element={<UnEvento />} />
         </Route>
       </Routes>
     </BrowserRouter>

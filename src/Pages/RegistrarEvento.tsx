@@ -14,15 +14,16 @@ function RegistrarEvento() {
       await createEvento(e);
       navigate("/")
     } catch (err) {
-      setError("Ocurrió un error al crear el evento. Intente nuevamente."); //TODO eliminar foto de cloudinary en caso de error
+      setError(err.message); //TODO eliminar foto de cloudinary en caso de error
     } finally {
       setLoading(false);
     }
   }
   return (
-    <div className='p-3 flex w-full justify-center items-center'>
+    <div className='p-3 flex flex-col gap-6 w-full justify-center items-center'>
+      <h1 className='text-3xl font-semibold'>Crear evento</h1>
       <FormEvento submit={newEvento} loading={loading} setLoading={setLoading} setError={setError}>
-        {error && <p className="text-red-300">{error}</p>}
+        {error && <p className="text-red-500">{error}</p>}
       </FormEvento>
     </div>
   )

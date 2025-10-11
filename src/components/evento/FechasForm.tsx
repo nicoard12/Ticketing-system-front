@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react"; // icono de tacho
 import type { Evento } from "@/api/eventos";
+import { convertirUTC } from "@/helpers/fechas";
 
 type FechasFormProps = {
   setEvento: React.Dispatch<React.SetStateAction<Omit<Evento, "_id">>>;
+  fechasEditables?: Date[] | null
 };
 
-function FechasForm({ setEvento }: FechasFormProps) {
+function FechasForm({ setEvento, fechasEditables }: FechasFormProps) {
   const [fechas, setFechas] = useState<string[]>([""]);
 
   const agregarFecha = () => {
@@ -33,6 +35,11 @@ function FechasForm({ setEvento }: FechasFormProps) {
     }));
   };
 
+  useEffect(() =>{
+    console.log(fechasEditables)
+    if (fechasEditables && fechasEditables.length > 0) setFechas(fechasEditables.map(f => f.toString()))
+  },[fechasEditables])
+
   return (
     <div className="flex flex-col items-start w-full gap-1">
       <label>Fechas</label>
@@ -44,7 +51,7 @@ function FechasForm({ setEvento }: FechasFormProps) {
               <input
                 type="datetime-local"
                 className="p-2 border rounded flex-1"
-                value={fecha}
+                value={convertirUTC(fecha)}
                 onChange={(e) => cambiarFecha(i, e.target.value)}
               />
               {fechas.length > 1 && (
@@ -61,9 +68,9 @@ function FechasForm({ setEvento }: FechasFormProps) {
         </div>
 
         <Button
-          variant="outline"
+          variant="default"
           type="button"
-          className="cursor-pointer text-black"
+          className="cursor-pointer"
           onClick={agregarFecha}
         >
           Agregar fecha

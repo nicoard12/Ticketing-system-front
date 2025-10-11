@@ -23,7 +23,7 @@ function EventoBox({ evento }: EventoBoxProps) {
         />
       </div>
       <div className='p-2 flex items-center justify-center border-x border-b border-gray-400 rounded-b'>
-        <h1 className='text-sm sm:text-md md:text-lg font-semibold h-10'>{evento.titulo}</h1>
+        <h1 className='text-sm sm:text-md md:text-lg font-semibold h-10 truncate '>{evento.titulo}</h1>
       </div>
     </div>
   )

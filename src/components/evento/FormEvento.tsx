@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import type { Evento } from "@/api/eventos";
 import FechasForm from "./FechasForm";
 import { uploadImage } from "../../helpers/cloudinary.ts";
+import { useNavigate } from "react-router-dom";
 
 type FormEventoProps = {
   submit: (e: Omit<Evento, "_id">) => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
+  eventoEditable?: Evento | null;
   children?: React.ReactNode;
 };
 
@@ -18,7 +20,9 @@ function FormEvento({
   setLoading,
   setError,
   children,
+  eventoEditable,
 }: FormEventoProps) {
+  const navigate = useNavigate();
   const [imagen, setImagen] = useState<File | null>(null);
   const [evento, setEvento] = useState<Omit<Evento, "_id">>({
     titulo: "",
@@ -54,7 +58,7 @@ function FormEvento({
       !evento.cantidadEntradas.toString().trim() ||
       !evento.precioEntrada.toString().trim() ||
       !evento.ubicacion.trim() ||
-      !imagen ||
+      (!imagen && !eventoEditable) ||
       !evento.fechas.length ||
       evento.fechas.some(
         (f: unknown) => !f || (typeof f === "string" && !f.trim())
@@ -64,21 +68,37 @@ function FormEvento({
       setLoading(false);
       return;
     }
-    const imageCloudinary = await uploadImage(imagen);
-    if (imageCloudinary == "error") {
-      setError("Error del servidor, intentelo mas tarde.");
-      setLoading(false);
-    } else submit({ ...evento, imagenUrl: imageCloudinary });
+    if (imagen) {
+      const imageCloudinary = await uploadImage(imagen);
+      if (imageCloudinary == "error") {
+        setError("Error del servidor, intentelo mas tarde.");
+        setLoading(false);
+      } else submit({ ...evento, imagenUrl: imageCloudinary });
+    } else submit(evento);
   };
+
+  const goBack = () => {
+    if (eventoEditable) navigate(`/evento/${eventoEditable._id}`)  
+    else navigate("/");
+  };
+
+  useEffect(() => {
+    if (eventoEditable) {
+      setEvento({
+        ...eventoEditable,
+        fechas: eventoEditable.fechas.map((f) => f.fecha),
+      });
+    }
+  }, [eventoEditable]);
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col p-3 sm:p-8 gap-3 items-center bg-secondary text-white rounded-lg"
+      className="w-full sm:w-6/10 flex flex-col p-3 sm:p-8 gap-5 items-center bg-white text-black rounded-lg shadow border border-gray-300"
     >
-      <div className="flex flex-col sm:flex-row gap-10 sm:gap-20">
+      <div className="flex flex-col gap-10 w-full">
         {/* Columna izquierda */}
-        <div className="flex flex-col gap-8 flex-1 rounded w-full sm:w-1/2">
+        <div className="flex flex-col gap-8 flex-1 rounded w-full">
           <input
             type="text"
             value={evento.titulo}
@@ -124,17 +144,27 @@ function FormEvento({
         <div className="flex flex-col items-end gap-8 w-full sm:w-1/2">
           <div className="w-full flex flex-col items-start">
             <label className="block mb-1">Foto del evento</label>
-              {imagen && (
-                <div className="my-3 flex justify-center">
-                  <img
-                    src={URL.createObjectURL(imagen)}
-                    alt="Vista previa"
-                    className="max-h-32 rounded shadow"
-                  />
-                </div>
-              )}
-            <label className="inline-block bg-background text-black p-2 rounded-md cursor-pointer hover:bg-accent transition">
-              {imagen ? "Cambiar imagen" : "Subir imagen"}
+            {imagen ? (
+              <div className="my-3 flex justify-center">
+                <img
+                  src={URL.createObjectURL(imagen)}
+                  alt="Vista previa"
+                  className="max-h-32 rounded shadow"
+                />
+              </div>
+            ) : eventoEditable?.imagenUrl ? (
+              <div className="my-3 flex justify-center">
+                <img
+                  src={eventoEditable.imagenUrl}
+                  alt="Vista previa"
+                  className="max-h-32 rounded shadow"
+                />
+              </div>
+            ) : null}
+            <label className="inline-block bg-primary  text-sm font-medium text-white p-2.5 rounded-md cursor-pointer hover:bg-accent transition">
+              {imagen || eventoEditable?.imagenUrl
+                ? "Cambiar imagen"
+                : "Subir imagen"}
               <input
                 type="file"
                 accept="image/*"
@@ -144,7 +174,7 @@ function FormEvento({
             </label>
           </div>
 
-          <FechasForm setEvento={setEvento} />
+          <FechasForm setEvento={setEvento} fechasEditables={evento.fechas} />
         </div>
       </div>
 
@@ -152,12 +182,23 @@ function FormEvento({
 
       {loading ? (
         <Button type="button" variant={"outline"} className="text-black mt-3">
-          Creando evento...
+          {eventoEditable ? "Guardando..." : "Creando evento..."}
         </Button>
       ) : (
-        <Button type="submit" size={"lg"} className="cursor-pointer mt-3">
-          Aceptar
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            onClick={goBack}
+            variant={"outline"}
+            size={"lg"}
+            className="cursor-pointer"
+          >
+            Cancelar
+          </Button>
+          <Button type="submit" variant={"secondary"} size={"lg"} className="cursor-pointer">
+            Aceptar
+          </Button>
+        </div>
       )}
     </form>
   );

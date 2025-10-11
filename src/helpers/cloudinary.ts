@@ -7,6 +7,7 @@ const uploadImage = async (imagen: File): Promise<string> => {
   data.append("upload_preset", preset_name);
 
   try {
+    console.log(data)
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
       {
