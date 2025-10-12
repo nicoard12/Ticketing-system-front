@@ -14,8 +14,8 @@ function EditarEvento() {
     setError("");
     try {
       console.log("envio: ", e)
-      await updateEvento(evento._id, e); 
-      navigate(`/evento/${id}`)               //TODO eliminar de cloudinary en caso de haber cambiado la imagen
+      await updateEvento(evento._id, e); //TODO eliminar de cloudinary en back en caso de haber cambiado la imagen (comparar en back la anterior url con la nueva)
+      navigate(`/evento/${id}`)              
     } catch (err) {
       setError(err.message);
     } finally {

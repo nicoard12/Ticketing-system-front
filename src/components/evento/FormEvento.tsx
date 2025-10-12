@@ -78,7 +78,7 @@ function FormEvento({
   };
 
   const goBack = () => {
-    if (eventoEditable) navigate(`/evento/${eventoEditable._id}`)  
+    if (eventoEditable) navigate(`/evento/${eventoEditable._id}`);
     else navigate("/");
   };
 
@@ -99,51 +99,70 @@ function FormEvento({
       <div className="flex flex-col gap-10 w-full">
         {/* Columna izquierda */}
         <div className="flex flex-col gap-8 flex-1 rounded w-full">
-          <input
-            type="text"
-            value={evento.titulo}
-            placeholder="Título del evento"
-            className="p-2 border rounded "
-            name="titulo"
-            onChange={handleChange}
-          />
-          <textarea
-            placeholder="Descripción"
-            value={evento.descripcion}
-            className="p-2 border rounded  min-h-[80px]"
-            name="descripcion"
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            value={evento.cantidadEntradas}
-            placeholder="N° entradas por fecha"
-            className="p-2 border rounded "
-            name="cantidadEntradas"
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            value={evento.precioEntrada}
-            placeholder="Precio de las entradas"
-            className="p-2 border rounded "
-            name="precioEntrada"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            value={evento.ubicacion}
-            placeholder="Lugar del evento"
-            className="p-2 border rounded w-full "
-            name="ubicacion"
-            onChange={handleChange}
-          />
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Título del evento</label>
+            <input
+              type="text"
+              value={evento.titulo}
+              placeholder="Título del evento"
+              className="p-2 border rounded"
+              name="titulo"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Descripción</label>
+            <textarea
+              placeholder="Descripción"
+              value={evento.descripcion}
+              className="p-2 border rounded min-h-[80px]"
+              name="descripcion"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">N° entradas por fecha</label>
+            <input
+              type="number"
+              value={evento.cantidadEntradas}
+              placeholder="N° entradas por fecha"
+              className="p-2 border rounded"
+              name="cantidadEntradas"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Precio de las entradas</label>
+            <input
+              type="number"
+              value={evento.precioEntrada}
+              placeholder="Precio de las entradas"
+              className="p-2 border rounded"
+              name="precioEntrada"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Lugar del evento</label>
+            <input
+              type="text"
+              value={evento.ubicacion}
+              placeholder="Lugar del evento"
+              className="p-2 border rounded w-full"
+              name="ubicacion"
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         {/* Columna derecha */}
         <div className="flex flex-col items-end gap-8 w-full sm:w-1/2">
           <div className="w-full flex flex-col items-start">
-            <label className="block mb-1">Foto del evento</label>
+            <label className="block mb-1 font-medium">Foto del evento</label>
             {imagen ? (
               <div className="my-3 flex justify-center">
                 <img
@@ -161,7 +180,7 @@ function FormEvento({
                 />
               </div>
             ) : null}
-            <label className="inline-block bg-primary  text-sm font-medium text-white p-2.5 rounded-md cursor-pointer hover:bg-accent transition">
+            <label className="inline-block bg-primary text-sm font-medium text-white p-2.5 rounded-md cursor-pointer hover:bg-primary/90 transition">
               {imagen || eventoEditable?.imagenUrl
                 ? "Cambiar imagen"
                 : "Subir imagen"}
@@ -195,7 +214,12 @@ function FormEvento({
           >
             Cancelar
           </Button>
-          <Button type="submit" variant={"secondary"} size={"lg"} className="cursor-pointer">
+          <Button
+            type="submit"
+            variant={"secondary"}
+            size={"lg"}
+            className="cursor-pointer"
+          >
             Aceptar
           </Button>
         </div>

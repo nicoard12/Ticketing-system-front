@@ -9,6 +9,7 @@ function UnEvento() {
   const { id } = useParams();
   const [evento, setEvento] = useState<Evento | null>(null);
   const [modal, setModal]= useState(false)
+  const [deleting, setDeleting]= useState(false)
   const navigate= useNavigate()
 
   const goToEdit= () =>{
@@ -16,8 +17,9 @@ function UnEvento() {
   }
 
   const deleteEvent = async () =>{
-    await deleteEvento(id)    
-    //TODO: eliminar imagen de cloudinary
+    setDeleting(true)
+    await deleteEvento(id)  
+    setDeleting(false) 
     setModal(false)
     navigate("/")
   }
@@ -68,7 +70,7 @@ function UnEvento() {
         </div>
       </div>
 
-      {modal && <Modal evento={evento} cancelar={() => setModal(false)} confirmar={deleteEvent}/>}
+      {modal && <Modal evento={evento} cancelar={() => setModal(false)} confirmar={deleteEvent} deleting={deleting}/>}
     </div>
   );
 }
