@@ -44,7 +44,7 @@ function UnEvento() {
       <div className="flex flex-col sm:flex-row flex-1 gap-5 justify-between ">
         <div className="flex flex-col gap-3">
           <h1 className="font-semibold text-2xl">{evento?.titulo}</h1>
-          <p className="text-base overflow-y-auto max-h-[200px]">{evento?.descripcion}</p>
+          <p className="text-base overflow-y-auto max-h-[200px] break-all">{evento?.descripcion}</p>
           <h2 className="text-lg font-semibold">Fechas</h2>
           {evento?.fechas.map((f) => {
             return (
