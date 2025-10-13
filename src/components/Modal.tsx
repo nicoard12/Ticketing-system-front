@@ -20,7 +20,7 @@ function Modal({ evento, cancelar, confirmar, deleting }: ModalProps) {
         </p>
         <div className="flex justify-end gap-3">
           {deleting ? (
-            <Button variant="outline" className="cursor-pointer">
+            <Button variant="outline">
               Eliminando...
             </Button>
           ) : (

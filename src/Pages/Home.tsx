@@ -18,7 +18,6 @@ function Home() {
   useEffect(() => {
     const fetchEventos = async () => {
       const response = await getEventos();
-      console.log(response);
       setEventos(response);
       setAllEventos(response);
     };

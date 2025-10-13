@@ -6,7 +6,7 @@ import { uploadImage } from "../../helpers/cloudinary.ts";
 import { useNavigate } from "react-router-dom";
 
 type FormEventoProps = {
-  submit: (e: Omit<Evento, "_id">) => void;
+  submit: (e: Omit<Evento, "_id">, imagen?: File | null) => Promise<void>
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
@@ -69,11 +69,7 @@ function FormEvento({
       return;
     }
     if (imagen) {
-      const imageCloudinary = await uploadImage(imagen);
-      if (imageCloudinary == "error") {
-        setError("Error del servidor, intentelo mas tarde.");
-        setLoading(false);
-      } else submit({ ...evento, imagenUrl: imageCloudinary });
+      submit(evento, imagen)
     } else submit(evento);
   };
 
@@ -118,8 +114,18 @@ function FormEvento({
               value={evento.descripcion}
               className="p-2 border rounded min-h-[80px]"
               name="descripcion"
+              maxLength={500}
               onChange={handleChange}
             />
+            <span
+              className={`text-sm self-end ${
+                evento.descripcion.length >= 500
+                  ? "text-red-500 font-semibold"
+                  : "text-gray-500"
+              }`}
+            >
+              {evento.descripcion.length}/500
+            </span>
           </div>
 
           <div className="flex flex-col">

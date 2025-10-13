@@ -1,0 +1,18 @@
+export const handleApiError = (error: any, contexto: string) => {
+  if (error.response) {
+    console.error(`Error en la request (${contexto}):`, error.response);
+    const msg = error.response.data.message?.[0];
+
+    switch (msg) {
+      case 'titulo must be shorter than or equal to 40 characters':
+        throw new Error('El título del evento no debe tener más de 40 caracteres');
+      case 'descripcion must be shorter than or equal to 300 characters':
+        throw new Error('La descripción del evento no debe tener más de 300 caracteres');
+      default:
+        throw new Error(msg || `Error desconocido al ${contexto} el evento`);
+    }
+  } else {
+    console.error(`Error inesperado (${contexto}):`, error.message);
+    throw new Error(`Error inesperado al ${contexto} el evento: ${error.message}`);
+  }
+};

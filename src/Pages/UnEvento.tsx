@@ -34,8 +34,8 @@ function UnEvento() {
   }, [id]);
 
   return (
-    <div className="flex flex-col sm:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
-      <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full sm:w-1/3 ">
+    <div className="flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
+      <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full lg:w-1/3 ">
         <img
           src={evento?.imagenUrl}
           alt={`Imagen de : ${evento?.titulo}`}
@@ -43,25 +43,31 @@ function UnEvento() {
         />
       </div>
 
-      <div className="flex flex-col sm:flex-row flex-1 gap-5 justify-between ">
+      <div className="flex flex-col lg:flex-row flex-1 gap-5 justify-between ">
         <div className="flex flex-col gap-3">
-          <h1 className="font-semibold text-2xl">{evento?.titulo}</h1>
-          <p className="text-base overflow-y-auto max-h-[200px] break-all">{evento?.descripcion}</p>
-          <h2 className="text-lg font-semibold">Fechas</h2>
-          {evento?.fechas.map((f) => {
-            return (
-              <p key={f._id}>
-                {new Date(f.fecha).toLocaleString("es-AR", {
-                  timeZone: "America/Argentina/Buenos_Aires",
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
-            );
-          })}
+          <div>
+            <h1 className="font-semibold text-2xl">{evento?.titulo}</h1>
+            <p className="text-base overflow-y-auto max-h-[200px] break-all">{evento?.descripcion}</p>
+          </div>
+          <div className="flex flex-col items-start h-[270px] 2xl:h-[350px]">
+            <h2 className="text-lg font-semibold">Fechas</h2>
+            <div className="flex flex-col gap-2 overflow-y-auto justify-start items-start pr-10">
+              {evento?.fechas.map((f) => {
+                return (
+                  <p key={f._id}>
+                    {new Date(f.fecha).toLocaleString("es-AR", {
+                      timeZone: "America/Argentina/Buenos_Aires",
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col justify-between gap-5">

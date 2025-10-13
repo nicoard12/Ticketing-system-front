@@ -8,17 +8,18 @@ function RegistrarEvento() {
   const [error, setError]= useState("")
   const navigate= useNavigate()
 
-  const newEvento= async (e: Omit<Evento, "_id">) =>{
+  const newEvento= async (e: Omit<Evento, "_id">, imagen?: File | null) =>{
     setError("");
     try {
-      await createEvento(e);
+      await createEvento(e, imagen);
       navigate("/")
     } catch (err) {
-      setError(err.message); //TODO eliminar foto de cloudinary en caso de error
+      setError(err.message); 
     } finally {
       setLoading(false);
     }
   }
+
   return (
     <div className='p-3 flex flex-col gap-6 w-full justify-center items-center'>
       <h1 className='text-3xl font-semibold'>Crear evento</h1>

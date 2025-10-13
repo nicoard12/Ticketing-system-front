@@ -1,19 +1,20 @@
-import api from './api';
+import api from "./api";
+import { handleApiError } from "@/helpers/handleApiError";
 
 export type Evento = {
   _id: string;
   titulo: string;
   fechas: Date[];
   descripcion: string;
-  cantidadEntradas: string;  //en bd number
-  precioEntrada: string;     //en bd number
+  cantidadEntradas: string; //en bd number
+  precioEntrada: string; //en bd number
   ubicacion: string;
   imagenUrl: string;
-}
+};
 
 export const getEventos = async () => {
-  const response = await api.get<Evento[]>('/eventos');
-  return response.data.map(evento => ({
+  const response = await api.get<Evento[]>("/eventos");
+  return response.data.map((evento) => ({
     ...evento,
     cantidadEntradas: String(evento.cantidadEntradas),
     precioEntrada: String(evento.precioEntrada),
@@ -29,48 +30,69 @@ export const getEventoById = async (id: string) => {
   };
 };
 
-
-export const createEvento = async (evento: Omit<Evento, '_id'>) => {
-  const payload = {
-    ...evento,
-    cantidadEntradas: Number(evento.cantidadEntradas),
-    precioEntrada: Number(evento.precioEntrada),
-  };
-
-  const response = await api.post<Evento>('/eventos', payload);
-  return response.data;
-};
-
-export const updateEvento = async (id: string, evento: Omit<Evento, '_id'>) => {
+export const createEvento = async (
+  evento: Omit<Evento, "_id">,
+  imagen: File | null
+) => {
   try {
-    // Convertir a number
-    const eventoNormalizado = {
-      ...evento,
-      cantidadEntradas: Number(evento.cantidadEntradas),
-      precioEntrada: Number(evento.precioEntrada),
-    };
+    const formData = new FormData();
 
-    const response = await api.put<Evento>(`/eventos/${id}`, eventoNormalizado);
-    return response.data;
-  } catch (error: any) {
-    if (error.response) {
-      console.error('Error en la request:', error.response);
-      if (error.response.data.message[0] == "titulo must be shorter than or equal to 40 characters"){
-        throw new Error("El titulo del evento no debe tener mas de 40 caracteres")
-      }else if (error.response.data.message[0] == "descripcion must be shorter than or equal to 300 characters"){
-        throw new Error("La descripcion del evento no debe tener mas de 300 caracteres")
-      }
-      else throw new Error (error.response.data.message[0])
-    } else {
-      console.error('Error inesperado:', error.message);
-      throw new Error(`Error inesperado: ${error.message}`);
+    // Campos del evento
+    formData.append("titulo", evento.titulo);
+    formData.append("descripcion", evento.descripcion);
+    formData.append("cantidadEntradas", evento.cantidadEntradas.toString());
+    formData.append("precioEntrada", evento.precioEntrada.toString());
+    formData.append("ubicacion", evento.ubicacion);
+    formData.append("fechas", JSON.stringify(evento.fechas));
+    formData.append("imagen", imagen!);
+
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
     }
+
+    const response = await api.post<Evento>("/eventos", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    handleApiError(error, "crear");
   }
 };
 
+export const updateEvento = async (
+  id: string,
+  evento: Omit<Evento, "_id">,
+  imagen: File | null
+) => {
+  try {
+    const formData = new FormData();
 
+    formData.append("titulo", evento.titulo);
+    formData.append("descripcion", evento.descripcion);
+    formData.append("cantidadEntradas", evento.cantidadEntradas.toString());
+    formData.append("precioEntrada", evento.precioEntrada.toString());
+    formData.append("ubicacion", evento.ubicacion);
+    formData.append("fechas", JSON.stringify(evento.fechas));
+    // Imagen opcional
+    if (imagen) {
+      formData.append("imagen", imagen);
+    }
+
+    const response = await api.put<Evento>(`/eventos/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    handleApiError(error, "actualizar");
+  }
+};
 
 export const deleteEvento = async (id: string) => {
   await api.delete(`/eventos/${id}`);
 };
-

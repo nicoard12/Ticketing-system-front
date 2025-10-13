@@ -10,11 +10,11 @@ function EditarEvento() {
   const { id }= useParams()
   const navigate= useNavigate()
 
-  const editarEvento= async (e: Omit<Evento, "_id">) =>{
+  const editarEvento= async (e: Omit<Evento, "_id">, imagen?: File | null) =>{
     setError("");
     try {
       console.log("envio: ", e)
-      await updateEvento(evento._id, e); //TODO eliminar de cloudinary en back en caso de haber cambiado la imagen (comparar en back la anterior url con la nueva)
+      await updateEvento(evento._id, e, imagen); 
       navigate(`/evento/${id}`)              
     } catch (err) {
       setError(err.message);

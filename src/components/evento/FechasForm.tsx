@@ -36,7 +36,6 @@ function FechasForm({ setEvento, fechasEditables }: FechasFormProps) {
   };
 
   useEffect(() =>{
-    console.log(fechasEditables)
     if (fechasEditables && fechasEditables.length > 0) setFechas(fechasEditables.map(f => f.toString()))
   },[fechasEditables])
 
