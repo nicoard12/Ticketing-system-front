@@ -1,7 +1,10 @@
 export const handleApiError = (error: any, contexto: string) => {
   if (error.response) {
     console.error(`Error en la request (${contexto}):`, error.response);
-    const msg = error.response.data.message?.[0];
+
+    const dataMessage = error.response.data.message;
+    // Si es un array, tomamos el primer elemento; si es string, lo usamos directamente
+    const msg = Array.isArray(dataMessage) ? dataMessage[0] : dataMessage;
 
     switch (msg) {
       case 'titulo must be shorter than or equal to 40 characters':
@@ -16,3 +19,4 @@ export const handleApiError = (error: any, contexto: string) => {
     throw new Error(`Error inesperado al ${contexto} el evento: ${error.message}`);
   }
 };
+
