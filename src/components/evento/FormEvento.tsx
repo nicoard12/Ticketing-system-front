@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import type { Evento } from "@/api/eventos";
 import FechasForm from "./FechasForm";
-import { uploadImage } from "../../helpers/cloudinary.ts";
 import { useNavigate } from "react-router-dom";
 
 type FormEventoProps = {
