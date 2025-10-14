@@ -18,8 +18,7 @@ function EditarEvento() {
       navigate(`/evento/${id}`)              
     } catch (err) {
       setError(err.message);
-    } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 

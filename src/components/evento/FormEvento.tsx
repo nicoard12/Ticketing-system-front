@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import type { Evento } from "@/api/eventos";
 import FechasForm from "./FechasForm";
-import { uploadImage } from "../../helpers/cloudinary.ts";
 import { useNavigate } from "react-router-dom";
 
 type FormEventoProps = {
-  submit: (e: Omit<Evento, "_id">, imagen?: File | null) => Promise<void>
+  submit: (e: Omit<Evento, "_id">, imagen?: File | null) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
@@ -69,7 +68,7 @@ function FormEvento({
       return;
     }
     if (imagen) {
-      submit(evento, imagen)
+      submit(evento, imagen);
     } else submit(evento);
   };
 
@@ -87,6 +86,12 @@ function FormEvento({
     }
   }, [eventoEditable]);
 
+  useEffect(() => {
+    const input = document.querySelector('input[type="number"]');
+    input.addEventListener("wheel", (e) => e.preventDefault());
+
+  }, []);
+  
   return (
     <form
       onSubmit={handleSubmit}
