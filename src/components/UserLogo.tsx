@@ -1,9 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { UserIcon, LogOutIcon } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { UserIcon, LogOutIcon } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
-function LogoUser() {
+function UserLogo() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const navigate= useNavigate()
+  const { logout } = useAuth0();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -12,10 +16,10 @@ function LogoUser() {
       }
     }
     if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
 
@@ -31,13 +35,18 @@ function LogoUser() {
         <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10 text-sm">
           <ul className="py-1">
             <li>
-              <button className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              <button onClick={() => navigate("/perfil")} className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer">
                 <UserIcon className="w-4 h-4" />
                 Perfil
               </button>
             </li>
             <li>
-              <button className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              <button
+                onClick={() =>
+                  logout({ logoutParams: { returnTo: window.location.origin } })
+                }
+                className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
                 <LogOutIcon className="w-4 h-4" />
                 Cerrar sesión
               </button>
@@ -49,4 +58,4 @@ function LogoUser() {
   );
 }
 
-export default LogoUser;
+export default UserLogo;

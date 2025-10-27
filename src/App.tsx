@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import RegistrarEvento from "./Pages/RegistrarEvento";
 import EditarEvento from "./Pages/EditarEvento";
 import UnEvento from "./Pages/UnEvento";
+import Profile from "./Pages/Profile";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="evento/:id" element={<UnEvento />} />
           <Route path="registrar-evento" element={<RegistrarEvento />} />
           <Route path="editar-evento/:id" element={<EditarEvento />} />
+          <Route path="perfil" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

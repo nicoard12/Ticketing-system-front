@@ -1,11 +1,13 @@
 import { getEventos, type Evento } from "@/api/eventos";
 import Buscador from "@/components/Buscador";
 import EventoBox from "@/components/evento/EventoBox";
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 
 function Home() {
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [allEventos, setAllEventos] = useState<Evento[]>([]);
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const onSearch = (query: string) => {
     setEventos(
@@ -24,6 +26,27 @@ function Home() {
 
     fetchEventos();
   }, []);
+
+  // useEffect(() => {
+  //   const updateApiToken = (token: string) => {
+  //     if (token) {
+  //       configuration.config = {       //De donde sale este configuration??
+  //         basePath: "http://localhost:3000",
+  //         accessToken: () => token,
+  //       };
+  //     }
+  //   };
+
+  //   if (isAuthenticated) {
+  //     getAccessTokenSilently().then((token) => {
+  //       if (localStorage && localStorage.getItem("app_token") !== token) {
+  //         localStorage.setItem("app_token", token);
+  //       }
+  //       console.log("token", token);
+  //       updateApiToken(token);
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div className="flex flex-col items-center gap-10 p-4">

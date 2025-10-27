@@ -1,10 +1,13 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import LogoUser from "./LogoUser";
+import UserLogo from "./UserLogo";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Header() {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false); // Simulación de estado de administrador
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
   const goRegistrarEvento = () => {
     navigate("/registrar-evento");
@@ -16,17 +19,29 @@ function Header() {
         <p className="italic cursor-pointer" onClick={() => navigate("/")}>
           TicketingSystem
         </p>
-        <div className="flex gap-5 items-center">
-          <Button
-            size={"sm"}
-            onClick={goRegistrarEvento}
-            variant={"ghost"}
-            className="cursor-pointer"
-          >
-            Crear evento
-          </Button>
-          <LogoUser />
-        </div>
+        {isLoading ? null : (
+          <div className="flex gap-5 items-center">
+            <Button
+              size={"sm"}
+              onClick={goRegistrarEvento}
+              variant={"ghost"}
+              className="cursor-pointer"
+            >
+              Crear evento
+            </Button>
+            {isAuthenticated ? (
+              <UserLogo />
+            ) : (
+              <Button
+                variant={"secondary"}
+                className="cursor-pointer"
+                onClick={() => loginWithRedirect()}
+              >
+                Iniciar sesión
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
