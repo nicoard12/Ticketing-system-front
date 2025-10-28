@@ -3,22 +3,19 @@ import { Button } from "../ui/button";
 import type { Evento } from "@/api/eventos";
 import FechasForm from "./FechasForm";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 type FormEventoProps = {
   submit: (e: Omit<Evento, "_id">, imagen?: File | null) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setError: React.Dispatch<React.SetStateAction<string>>;
   eventoEditable?: Evento | null;
-  children?: React.ReactNode;
 };
 
 function FormEvento({
   submit,
   loading,
   setLoading,
-  setError,
-  children,
   eventoEditable,
 }: FormEventoProps) {
   const navigate = useNavigate();
@@ -48,7 +45,6 @@ function FormEvento({
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setError("");
     setLoading(true);
     e.preventDefault();
     if (
@@ -63,7 +59,7 @@ function FormEvento({
         (f: unknown) => !f || (typeof f === "string" && !f.trim())
       )
     ) {
-      setError("Todos los campos son obligatorios.");
+      toast.error("Todos los campos son obligatorios.");
       setLoading(false);
       return;
     }
@@ -87,11 +83,20 @@ function FormEvento({
   }, [eventoEditable]);
 
   useEffect(() => {
-    const input = document.querySelector('input[type="number"]');
-    input.addEventListener("wheel", (e) => e.preventDefault());
+    const inputs = document.querySelectorAll('input[type="number"]');
 
+    const disableScroll = (e: WheelEvent) => e.preventDefault();
+
+    inputs.forEach((input) => input.addEventListener("wheel", disableScroll));
+
+    // Limpieza para evitar fugas de eventos
+    return () => {
+      inputs.forEach((input) =>
+        input.removeEventListener("wheel", disableScroll)
+      );
+    };
   }, []);
-  
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -207,8 +212,6 @@ function FormEvento({
           <FechasForm setEvento={setEvento} fechasEditables={evento.fechas} />
         </div>
       </div>
-
-      {children}
 
       {loading ? (
         <Button type="button" variant={"outline"} className="text-black mt-3">

@@ -27,26 +27,15 @@ function Home() {
     fetchEventos();
   }, []);
 
-  // useEffect(() => {
-  //   const updateApiToken = (token: string) => {
-  //     if (token) {
-  //       configuration.config = {       //De donde sale este configuration??
-  //         basePath: "http://localhost:3000",
-  //         accessToken: () => token,
-  //       };
-  //     }
-  //   };
-
-  //   if (isAuthenticated) {
-  //     getAccessTokenSilently().then((token) => {
-  //       if (localStorage && localStorage.getItem("app_token") !== token) {
-  //         localStorage.setItem("app_token", token);
-  //       }
-  //       console.log("token", token);
-  //       updateApiToken(token);
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAccessTokenSilently().then((token) => {
+        if (localStorage && localStorage.getItem("app_token") !== token) {
+          localStorage.setItem("app_token", token);
+        }
+      });
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="flex flex-col items-center gap-10 p-4">

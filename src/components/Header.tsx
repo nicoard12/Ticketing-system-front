@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import UserLogo from "./UserLogo";
 import { Button } from "./ui/button";
-import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Header() {
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false); // Simulación de estado de administrador
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
   const goRegistrarEvento = () => {
@@ -21,16 +19,18 @@ function Header() {
         </p>
         {isLoading ? null : (
           <div className="flex gap-5 items-center">
-            <Button
-              size={"sm"}
-              onClick={goRegistrarEvento}
-              variant={"ghost"}
-              className="cursor-pointer"
-            >
-              Crear evento
-            </Button>
             {isAuthenticated ? (
-              <UserLogo />
+              <>
+                <Button
+                  size={"sm"}
+                  onClick={goRegistrarEvento}
+                  variant={"ghost"}
+                  className="cursor-pointer"
+                >
+                  Crear evento
+                </Button>
+                <UserLogo />
+              </>
             ) : (
               <Button
                 variant={"secondary"}

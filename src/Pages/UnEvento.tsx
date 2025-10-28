@@ -4,6 +4,7 @@ import { deleteEvento, type Evento, getEventoById } from "@/api/eventos";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2} from 'lucide-react';
 import Modal from "@/components/Modal";
+import { toast } from "sonner";
 
 function UnEvento() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ function UnEvento() {
     await deleteEvento(id)  
     setDeleting(false) 
     setModal(false)
+    toast.warning("Evento eliminado")
     navigate("/")
   }
 
