@@ -33,7 +33,7 @@ function Header() {
               </>
             ) : (
               <Button
-                variant={"secondary"}
+                variant={"outline"}
                 className="cursor-pointer"
                 onClick={() => loginWithRedirect()}
               >

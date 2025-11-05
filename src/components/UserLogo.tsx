@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { UserIcon, LogOutIcon } from "lucide-react";
+import { UserIcon, LogOutIcon, CircleUserRound } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
 function UserLogo() {
   const [open, setOpen] = useState(false);
+  const [failedImage, setFailedImage] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { logout, user } = useAuth0();
@@ -34,7 +35,16 @@ function UserLogo() {
         className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full "
         onClick={() => setOpen((prev) => !prev)}
       >
-        <img src={user!.picture} alt={user!.name} className="rounded-full"/>
+        {failedImage ? (
+          <CircleUserRound color="white" strokeWidth={1} size={64} />
+        ) : (
+          <img
+            src={user!.picture}
+            alt={user!.name}
+            onError={() => setFailedImage(true)}
+            className="rounded-full"
+          />
+        )}
       </button>
       {open && (
         <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10 text-sm">

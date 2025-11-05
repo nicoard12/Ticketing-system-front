@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Edit, Trash2} from 'lucide-react';
 import Modal from "@/components/Modal";
 import { toast } from "sonner";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function UnEvento() {
   const { id } = useParams();
   const [evento, setEvento] = useState<Evento | null>(null);
   const [modal, setModal]= useState(false)
   const [deleting, setDeleting]= useState(false)
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const navigate= useNavigate()
 
   const goToEdit= () =>{
@@ -34,6 +36,12 @@ function UnEvento() {
 
     if (id) getEvento();
   }, [id]);
+
+  useEffect(() =>{
+    if (!isAuthenticated) loginWithRedirect()
+  },[])
+
+  if (!isAuthenticated) return null
 
   return (
     <div className="flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">

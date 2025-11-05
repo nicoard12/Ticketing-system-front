@@ -1,4 +1,5 @@
 import type { Evento } from '@/api/eventos'
+import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -8,9 +9,11 @@ type EventoBoxProps = {
 
 function EventoBox({ evento }: EventoBoxProps) {
   const navigate= useNavigate()
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   const goToUnEvento= () =>{
-    navigate(`/evento/${evento._id}`)
+    if (!isAuthenticated) loginWithRedirect()
+    else navigate(`/evento/${evento._id}`)
   }
 
   return (
