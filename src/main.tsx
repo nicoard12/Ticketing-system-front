@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { UserProvider } from "./context/UserContext.tsx";
 
 const root = createRoot(document.getElementById("root")!);
 
@@ -17,7 +18,9 @@ root.render(
       }}
       cacheLocation="localstorage"
     >
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </Auth0Provider>
   </StrictMode>
 );

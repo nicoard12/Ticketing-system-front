@@ -12,7 +12,7 @@ function UnEvento() {
   const [evento, setEvento] = useState<Evento | null>(null);
   const [modal, setModal]= useState(false)
   const [deleting, setDeleting]= useState(false)
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
   const navigate= useNavigate()
 
   const goToEdit= () =>{
@@ -38,8 +38,9 @@ function UnEvento() {
   }, [id]);
 
   useEffect(() =>{
+    if (isLoading) return
     if (!isAuthenticated) loginWithRedirect()
-  },[])
+  },[isLoading, isAuthenticated])
 
   if (!isAuthenticated) return null
 

@@ -2,10 +2,13 @@ import { useNavigate } from "react-router-dom";
 import UserLogo from "./UserLogo";
 import { Button } from "./ui/button";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useUsuario } from "@/context/UserContext";
+import { useEffect } from "react";
 
 function Header() {
   const navigate = useNavigate();
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+  const {user}= useUsuario()
 
   const goRegistrarEvento = () => {
     navigate("/registrar-evento");
@@ -21,14 +24,14 @@ function Header() {
           <div className="flex gap-5 items-center">
             {isAuthenticated ? (
               <>
-                <Button
+                {user?.rol == "productor" && <Button
                   size={"sm"}
                   onClick={goRegistrarEvento}
                   variant={"ghost"}
                   className="cursor-pointer"
                 >
                   Crear evento
-                </Button>
+                </Button>}
                 <UserLogo />
               </>
             ) : (
