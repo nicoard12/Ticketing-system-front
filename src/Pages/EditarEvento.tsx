@@ -17,6 +17,7 @@ function EditarEvento() {
       toast.success("Evento actualizado");
       navigate(`/evento/${id}`)              
     } catch (err) {
+      console.log("a ver, ", err)
       toast.error(err.message);
       setLoading(false)
     }

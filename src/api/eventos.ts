@@ -10,6 +10,7 @@ export type Evento = {
   precioEntrada: string; //en bd number
   ubicacion: string;
   imagenUrl: string;
+  createdBy: string;
 };
 
 export const getEventos = async () => {
