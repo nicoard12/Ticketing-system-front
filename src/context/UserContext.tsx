@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUsuario, type Rol, type Usuario } from "@/api/usuarios";
-
 type UsuarioExtendido = (Usuario & { picture: string }) | null;
 
 type UsuarioContextType = {
@@ -23,13 +22,16 @@ export const UserProvider = ({ children }) => {
       email: user.email!,
       rol: "normal" as Rol,
     };
-
-    const response = await createUsuario(newUser);
-    console.log(response);
-    setExtendedUser({
-      ...response,
-      picture: user.picture!,
-    });
+    try {
+      const response = await createUsuario(newUser);
+      setExtendedUser({
+        ...response,
+        picture: user.picture!,
+      });
+    } catch (error) {
+      console.log("errrr, ",error)
+      if (error.code == "ERR_NETWORK") alert("Error al conectar con el servidor, por favor intentalo mas tarde.")
+    }
   };
 
   useEffect(() => {
