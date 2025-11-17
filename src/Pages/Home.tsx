@@ -17,9 +17,16 @@ function Home() {
 
   useEffect(() => {
     const fetchEventos = async () => {
-      const response = await getEventos();
-      setEventos(response);
-      setAllEventos(response);
+      try {
+        const response = await getEventos();
+        setEventos(response);
+        setAllEventos(response);
+      } catch (error) {
+        if (error.code == "ERR_NETWORK")
+          alert(
+            "Error al conectar con el servidor, por favor intentalo mas tarde."
+          );
+      }
     };
 
     fetchEventos();
