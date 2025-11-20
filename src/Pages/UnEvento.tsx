@@ -50,7 +50,7 @@ function UnEvento() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
+    <div className="text-primary flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
       <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full lg:w-1/3 ">
         <img
           src={evento?.imagenUrl}

@@ -5,7 +5,7 @@ import { Toaster } from "sonner"
 function Layout() {
 
   return (
-    <div className="bg-background text-foreground">
+    <div className="text-foreground">
       <Header />
       <Outlet />
 

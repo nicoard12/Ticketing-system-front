@@ -17,12 +17,12 @@ function EventoBox({ evento }: EventoBoxProps) {
   }
 
   return (
-    <div onClick={goToUnEvento} className='bg-card shadow rounded flex flex-col cursor-pointer hover:scale-[1.01] transition-transform max-w-[200px] sm:max-w-[220px] md:max-w-[240px] w-full'>
-      <div className='aspect-square flex items-center justify-center overflow-hidden rounded-t border-x border-gray-400'>
+    <div onClick={goToUnEvento} className='hover:outline-black outline outline-gray-900/70 bg-card text-card-foreground shadow rounded flex flex-col cursor-pointer hover:scale-[1.01] transition-transform max-w-[200px] sm:max-w-[220px] md:max-w-[240px] w-full'>
+      <div className='aspect-square flex items-center justify-center overflow-hidden rounded-t'>
         <img
           src={evento.imagenUrl}
           alt={`Imagen de : ${evento.titulo}`}
-          className='object-cover w-full h-full'
+          className='object-cover w-full h-full '
         />
       </div>
       <div className='p-2 flex items-center justify-center border-x border-b border-gray-400 rounded-b'>

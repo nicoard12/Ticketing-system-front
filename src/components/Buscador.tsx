@@ -26,7 +26,7 @@ function Buscador({ onSearch }: BuscadorProps) {
   }, [search]);
 
   return (
-    <div className="w-1/2 min-w-[250px]">
+    <div className="md:absolute md:top-6 w-1/2 min-w-[250px] text-primary">
       <InputGroup className="bg-card shadow py-5">
         <InputGroupInput
           placeholder="Buscar evento..."
