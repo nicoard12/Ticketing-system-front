@@ -6,7 +6,7 @@ import { useUsuario } from "@/context/UserContext";
 function Header() {
   const navigate = useNavigate();
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
-  const {user}= useUsuario()
+  const { user } = useUsuario();
 
   const goRegistrarEvento = () => {
     navigate("/registrar-evento");
@@ -15,21 +15,32 @@ function Header() {
   return (
     <div className=" text-primary-foreground p-5 py-7 text-lg sm:text-2xl flex flex-col gap-5">
       <div className="flex justify-between">
-        <p className="italic cursor-pointer" onClick={() => navigate("/")}>
+        <p id="home-logo" className="italic cursor-pointer" onClick={() => navigate("/")}>
           TicketingSystem
         </p>
         {isLoading ? null : (
           <div className="flex gap-5 items-center">
+            <Button
+              size={"sm"}
+              onClick={goRegistrarEvento}
+              variant={"ghost"}
+              id="crear-evento"
+              className="cursor-pointer"
+            >
+              Crear evento
+            </Button>
             {isAuthenticated ? (
               <>
-                {user?.rol == "productor" && <Button
-                  size={"sm"}
-                  onClick={goRegistrarEvento}
-                  variant={"ghost"}
-                  className="cursor-pointer"
-                >
-                  Crear evento
-                </Button>}
+                {user?.rol == "productor" && (
+                  <Button
+                    size={"sm"}
+                    onClick={goRegistrarEvento}
+                    variant={"ghost"}
+                    className="cursor-pointer"
+                  >
+                    Crear evento
+                  </Button>
+                )}
                 <UserLogo />
               </>
             ) : (

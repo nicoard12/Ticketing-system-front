@@ -29,6 +29,7 @@ function Modal({ evento, cancelar, confirmar, deleting }: ModalProps) {
                 variant="outline"
                 onClick={cancelar}
                 className="cursor-pointer"
+                id="cancel-deletion"
               >
                 Cancelar
               </Button>
@@ -36,6 +37,7 @@ function Modal({ evento, cancelar, confirmar, deleting }: ModalProps) {
                 variant="destructive"
                 onClick={confirmar}
                 className="cursor-pointer"
+                id="confirm-deletion"
               >
                 Eliminar
               </Button>

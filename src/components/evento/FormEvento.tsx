@@ -184,6 +184,7 @@ function FormEvento({
                 <img
                   src={URL.createObjectURL(imagen)}
                   alt="Vista previa"
+                  data-cy="preview-image"
                   className="max-h-32 rounded shadow"
                 />
               </div>
@@ -192,6 +193,7 @@ function FormEvento({
                 <img
                   src={eventoEditable.imagenUrl}
                   alt="Vista previa"
+                  data-cy="preview-image"
                   className="max-h-32 rounded shadow"
                 />
               </div>
@@ -204,6 +206,7 @@ function FormEvento({
                 type="file"
                 accept="image/*"
                 onChange={changeImagen}
+                name="imagen"
                 className="hidden"
               />
             </label>
@@ -224,6 +227,7 @@ function FormEvento({
             onClick={goBack}
             variant={"outline"}
             size={"lg"}
+            data-cy="cancel-button"
             className="cursor-pointer"
           >
             Cancelar

@@ -44,10 +44,10 @@ function UnEvento() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (!isAuthenticated) loginWithRedirect();
+    // if (!isAuthenticated) loginWithRedirect();
   }, [isLoading, isAuthenticated]);
 
-  if (!isAuthenticated) return null;
+  // if (!isAuthenticated) return null;
 
   return (
     <div className="text-primary flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
@@ -62,7 +62,7 @@ function UnEvento() {
       <div className="flex flex-col lg:flex-row flex-1 gap-5 justify-between ">
         <div className="flex flex-col gap-3">
           <div>
-            <h1 className="font-semibold text-2xl">{evento?.titulo}</h1>
+            <h1 data-cy="title" className="font-semibold text-2xl">{evento?.titulo}</h1>
             <p className="text-base overflow-y-auto max-h-[200px] break-all">
               {evento?.descripcion}
             </p>
@@ -87,6 +87,17 @@ function UnEvento() {
             </div>
           </div>
         </div>
+
+        <Button
+          onClick={() => setModal(true)}
+          variant={"destructive"}
+          className="cursor-pointer"
+          id="eliminar-evento"
+        >
+          {" "}
+          <Trash2 />
+          Eliminar evento
+        </Button>
 
         {evento?.createdBy == user?.sub && (
           <div className="flex flex-col justify-between gap-5">

@@ -10,7 +10,7 @@ export const handleApiError = (error: any, contexto: string) => {
       case 'titulo must be shorter than or equal to 40 characters':
         throw new Error('El título del evento no debe tener más de 40 caracteres');
       case 'descripcion must be shorter than or equal to 300 characters':
-        throw new Error('La descripción del evento no debe tener más de 300 caracteres');
+        throw new Error('La descripción del evento no debe tener más de 500 caracteres');
       default:
         throw new Error(msg || `Error desconocido al ${contexto} el evento`);
     }

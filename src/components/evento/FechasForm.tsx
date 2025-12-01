@@ -51,6 +51,7 @@ function FechasForm({ setEvento, fechasEditables }: FechasFormProps) {
                 type="datetime-local"
                 className="p-2 border rounded flex-1"
                 value={convertirUTC(fecha)}
+                name="fecha"
                 onChange={(e) => cambiarFecha(i, e.target.value)}
               />
               {fechas.length > 1 && (
@@ -69,6 +70,7 @@ function FechasForm({ setEvento, fechasEditables }: FechasFormProps) {
         <Button
           variant="default"
           type="button"
+          data-cy="add-date-button"
           className="cursor-pointer"
           onClick={agregarFecha}
         >
