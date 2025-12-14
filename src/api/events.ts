@@ -14,7 +14,7 @@ export type Event = {
 };
 
 export const getEvents = async () => {
-  const response = await api.get<Event[]>("/eventos");
+  const response = await api.get<Event[]>("/events");
   return response.data.map((event) => ({
     ...event,
     cantidadEntradas: String(event.cantidadEntradas),
@@ -23,7 +23,7 @@ export const getEvents = async () => {
 };
 
 export const getEventById = async (id: string) => {
-  const response = await api.get<Event>(`/eventos/${id}`);
+  const response = await api.get<Event>(`/events/${id}`);
   return {
     ...response.data,
     cantidadEntradas: String(response.data.cantidadEntradas),
@@ -50,7 +50,7 @@ export const createEvent = async (
       console.log(key, value);
     }
 
-    const response = await api.post<Event>("/eventos", formData, {
+    const response = await api.post<Event>("/events", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -81,7 +81,7 @@ export const updateEvent = async (
       formData.append("imagen", imagen);
     }
 
-    const response = await api.put<Event>(`/eventos/${id}`, formData, {
+    const response = await api.put<Event>(`/events/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -94,5 +94,5 @@ export const updateEvent = async (
 };
 
 export const deleteEvent = async (id: string) => {
-  await api.delete(`/eventos/${id}`);
+  await api.delete(`/events/${id}`);
 };
