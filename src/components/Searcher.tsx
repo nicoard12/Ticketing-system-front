@@ -1,10 +1,5 @@
 import {
-  CheckIcon,
-  CreditCardIcon,
-  InfoIcon,
-  MailIcon,
   SearchIcon,
-  StarIcon,
 } from "lucide-react";
 
 import {
@@ -14,11 +9,11 @@ import {
 } from "@/components/ui/input-group";
 import { useEffect, useState } from "react";
 
-type BuscadorProps = {
+type SearcherProps = {
   onSearch: (query: string) => void;
 };
 
-function Buscador({ onSearch }: BuscadorProps) {
+function Searcher({ onSearch }: SearcherProps) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -41,4 +36,4 @@ function Buscador({ onSearch }: BuscadorProps) {
   );
 }
 
-export default Buscador;
+export default Searcher;

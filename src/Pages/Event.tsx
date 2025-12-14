@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteEvento, type Evento, getEventoById } from "@/api/eventos";
+import { deleteEvent, type Event, getEventById } from "@/api/events";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import Modal from "@/components/Modal";
 import { toast } from "sonner";
 import { useAuth0 } from "@auth0/auth0-react";
 
-function UnEvento() {
+function Event() {
   const { id } = useParams();
-  const [evento, setEvento] = useState<Evento | null>(null);
+  const [evento, setEvento] = useState<Event | null>(null);
   const [modal, setModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const { isAuthenticated, isLoading, user } = useAuth0();
@@ -19,10 +19,10 @@ function UnEvento() {
     navigate(`/editar-evento/${id}`);
   };
 
-  const deleteEvent = async () => {
+  const startDelete = async () => {
     try {
       setDeleting(true);
-      await deleteEvento(id);
+      await deleteEvent(id);
       setDeleting(false);
       setModal(false);
       toast.warning("Evento eliminado");
@@ -34,12 +34,12 @@ function UnEvento() {
   };
 
   useEffect(() => {
-    const getEvento = async () => {
-      const response = await getEventoById(id);
+    const getEvent = async () => {
+      const response = await getEventById(id);
       setEvento(response);
     };
 
-    if (id) getEvento();
+    if (id) getEvent();
   }, [id]);
 
   useEffect(() => {
@@ -115,7 +115,7 @@ function UnEvento() {
         <Modal
           evento={evento}
           cancelar={() => setModal(false)}
-          confirmar={deleteEvent}
+          confirmar={startDelete}
           deleting={deleting}
         />
       )}
@@ -123,4 +123,4 @@ function UnEvento() {
   );
 }
 
-export default UnEvento;
+export default Event;

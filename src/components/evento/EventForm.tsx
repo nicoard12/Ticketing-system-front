@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import type { Evento } from "@/api/eventos";
-import FechasForm from "./FechasForm";
+import type { Event } from "@/api/events";
+import DateForm from "./DateForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-type FormEventoProps = {
-  submit: (e: Omit<Evento, "_id">, imagen?: File | null) => Promise<void>;
+type EventFormProps = {
+  submit: (e: Omit<Event, "_id">, imagen?: File | null) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  eventoEditable?: Evento | null;
+  eventoEditable?: Event | null;
 };
 
-function FormEvento({
+function EventForm({
   submit,
   loading,
   setLoading,
   eventoEditable,
-}: FormEventoProps) {
+}: EventFormProps) {
   const navigate = useNavigate();
   const [imagen, setImagen] = useState<File | null>(null);
-  const [evento, setEvento] = useState<Omit<Evento, "_id">>({
+  const [evento, setEvento] = useState<Omit<Event, "_id">>({
     titulo: "",
     fechas: [],
     descripcion: "",
@@ -212,7 +212,7 @@ function FormEvento({
             </label>
           </div>
 
-          <FechasForm setEvento={setEvento} fechasEditables={evento.fechas} />
+          <DateForm setEvento={setEvento} fechasEditables={evento.fechas} />
         </div>
       </div>
 
@@ -246,4 +246,4 @@ function FormEvento({
   );
 }
 
-export default FormEvento;
+export default EventForm;

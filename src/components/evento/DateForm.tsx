@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react"; // icono de tacho
-import type { Evento } from "@/api/eventos";
+import type { Event } from "@/api/events";
 import { convertirUTC } from "@/helpers/fechas";
 
-type FechasFormProps = {
-  setEvento: React.Dispatch<React.SetStateAction<Omit<Evento, "_id">>>;
+type DateFormProps = {
+  setEvento: React.Dispatch<React.SetStateAction<Omit<Event, "_id">>>;
   fechasEditables?: Date[] | null
 };
 
-function FechasForm({ setEvento, fechasEditables }: FechasFormProps) {
+function DateForm({ setEvento, fechasEditables }: DateFormProps) {
   const [fechas, setFechas] = useState<string[]>([""]);
 
   const agregarFecha = () => {
@@ -81,4 +81,4 @@ function FechasForm({ setEvento, fechasEditables }: FechasFormProps) {
   );
 }
 
-export default FechasForm;
+export default DateForm;

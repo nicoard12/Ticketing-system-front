@@ -1,22 +1,22 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { createUsuario, type Rol, type Usuario } from "@/api/usuarios";
-type UsuarioExtendido = (Usuario & { picture: string }) | null;
+import { createUsuario, type Rol, type User } from "@/api/users";
+type ExtendedUser = (User & { picture: string }) | null;
 
-type UsuarioContextType = {
-  user: UsuarioExtendido;
+type ContextTypeUser = {
+  user: ExtendedUser;
 };
 
-const UserContext = createContext<UsuarioContextType | undefined>(undefined);
+const UserContext = createContext<ContextTypeUser | undefined>(undefined);
 
 export const UserProvider = ({ children }) => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [extendedUser, setExtendedUser] = useState<UsuarioExtendido>(null);
+  const [extendedUser, setExtendedUser] = useState<ExtendedUser>(null);
 
   const register = async () => {
     if (!user) return;
 
-    const newUser: Usuario = {
+    const newUser: User = {
       idAuth: user.sub!,
       nombre: user.name!,
       email: user.email!,

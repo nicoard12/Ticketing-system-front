@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Layout from "./Layout";
-import RegistrarEvento from "./Pages/RegistrarEvento";
-import EditarEvento from "./Pages/EditarEvento";
-import UnEvento from "./Pages/UnEvento";
+import EventAdd from "./Pages/EventAdd";
+import EventEdit from "./Pages/EventEdit";
+import Event from "./Pages/Event";
 import Profile from "./Pages/Profile";
 
 export default function App() {
@@ -12,9 +12,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="evento/:id" element={<UnEvento />} />
-          <Route path="registrar-evento" element={<RegistrarEvento />} />
-          <Route path="editar-evento/:id" element={<EditarEvento />} />
+          <Route path="evento/:id" element={<Event />} />
+          <Route path="registrar-evento" element={<EventAdd />} />
+          <Route path="editar-evento/:id" element={<EventEdit />} />
           <Route path="perfil" element={<Profile />} />
         </Route>
       </Routes>
