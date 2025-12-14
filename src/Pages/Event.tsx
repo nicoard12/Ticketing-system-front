@@ -42,26 +42,24 @@ function Event() {
     if (id) getEvent();
   }, [id]);
 
-  useEffect(() => {
-    if (isLoading) return;
-  }, [isLoading, isAuthenticated]);
-
-  if (!isAuthenticated) return null;
-
   return (
-    <div className="text-primary flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
+    <div className="text-primary flex flex-col lg:flex-row p-3 gap-5 bg-white border border-gray-300 m-4  rounded shadow">
       <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full lg:w-1/3 ">
-        {evento && <img
-          src={evento?.imagenUrl}
-          alt={`Imagen de : ${evento?.titulo}`}
-          className="object-cover w-full h-full"
-        />}
+        {evento && (
+          <img
+            src={evento?.imagenUrl}
+            alt={`Imagen de : ${evento?.titulo}`}
+            className="object-cover w-full h-full"
+          />
+        )}
       </div>
 
       <div className="flex flex-col lg:flex-row flex-1 gap-5 justify-between ">
         <div className="flex flex-col gap-3">
           <div>
-            <h1 data-cy="title" className="font-semibold text-2xl">{evento?.titulo}</h1>
+            <h1 data-cy="title" className="font-semibold text-2xl">
+              {evento?.titulo}
+            </h1>
             <p className="text-base overflow-y-auto max-h-[200px] break-all">
               {evento?.descripcion}
             </p>
@@ -87,7 +85,7 @@ function Event() {
           </div>
         </div>
 
-        {evento?.createdBy == user?.sub && (
+        {(isAuthenticated && evento?.createdBy == user?.sub) && (
           <div className="flex flex-col justify-between gap-5">
             <Button
               onClick={goToEdit}

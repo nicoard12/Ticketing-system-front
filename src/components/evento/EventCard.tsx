@@ -1,5 +1,4 @@
 import type { Event } from '@/api/events'
-import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom'
 
 type EventCardProps = {
@@ -8,11 +7,9 @@ type EventCardProps = {
 
 function EventCard({ event }: EventCardProps) {
   const navigate= useNavigate()
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   const goToEvent= () =>{
-    if (!isAuthenticated) loginWithRedirect()
-    else navigate(`/evento/${event._id}`)
+    navigate(`/evento/${event._id}`)
   }
 
   return (
