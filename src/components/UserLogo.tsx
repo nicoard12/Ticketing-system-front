@@ -51,7 +51,7 @@ function UserLogo() {
           <ul className="py-1">
             <li>
               <button
-                onClick={() => navigate("/perfil")}
+                onClick={() => {navigate("/perfil"); setOpen(false)}}
                 className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
                 <UserIcon className="w-4 h-4" />

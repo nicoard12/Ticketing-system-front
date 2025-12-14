@@ -36,7 +36,7 @@ function EditarEvento() {
   },[id])
 
   return (
-    <div className='p-3 flex flex-col gap-6 w-full justify-center items-center'>
+    <div className='p-2 pb-3 flex flex-col gap-6 justify-center items-center'>
       <h1 className='text-3xl font-semibold'>Editar evento</h1>
       <FormEvento submit={editarEvento} loading={loading} setLoading={setLoading} eventoEditable={evento} />
     </div>

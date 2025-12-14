@@ -12,7 +12,7 @@ function UnEvento() {
   const [evento, setEvento] = useState<Evento | null>(null);
   const [modal, setModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const { loginWithRedirect, isAuthenticated, isLoading, user } = useAuth0();
+  const { isAuthenticated, isLoading, user } = useAuth0();
   const navigate = useNavigate();
 
   const goToEdit = () => {
@@ -44,19 +44,18 @@ function UnEvento() {
 
   useEffect(() => {
     if (isLoading) return;
-    // if (!isAuthenticated) loginWithRedirect();
   }, [isLoading, isAuthenticated]);
 
-  // if (!isAuthenticated) return null;
+  if (!isAuthenticated) return null;
 
   return (
     <div className="text-primary flex flex-col lg:flex-row p-5 gap-5 bg-white border border-gray-300 m-5 rounded shadow">
       <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full lg:w-1/3 ">
-        <img
+        {evento && <img
           src={evento?.imagenUrl}
           alt={`Imagen de : ${evento?.titulo}`}
           className="object-cover w-full h-full"
-        />
+        />}
       </div>
 
       <div className="flex flex-col lg:flex-row flex-1 gap-5 justify-between ">
@@ -87,17 +86,6 @@ function UnEvento() {
             </div>
           </div>
         </div>
-
-        <Button
-          onClick={() => setModal(true)}
-          variant={"destructive"}
-          className="cursor-pointer"
-          id="eliminar-evento"
-        >
-          {" "}
-          <Trash2 />
-          Eliminar evento
-        </Button>
 
         {evento?.createdBy == user?.sub && (
           <div className="flex flex-col justify-between gap-5">
