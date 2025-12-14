@@ -6,13 +6,15 @@ import { Edit, Trash2 } from "lucide-react";
 import Modal from "@/components/Modal";
 import { toast } from "sonner";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useUsuario } from "@/context/UserContext";
 
 function Event() {
   const { id } = useParams();
   const [evento, setEvento] = useState<Event | null>(null);
   const [modal, setModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const { isAuthenticated, isLoading, user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+  const { user } = useUsuario();
   const navigate = useNavigate();
 
   const goToEdit = () => {
@@ -85,7 +87,7 @@ function Event() {
           </div>
         </div>
 
-        {(isAuthenticated && evento?.createdBy == user?.sub) && (
+        {(isAuthenticated && evento?.createdBy == user?.idAuth && user?.rol == "productor") && (
           <div className="flex flex-col justify-between gap-5">
             <Button
               onClick={goToEdit}

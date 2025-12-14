@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { createUsuario, type Rol, type User } from "@/api/users";
+import { createUser, type Rol, type User } from "@/api/users";
 type ExtendedUser = (User & { picture: string }) | null;
 
 type ContextTypeUser = {
@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
       rol: "normal" as Rol,
     };
     try {
-      const response = await createUsuario(newUser);
+      const response = await createUser(newUser);
       setExtendedUser({
         ...response,
         picture: user.picture!,

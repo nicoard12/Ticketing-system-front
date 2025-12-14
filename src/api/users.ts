@@ -8,19 +8,11 @@ export interface User {
   email: string;
   rol: Rol;
 }
-export const getUsuarioById = async (id: string) => {
-  const response = await api.get<User>(`/users/${id}`);
-  return response.data;
-}
 
-export const createUsuario = async (user: User) => {
+export const createUser = async (user: User) => { //Si el usuario no existe lo crea y lo devuelve, si ya existia solamente lo devuelve
   const response = await api.post<User>('/users', user);
   return response.data;
 }
 
-export const updateUsuario = async (user: User) => {
-  const response = await api.put<User>(`/users/${user.idAuth}`, user);
-  return response.data;
-}
 
 

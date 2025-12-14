@@ -7,7 +7,7 @@ function Profile() {
   const [failedImage, setFailedImage] = useState(false);
 
   useEffect(() => {
-    console.log("User info:", user);
+    
   }, [user]);
 
   if (isLoading || !user) {
