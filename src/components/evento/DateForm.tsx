@@ -17,12 +17,12 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
   };
 
   const cambiarFecha = (index: number, value: string) => {
-    const nuevasFechas = [...fechas];
-    nuevasFechas[index] = value;
-    setFechas(nuevasFechas);
+    const nuevaFecha = [...fechas];
+    nuevaFecha[index] = value;
+    setFechas(nuevaFecha);
     setEvento((prev) => ({
       ...prev,
-      fechas: nuevasFechas.map((f) => new Date(f)),
+      fechas: nuevaFecha.map(f => new Date(f)),
     }));
   };
 
