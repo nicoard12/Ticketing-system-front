@@ -1,11 +1,11 @@
-import { getEvents, type Event } from "@/api/events";
+import { getEvents, type EventResponse } from "@/api/events";
 import Searcher from "@/components/Searcher";
 import EventCard from "@/components/evento/EventCard";
 import React, { useEffect, useState } from "react";
 
 function Home() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [allEvents, setAllEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventResponse[]>([]);
+  const [allEvents, setAllEvents] = useState<EventResponse[]>([]);
 
   const onSearch = (query: string) => {
     setEvents(

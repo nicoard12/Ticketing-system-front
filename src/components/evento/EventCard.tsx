@@ -1,8 +1,8 @@
-import type { Event } from '@/api/events'
+import type { EventResponse } from '@/api/events'
 import { useNavigate } from 'react-router-dom'
 
 type EventCardProps = {
-  event: Event;
+  event: EventResponse;
 }
 
 function EventCard({ event }: EventCardProps) {

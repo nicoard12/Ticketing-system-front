@@ -1,4 +1,4 @@
-import { getEventById, updateEvent, type Event } from '@/api/events'
+import { getEventById, updateEvent, type Event, type EventResponse } from '@/api/events'
 import EventForm from '@/components/evento/EventForm'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -6,13 +6,13 @@ import { toast } from 'sonner'
 
 function EventEdit() {
   const [loading, setLoading]= useState(false)
-  const [event, setEvent]= useState<Event | null>(null)
+  const [event, setEvent]= useState<EventResponse | null>(null)
   const { id }= useParams()
   const navigate= useNavigate()
 
   const editarEvento= async (e: Omit<Event, "_id">, image?: File | null) =>{
     try {
-      await updateEvent(event._id, e, image); 
+      await updateEvent(event!._id, e, image); 
       toast.success("Evento actualizado");
       navigate(`/evento/${id}`)              
     } catch (err) {
@@ -24,7 +24,7 @@ function EventEdit() {
 
   useEffect(() =>{
     const getEvent= async () =>{
-      const response= await getEventById(id)
+      const response= await getEventById(id!)
       setEvent(response)
     }
 

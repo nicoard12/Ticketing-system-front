@@ -1,10 +1,17 @@
 import api from "./api";
 import { handleApiError } from "@/helpers/handleApiError";
 
-export type Event = {
+export type EventDateResponse = {
   _id: string;
   titulo: string;
-  fechas: Date[];
+  fecha: Date; 
+  cantidadEntradasDisponibles: number;
+};
+
+export type EventResponse = {
+  _id: string;
+  titulo: string;
+  fechas: EventDateResponse[];
   descripcion: string;
   cantidadEntradas: string; 
   precioEntrada: string; 
@@ -13,22 +20,25 @@ export type Event = {
   createdBy: string;
 };
 
+export type Event = {
+  _id: string;
+  titulo: string;
+  fechas: Date[];
+  descripcion: string;
+  cantidadEntradas: string;
+  precioEntrada: string; 
+  ubicacion: string;
+  imagenUrl: string;
+};
+
 export const getEvents = async () => {
-  const response = await api.get<Event[]>("/events");
-  return response.data.map((event) => ({
-    ...event,
-    cantidadEntradas: String(event.cantidadEntradas),
-    precioEntrada: String(event.precioEntrada),
-  }));
+  const response = await api.get<EventResponse[]>("/events");
+  return response.data
 };
 
 export const getEventById = async (id: string) => {
-  const response = await api.get<Event>(`/events/${id}`);
-  return {
-    ...response.data,
-    cantidadEntradas: String(response.data.cantidadEntradas),
-    precioEntrada: String(response.data.precioEntrada),
-  };
+  const response = await api.get<EventResponse>(`/events/${id}`);
+  return response.data
 };
 
 export const createEvent = async (
@@ -45,10 +55,6 @@ export const createEvent = async (
     formData.append("ubicacion", event.ubicacion);
     formData.append("fechas", JSON.stringify(event.fechas));
     formData.append("imagen", imagen!);
-
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
 
     const response = await api.post<Event>("/events", formData, {
       headers: {

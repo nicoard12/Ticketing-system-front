@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "./ui/button";
-import type { Event } from "@/api/events";
+import type { EventResponse } from "@/api/events";
 
 type ModalProps = {
-  evento: Event | null;
+  evento: EventResponse | null;
   cancelar: (value: React.SetStateAction<boolean>) => void;
   confirmar: () => Promise<void>;
   deleting: boolean;

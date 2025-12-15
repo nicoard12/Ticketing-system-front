@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import type { Event } from "@/api/events";
+import type { Event, EventResponse } from "@/api/events";
 import DateForm from "./DateForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -9,7 +9,7 @@ type EventFormProps = {
   submit: (e: Omit<Event, "_id">, imagen?: File | null) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  eventoEditable?: Event | null;
+  eventoEditable?: EventResponse | null;
 };
 
 function EventForm({
