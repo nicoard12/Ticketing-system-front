@@ -1,15 +1,27 @@
 import type { EventDate } from "@/api/events";
-import React from "react";
 import { Button } from "../ui/button";
+import { useUsuario } from "@/context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
-type EventDateItemProps= {
-    date: EventDate;
-}
+type EventDateItemProps = {
+  date: EventDate;
+  eventId: string;
+};
 
-function EventDateItem({date}: EventDateItemProps) {
+function EventDateItem({ date, eventId }: EventDateItemProps) {
+  const { user } = useUsuario();
+  const { loginWithRedirect } = useAuth0();
+  const navigate = useNavigate();
+
+  const buyTicket = () => {
+    if (!user) loginWithRedirect();
+    else navigate(`/evento/${eventId}/fecha/${date._id}`)
+  };
+
   return (
-    <div className="flex items-center justify-center w-full border border-2 rounded p-3">
-      <p className="w-full font-semibold uppercase">
+    <div className="flex items-center justify-between w-full border border-2 rounded p-2">
+      <p className=" font-semibold uppercase">
         {new Date(date.fecha).toLocaleString("es-AR", {
           timeZone: "America/Argentina/Buenos_Aires",
           year: "numeric",
@@ -21,9 +33,15 @@ function EventDateItem({date}: EventDateItemProps) {
         })}
       </p>
 
-      <Button>
-        Comprar
-      </Button>
+      <div className="flex gap-3 items-center ">
+        <span className="text-sm font-thin">
+          Quedan {date.cantidadEntradas} entradas
+        </span>
+
+        {(!user || user.rol == "normal") && (
+          <Button onClick={buyTicket}>Comprar</Button>
+        )}
+      </div>
     </div>
   );
 }

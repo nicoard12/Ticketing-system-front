@@ -19,6 +19,7 @@ function DateAndTicketsForm({
   eliminarFecha,
   deleteEnabled,
 }: DateAndTicketsProps) {
+
   return (
     <div
       className={`w-full flex flex-col sm:flex-row justify-center items-start sm:items-center gap-3 sm:gap-5 md:gap-10 lg:gap-30 px-2 sm:py-2 sm:px-4 rounded hover:bg-gray-100/70`}

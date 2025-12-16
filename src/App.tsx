@@ -5,6 +5,7 @@ import EventAdd from "./Pages/EventAdd";
 import EventEdit from "./Pages/EventEdit";
 import Event from "./Pages/Event";
 import Profile from "./Pages/Profile";
+import BuyTicket from "./Pages/BuyTicket";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="evento/:id" element={<Event />} />
+          <Route path="evento/:id/fecha/:idFecha" element={<BuyTicket />} />
           <Route path="registrar-evento" element={<EventAdd />} />
           <Route path="editar-evento/:id" element={<EventEdit />} />
           <Route path="perfil" element={<Profile />} />

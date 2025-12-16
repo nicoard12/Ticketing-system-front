@@ -23,13 +23,13 @@ export const UserProvider = ({ children }) => {
       rol: "normal" as Rol,
     };
     try {
-      const response = await createUser(newUser);
+      const response = await createUser(newUser); //Si ya estaba registrado devuelve el usuario registrado
       setExtendedUser({
         ...response,
         picture: user.picture!,
       });
     } catch (error) {
-      console.log("errrr, ",error)
+      console.log("error, ",error)
       if (error.code == "ERR_NETWORK") alert("Error al conectar con el servidor, por favor intentalo mas tarde.")
     }
   };
