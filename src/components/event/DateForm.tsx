@@ -87,7 +87,7 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
       </label>
       <hr className="w-full mb-2"/>
       <div className="flex flex-col items-start w-full gap-3">
-        <div className="flex flex-col items-center justify-center w-full gap-2 overflow-auto max-h-90">
+        <div className="flex flex-col w-full items-start lg:items-center gap-4 sm:gap-2 overflow-auto max-h-90">
           {fechas.map((fecha, i) => (
             <DateAndTicketsForm
               key={i}
