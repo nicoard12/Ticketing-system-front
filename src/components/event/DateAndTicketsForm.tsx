@@ -1,6 +1,7 @@
 import type { EventDate } from "@/api/events";
 import { convertirUTC } from "@/helpers/fechas";
 import { Trash2 } from "lucide-react";
+import { useEffect } from "react";
 
 type DateAndTicketsProps = {
   index: number;
@@ -19,6 +20,21 @@ function DateAndTicketsForm({
   eliminarFecha,
   deleteEnabled,
 }: DateAndTicketsProps) {
+
+    useEffect(() => {
+    const inputs = document.querySelectorAll('input[type="number"]');
+
+    const disableScroll = (e: WheelEvent) => e.preventDefault();
+
+    inputs.forEach((input) => input.addEventListener("wheel", disableScroll));
+
+    // Limpieza para evitar fugas de eventos
+    return () => {
+      inputs.forEach((input) =>
+        input.removeEventListener("wheel", disableScroll)
+      );
+    };
+  }, []);
 
   return (
     <div

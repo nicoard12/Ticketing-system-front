@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react"; // icono de tacho
 import type { Event, EventDate } from "@/api/events";
-import { convertirUTC } from "@/helpers/fechas";
 import DateAndTicketsForm from "./DateAndTicketsForm";
 
 type DateFormProps = {
@@ -65,20 +63,6 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
       setFechas(fechasEditables);
   }, [fechasEditables]);
 
-  useEffect(() => {
-    const inputs = document.querySelectorAll('input[type="number"]');
-
-    const disableScroll = (e: WheelEvent) => e.preventDefault();
-
-    inputs.forEach((input) => input.addEventListener("wheel", disableScroll));
-
-    // Limpieza para evitar fugas de eventos
-    return () => {
-      inputs.forEach((input) =>
-        input.removeEventListener("wheel", disableScroll)
-      );
-    };
-  }, []);
 
   return (
     <div className="flex flex-col items-start w-full gap-1">

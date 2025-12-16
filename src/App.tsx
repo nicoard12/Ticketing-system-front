@@ -14,7 +14,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="evento/:id" element={<Event />} />
-          <Route path="evento/:id/fecha/:idFecha" element={<BuyTicket />} />
+          <Route path="evento/:id/fecha/:numFecha" element={<BuyTicket />} />
           <Route path="registrar-evento" element={<EventAdd />} />
           <Route path="editar-evento/:id" element={<EventEdit />} />
           <Route path="perfil" element={<Profile />} />

@@ -7,16 +7,17 @@ import { useNavigate } from "react-router-dom";
 type EventDateItemProps = {
   date: EventDate;
   eventId: string;
+  index: number;
 };
 
-function EventDateItem({ date, eventId }: EventDateItemProps) {
+function EventDateItem({ date, eventId, index }: EventDateItemProps) {
   const { user } = useUsuario();
   const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
 
   const buyTicket = () => {
     if (!user) loginWithRedirect();
-    else navigate(`/evento/${eventId}/fecha/${date._id}`)
+    else navigate(`/evento/${eventId}/fecha/${index+1}`)
   };
 
   return (

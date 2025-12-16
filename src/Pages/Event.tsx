@@ -90,9 +90,9 @@ function Event() {
         <div className="flex flex-col gap-2 items-start w-full overflow-y-auto">
           <h2 className="text-lg font-semibold">Fechas</h2>
           <div className="flex flex-col gap-2 justify-start items-start pr-1 w-full">
-            {evento?.fechas.map((f) => {
+            {evento?.fechas.map((f, index) => {
               return (
-                <EventDateItem key={f._id} date={f} eventId={evento._id} />
+                <EventDateItem key={f._id} date={f} eventId={evento._id} index={index} />
               );
             })}
           </div>
