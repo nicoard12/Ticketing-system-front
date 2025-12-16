@@ -103,7 +103,6 @@ function EventForm({
       className="w-full sm:w-6/10 flex flex-col p-3 sm:p-8 gap-5 items-center bg-white text-black rounded-lg shadow border border-gray-300"
     >
       <div className="flex flex-col gap-10 w-full">
-        {/* Columna izquierda */}
         <div className="flex flex-col gap-8 flex-1 rounded w-full">
           <div className="flex flex-col">
             <label className="mb-1 font-medium">Título del evento</label>
@@ -175,8 +174,7 @@ function EventForm({
           </div>
         </div>
 
-        {/* Columna derecha */}
-        <div className="flex flex-col items-end gap-8 w-full sm:w-1/2">
+        <div className="flex flex-col items-end gap-8 w-full ">
           <div className="w-full flex flex-col items-start">
             <label className="block mb-1 font-medium">Foto del evento</label>
             {imagen ? (
@@ -217,9 +215,9 @@ function EventForm({
       </div>
 
       {loading ? (
-        <Button type="button" variant={"outline"} className="text-black mt-3">
+        <p className="bg-gray-100 rounded shadow p-3 mt-3">
           {eventoEditable ? "Guardando..." : "Creando evento..."}
-        </Button>
+        </p>
       ) : (
         <div className="flex gap-3">
           <Button
@@ -228,16 +226,10 @@ function EventForm({
             variant={"outline"}
             size={"lg"}
             data-cy="cancel-button"
-            className="cursor-pointer"
           >
             Cancelar
           </Button>
-          <Button
-            type="submit"
-            variant={"secondary"}
-            size={"lg"}
-            className="cursor-pointer"
-          >
+          <Button type="submit" variant={"secondary"} size={"lg"}>
             Aceptar
           </Button>
         </div>

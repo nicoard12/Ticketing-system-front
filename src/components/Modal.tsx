@@ -20,15 +20,14 @@ function Modal({ evento, cancelar, confirmar, deleting }: ModalProps) {
         </p>
         <div className="flex justify-end gap-3">
           {deleting ? (
-            <Button variant="outline">
+            <p className="bg-gray-100 rounded shadow p-3">
               Eliminando...
-            </Button>
+            </p>
           ) : (
             <>
               <Button
                 variant="outline"
                 onClick={cancelar}
-                className="cursor-pointer"
                 id="cancel-deletion"
               >
                 Cancelar
@@ -36,7 +35,6 @@ function Modal({ evento, cancelar, confirmar, deleting }: ModalProps) {
               <Button
                 variant="destructive"
                 onClick={confirmar}
-                className="cursor-pointer"
                 id="confirm-deletion"
               >
                 Eliminar

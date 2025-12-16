@@ -1,5 +1,5 @@
 import { createEvent, type Event } from '@/api/events'
-import EventForm from '@/components/evento/EventForm'
+import EventForm from '@/components/event/EventForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'

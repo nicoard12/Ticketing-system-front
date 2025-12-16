@@ -1,6 +1,6 @@
 import { getEvents, type EventResponse } from "@/api/events";
 import Searcher from "@/components/Searcher";
-import EventCard from "@/components/evento/EventCard";
+import EventCard from "@/components/event/EventCard";
 import React, { useEffect, useState } from "react";
 
 function Home() {

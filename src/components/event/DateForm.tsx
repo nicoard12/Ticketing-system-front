@@ -44,9 +44,9 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
       <label>Fechas</label>
 
       <div className="flex flex-col items-start w-full gap-3">
-        <div className="flex flex-col items-start gap-2 overflow-auto max-h-50">
+        <div className="flex flex-col items-start w-full gap-2 overflow-auto max-h-50">
           {fechas.map((fecha, i) => (
-            <div key={i} className="flex items-center gap-2">
+            <div key={i} className="flex items-center w-full gap-2">
               <input
                 type="datetime-local"
                 className="p-2 border rounded flex-1"
@@ -71,7 +71,6 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
           variant="default"
           type="button"
           data-cy="add-date-button"
-          className="cursor-pointer"
           onClick={agregarFecha}
         >
           Agregar fecha

@@ -32,7 +32,6 @@ function Header() {
                     size={"sm"}
                     onClick={goRegistrarEvento}
                     variant={"ghost"}
-                    className="cursor-pointer"
                   >
                     Crear evento
                   </Button>
@@ -42,7 +41,6 @@ function Header() {
             ) : (
               <Button
                 variant={"outline"}
-                className="cursor-pointer"
                 onClick={() => loginWithRedirect()}
               >
                 Iniciar sesión

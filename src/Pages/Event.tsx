@@ -7,7 +7,7 @@ import Modal from "@/components/Modal";
 import { toast } from "sonner";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUsuario } from "@/context/UserContext";
-import EventDateItem from "@/components/evento/EventDateItem";
+import EventDateItem from "@/components/event/EventDateItem";
 
 function Event() {
   const { id } = useParams();
@@ -67,9 +67,9 @@ function Event() {
               {evento?.descripcion}
             </p>
           </div>
-          <div className="flex flex-col items-start h-[270px] 2xl:h-[350px]">
+          <div className="flex flex-col gap-2 items-start w-full h-[270px] 2xl:h-[350px]">
             <h2 className="text-lg font-semibold">Fechas</h2>
-            <div className="flex flex-col gap-2 overflow-y-auto justify-start items-start pr-10">
+            <div className="flex flex-col gap-2 overflow-y-auto justify-start items-start pr-1 w-full">
               {evento?.fechas.map((f) => {
                 return <EventDateItem key={f._id} date={f} />;
               })}
@@ -84,7 +84,6 @@ function Event() {
               <Button
                 onClick={goToEdit}
                 variant={"outline"}
-                className="cursor-pointer"
               >
                 {" "}
                 <Edit />
@@ -93,7 +92,6 @@ function Event() {
               <Button
                 onClick={() => setModal(true)}
                 variant={"destructive"}
-                className="cursor-pointer"
               >
                 {" "}
                 <Trash2 />
