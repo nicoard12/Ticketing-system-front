@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react"; // icono de tacho
 import type { Event, EventDate } from "@/api/events";
 import { convertirUTC } from "@/helpers/fechas";
+import DateAndTicketsForm from "./DateAndTicketsForm";
 
 type DateFormProps = {
   setEvento: React.Dispatch<React.SetStateAction<Omit<Event, "_id">>>;
@@ -21,23 +22,28 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
     setFechas([...fechas, { fecha: "", cantidadEntradas: "" }]);
   };
 
-  const cambiarFecha = (index: number, value: string, name: string) => {
+  const cambiarFecha = (index: number, value: string) => {
     const updatedFechas = [...fechas];
-
-    if (name == "fecha") {
-      updatedFechas[index] = {
-        ...updatedFechas[index],
-        fecha: new Date(value),
-      };
-    } else {
-      updatedFechas[index] = {
-        ...updatedFechas[index],
-        cantidadEntradas: value,
-      };
-    }
+    updatedFechas[index] = {
+      ...updatedFechas[index],
+      fecha: new Date(value),
+    };
 
     setFechas(updatedFechas);
+    setEvento((prev) => ({
+      ...prev,
+      fechas: updatedFechas,
+    }));
+  };
 
+  const cambiarEntradas = (index: number, value: string) => {
+    const updatedFechas = [...fechas];
+    updatedFechas[index] = {
+      ...updatedFechas[index],
+      cantidadEntradas: value,
+    };
+
+    setFechas(updatedFechas);
     setEvento((prev) => ({
       ...prev,
       fechas: updatedFechas,
@@ -48,7 +54,6 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
     const nuevasFechas = fechas.filter((_, i) => i !== index);
 
     setFechas(nuevasFechas);
-
     setEvento((prev) => ({
       ...prev,
       fechas: nuevasFechas,
@@ -77,36 +82,22 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
 
   return (
     <div className="flex flex-col items-start w-full gap-1">
-      <label>Fechas</label>
-
+      <label htmlFor="fecha" className="font-semibold">
+        Fechas
+      </label>
+      <hr className="w-full mb-2"/>
       <div className="flex flex-col items-start w-full gap-3">
-        <div className="flex flex-col items-start w-full gap-2 overflow-auto max-h-50">
+        <div className="flex flex-col items-center justify-center w-full gap-2 overflow-auto max-h-90">
           {fechas.map((fecha, i) => (
-            <div key={i} className="flex items-center w-full gap-2">
-              <input
-                type="datetime-local"
-                className="p-2 border rounded"
-                value={convertirUTC(fecha.fecha)}
-                name="fecha"
-                onChange={(e) => cambiarFecha(i, e.target.value, e.target.name)}
-              />
-              <input
-                type="number"
-                name="cantEntradas"
-                value={fecha.cantidadEntradas}
-                placeholder="Cantidad de entradas para esta fecha"
-                onChange={(e) => cambiarFecha(i, e.target.value, e.target.name)}
-              />
-              {fechas.length > 1 && (
-                <button
-                  type="button"
-                  className="cursor-pointer rounded p-1"
-                  onClick={() => eliminarFecha(i)}
-                >
-                  <Trash2 size={18} />
-                </button>
-              )}
-            </div>
+            <DateAndTicketsForm
+              key={i}
+              index={i}
+              fecha={fecha}
+              cambiarFecha={cambiarFecha}
+              cambiarEntradas={cambiarEntradas}
+              eliminarFecha={eliminarFecha}
+              deleteEnabled={fechas.length > 1}
+            />
           ))}
         </div>
 

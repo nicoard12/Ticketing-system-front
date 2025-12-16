@@ -96,7 +96,7 @@ function EventForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full sm:w-6/10 flex flex-col p-3 sm:p-8 gap-5 items-center bg-white text-black rounded-lg shadow border border-gray-300"
+      className="w-9/10  flex flex-col p-8 gap-5 items-center bg-white text-black rounded-lg shadow border border-gray-300"
     >
       <div className="flex flex-col gap-10 w-full">
         <div className="flex flex-col gap-8 flex-1 rounded w-full">
@@ -203,7 +203,7 @@ function EventForm({
           {eventoEditable ? "Guardando..." : "Creando evento..."}
         </p>
       ) : (
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-5">
           <Button
             type="button"
             onClick={goBack}
