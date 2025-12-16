@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+//TODO falta agregar inputs de correo electronico
+
 function BuyTicket() {
   const { id, numFecha } = useParams();
   const [event, setEvent] = useState<EventResponse | null>(null);
