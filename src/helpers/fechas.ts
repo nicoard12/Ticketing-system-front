@@ -1,4 +1,5 @@
-export function convertirUTC(fechaUTC: string) {
+export function convertirUTC(fechaUTC: string | Date) {
+  if (fechaUTC == "") return ""
   const fecha = new Date(fechaUTC);
   const year = fecha.getFullYear();
   const month = String(fecha.getMonth() + 1).padStart(2, '0');

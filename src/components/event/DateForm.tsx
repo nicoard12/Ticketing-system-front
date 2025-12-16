@@ -1,43 +1,79 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react"; // icono de tacho
-import type { Event } from "@/api/events";
+import type { Event, EventDate } from "@/api/events";
 import { convertirUTC } from "@/helpers/fechas";
 
 type DateFormProps = {
   setEvento: React.Dispatch<React.SetStateAction<Omit<Event, "_id">>>;
-  fechasEditables?: Date[] | null
+  fechasEditables?: EventDate[];
 };
 
 function DateForm({ setEvento, fechasEditables }: DateFormProps) {
-  const [fechas, setFechas] = useState<string[]>([""]);
+  const [fechas, setFechas] = useState<Omit<EventDate, "_id" | "titulo">[]>([
+    {
+      fecha: "",
+      cantidadEntradas: "",
+    },
+  ]);
 
   const agregarFecha = () => {
-    setFechas([...fechas, ""]);
+    setFechas([...fechas, { fecha: "", cantidadEntradas: "" }]);
   };
 
-  const cambiarFecha = (index: number, value: string) => {
-    const nuevaFecha = [...fechas];
-    nuevaFecha[index] = value;
-    setFechas(nuevaFecha);
+  const cambiarFecha = (index: number, value: string, name: string) => {
+    const updatedFechas = [...fechas];
+
+    if (name == "fecha") {
+      updatedFechas[index] = {
+        ...updatedFechas[index],
+        fecha: new Date(value),
+      };
+    } else {
+      updatedFechas[index] = {
+        ...updatedFechas[index],
+        cantidadEntradas: value,
+      };
+    }
+
+    setFechas(updatedFechas);
+
     setEvento((prev) => ({
       ...prev,
-      fechas: nuevaFecha.map(f => new Date(f)),
+      fechas: updatedFechas,
     }));
   };
 
   const eliminarFecha = (index: number) => {
     const nuevasFechas = fechas.filter((_, i) => i !== index);
+
     setFechas(nuevasFechas);
+
     setEvento((prev) => ({
       ...prev,
-      fechas: nuevasFechas.map((f) => new Date(f)),
+      fechas: nuevasFechas,
     }));
   };
 
-  useEffect(() =>{
-    if (fechasEditables && fechasEditables.length > 0) setFechas(fechasEditables.map(f => f.toString()))
-  },[fechasEditables])
+  useEffect(() => {
+    if (fechasEditables && fechasEditables.length > 0)
+      setFechas(fechasEditables);
+  }, [fechasEditables]);
+
+  useEffect(() => {
+    const inputs = document.querySelectorAll('input[type="number"]');
+
+    const disableScroll = (e: WheelEvent) => e.preventDefault();
+
+    inputs.forEach((input) => input.addEventListener("wheel", disableScroll));
+
+    // Limpieza para evitar fugas de eventos
+    return () => {
+      inputs.forEach((input) =>
+        input.removeEventListener("wheel", disableScroll)
+      );
+    };
+  }, []);
 
   return (
     <div className="flex flex-col items-start w-full gap-1">
@@ -49,10 +85,17 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
             <div key={i} className="flex items-center w-full gap-2">
               <input
                 type="datetime-local"
-                className="p-2 border rounded flex-1"
-                value={convertirUTC(fecha)}
+                className="p-2 border rounded"
+                value={convertirUTC(fecha.fecha)}
                 name="fecha"
-                onChange={(e) => cambiarFecha(i, e.target.value)}
+                onChange={(e) => cambiarFecha(i, e.target.value, e.target.name)}
+              />
+              <input
+                type="number"
+                name="cantEntradas"
+                value={fecha.cantidadEntradas}
+                placeholder="Cantidad de entradas para esta fecha"
+                onChange={(e) => cambiarFecha(i, e.target.value, e.target.name)}
               />
               {fechas.length > 1 && (
                 <button

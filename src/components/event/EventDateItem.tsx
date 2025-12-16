@@ -1,9 +1,9 @@
-import type { EventDateResponse } from "@/api/events";
+import type { EventDate } from "@/api/events";
 import React from "react";
 import { Button } from "../ui/button";
 
 type EventDateItemProps= {
-    date: EventDateResponse;
+    date: EventDate;
 }
 
 function EventDateItem({date}: EventDateItemProps) {

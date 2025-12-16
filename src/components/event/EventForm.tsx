@@ -24,7 +24,6 @@ function EventForm({
     titulo: "",
     fechas: [],
     descripcion: "",
-    cantidadEntradas: "",
     precioEntrada: "",
     ubicacion: "",
     imagenUrl: "",
@@ -50,13 +49,15 @@ function EventForm({
     if (
       !evento.titulo.trim() ||
       !evento.descripcion.trim() ||
-      !evento.cantidadEntradas.toString().trim() ||
       !evento.precioEntrada.toString().trim() ||
       !evento.ubicacion.trim() ||
       (!imagen && !eventoEditable) ||
       !evento.fechas.length ||
       evento.fechas.some(
-        (f: unknown) => !f || (typeof f === "string" && !f.trim())
+        (f) =>
+          !f ||
+          (typeof f.fecha === "string" && f.fecha.trim() === "") ||
+          String(f.cantidadEntradas).trim() === ""
       )
     ) {
       toast.error("Todos los campos son obligatorios.");
@@ -74,12 +75,7 @@ function EventForm({
   };
 
   useEffect(() => {
-    if (eventoEditable) {
-      setEvento({
-        ...eventoEditable,
-        fechas: eventoEditable.fechas.map((f) => f.fecha),
-      });
-    }
+    if (eventoEditable) setEvento(eventoEditable);
   }, [eventoEditable]);
 
   useEffect(() => {
@@ -135,18 +131,6 @@ function EventForm({
             >
               {evento.descripcion.length}/500
             </span>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="mb-1 font-medium">N° entradas por fecha</label>
-            <input
-              type="number"
-              value={evento.cantidadEntradas}
-              placeholder="N° entradas por fecha"
-              className="p-2 border rounded"
-              name="cantidadEntradas"
-              onChange={handleChange}
-            />
           </div>
 
           <div className="flex flex-col">

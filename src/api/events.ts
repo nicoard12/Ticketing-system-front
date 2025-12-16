@@ -1,19 +1,18 @@
 import api from "./api";
 import { handleApiError } from "@/helpers/handleApiError";
 
-export type EventDateResponse = {
-  _id: string;
-  titulo: string;
-  fecha: Date; 
-  cantidadEntradasDisponibles: number;
+export type EventDate = {
+  _id?: string;
+  fecha: Date | string; 
+  cantidadEntradas: number | string;
 };
 
+//Puede que tenga que remover esto y unificar solo en Event
 export type EventResponse = {
   _id: string;
   titulo: string;
-  fechas: EventDateResponse[];
+  fechas: EventDate[];
   descripcion: string;
-  cantidadEntradas: string; 
   precioEntrada: string; 
   ubicacion: string;
   imagenUrl: string;
@@ -23,9 +22,8 @@ export type EventResponse = {
 export type Event = {
   _id: string;
   titulo: string;
-  fechas: Date[];
+  fechas: EventDate[];
   descripcion: string;
-  cantidadEntradas: string;
   precioEntrada: string; 
   ubicacion: string;
   imagenUrl: string;
@@ -50,7 +48,6 @@ export const createEvent = async (
 
     formData.append("titulo", event.titulo);
     formData.append("descripcion", event.descripcion);
-    formData.append("cantidadEntradas", event.cantidadEntradas.toString());
     formData.append("precioEntrada", event.precioEntrada.toString());
     formData.append("ubicacion", event.ubicacion);
     formData.append("fechas", JSON.stringify(event.fechas));
@@ -78,7 +75,6 @@ export const updateEvent = async (
 
     formData.append("titulo", event.titulo);
     formData.append("descripcion", event.descripcion);
-    formData.append("cantidadEntradas", event.cantidadEntradas.toString());
     formData.append("precioEntrada", event.precioEntrada.toString());
     formData.append("ubicacion", event.ubicacion);
     formData.append("fechas", JSON.stringify(event.fechas));
