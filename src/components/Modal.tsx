@@ -4,7 +4,7 @@ import type { EventResponse } from "@/api/events";
 
 type ModalProps = {
   evento: EventResponse | null;
-  cancelar: (value: React.SetStateAction<boolean>) => void;
+  cancelar: () => void;
   confirmar: () => Promise<void>;
   deleting: boolean;
 };
