@@ -1,4 +1,4 @@
-export const handleApiError = (error: any, contexto: string) => {
+export const handleApiEventError = (error: any, contexto: string) => {
   if (error.response) {
     console.error(`Error en la request (${contexto}):`, error.response);
 

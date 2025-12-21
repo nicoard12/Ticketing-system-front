@@ -1,5 +1,5 @@
 import api from "./api";
-import { handleApiError } from "@/helpers/handleApiError";
+import { handleApiEventError } from "@/helpers/handleApiError";
 
 export type EventDate = {
   _id?: string;
@@ -61,7 +61,7 @@ export const createEvent = async (
 
     return response.data;
   } catch (error) {
-    handleApiError(error, "crear");
+    handleApiEventError(error, "crear");
   }
 };
 
@@ -91,7 +91,7 @@ export const updateEvent = async (
 
     return response.data;
   } catch (error) {
-    handleApiError(error, "actualizar");
+    handleApiEventError(error, "actualizar");
   }
 };
 

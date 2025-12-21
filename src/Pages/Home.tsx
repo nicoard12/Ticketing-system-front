@@ -2,16 +2,18 @@ import { getEvents, type EventResponse } from "@/api/events";
 import { getUsers, type User } from "@/api/users";
 import Searcher from "@/components/Searcher";
 import EventCard from "@/components/event/EventCard";
+import UserCard from "@/components/user/UserCard";
 import { useUsuario } from "@/context/UserContext";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+//TODO: falta buscador para users
 
 function Home() {
   const [events, setEvents] = useState<EventResponse[]>([]);
   const [allEvents, setAllEvents] = useState<EventResponse[]>([]);
-  const [users, setUsers]= useState<User[]>([])
-  const [allUsers, setAllUsers]= useState<User[]>([])
+  const [users, setUsers] = useState<User[]>([]);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
   const { user, contextLoading } = useUsuario();
 
   const onSearch = (query: string) => {
@@ -38,11 +40,10 @@ function Home() {
   const fetchUsers = async () => {
     try {
       const response = await getUsers();
-      console.log("users: ", response)
       setUsers(response);
       setAllUsers(response);
     } catch (error) {
-      toast.error(error.message); 
+      toast.error(error.message);
     }
   };
 
@@ -56,11 +57,22 @@ function Home() {
   return (
     <div className="flex flex-col items-center gap-10 p-4">
       <Searcher onSearch={onSearch} />
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-        {events.map((event) => (
-          <EventCard key={event._id} event={event} />
-        ))}
-      </div>
+
+      {events.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {events.map((event) => (
+            <EventCard key={event._id} event={event} />
+          ))}
+        </div>
+      )}
+
+      {users.length > 0 && (
+        <div className="flex flex-col gap-3 w-full sm:w-1/2">
+          {users.map(user => (
+            <UserCard key={user.idAuth} user={user}/>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

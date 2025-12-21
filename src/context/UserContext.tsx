@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUser, type Rol, type User } from "@/api/users";
-type ExtendedUser = (User & { picture: string }) | null;
+type ExtendedUser = User | null;
 
 type ContextTypeUser = {
   user: ExtendedUser;
@@ -22,14 +22,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       idAuth: user.sub!,
       nombre: user.name!,
       email: user.email!,
+      imagen: user.picture!,
       rol: "normal" as Rol,
     };
     try {
       const response = await createUser(newUser); //Si ya estaba registrado devuelve el usuario registrado
-      setExtendedUser({
-        ...response,
-        picture: user.picture!,
-      });
+      setExtendedUser(response);
     } catch (error) {
       console.log("error, ",error)
       if (error.code == "ERR_NETWORK") alert("Error al conectar con el servidor, por favor intentalo mas tarde.")
