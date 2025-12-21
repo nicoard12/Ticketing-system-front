@@ -17,11 +17,21 @@ function Home() {
   const { user, contextLoading } = useUsuario();
 
   const onSearch = (query: string) => {
-    setEvents(
-      allEvents.filter((event) =>
-        event.titulo.toLowerCase().includes(query.toLowerCase())
-      )
-    );
+    if (user?.rol == "admin") {
+      setUsers(
+        allUsers.filter(
+          (user) =>
+            user.nombre.toLowerCase().includes(query.toLowerCase()) ||
+            user.email.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    } else {
+      setEvents(
+        allEvents.filter((event) =>
+          event.titulo.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    }
   };
 
   const fetchEvents = async () => {
@@ -68,8 +78,8 @@ function Home() {
 
       {users.length > 0 && (
         <div className="flex flex-col gap-3 w-full sm:w-1/2">
-          {users.map(user => (
-            <UserCard key={user.idAuth} user={user}/>
+          {users.map((user) => (
+            <UserCard key={user.idAuth} user={user} />
           ))}
         </div>
       )}

@@ -11,6 +11,8 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 import ModalUserConfirmation from "./ModalUserConfirmation";
 
+const MAIN_ADMIN_EMAIL= "nico.ticketingsystem.iaw@gmail.com"
+
 function UserCard({ user }: { user: User }) {
   const [failedImage, setFailedImage] = useState(false);
   const [openRoles, setOpenRoles] = useState(false);
@@ -20,7 +22,7 @@ function UserCard({ user }: { user: User }) {
   const ref = useRef<HTMLDivElement>(null);
 
   const esAdminPrincipal = () => {
-    return user.email == "nico.ticketingsystem.iaw@gmail.com";
+    return user.email == MAIN_ADMIN_EMAIL;
   };
 
   const showRoles = () => {
