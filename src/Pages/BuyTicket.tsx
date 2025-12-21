@@ -3,7 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-//TODO falta agregar inputs de correo electronico
+//TODO:
+// Usuario hace checkout
+
+// Pago aprobado por MercadoPago (lo dejo para el final)
+
+// Se registra la compra en el sistema (ticket en estado pending_verification)
+
+// Se envía email de verificación
+
+// Usuario confirma el email
+
+// Se habilita el envío del QR definitivo
 
 function BuyTicket() {
   const { id, numFecha } = useParams();
