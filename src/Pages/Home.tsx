@@ -7,8 +7,6 @@ import { useUsuario } from "@/context/UserContext";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-//TODO: falta buscador para users
-
 function Home() {
   const [events, setEvents] = useState<EventResponse[]>([]);
   const [allEvents, setAllEvents] = useState<EventResponse[]>([]);
