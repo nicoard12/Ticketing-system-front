@@ -1,11 +1,18 @@
 import { getEvents, type EventResponse } from "@/api/events";
+import { getUsers, type User } from "@/api/users";
 import Searcher from "@/components/Searcher";
 import EventCard from "@/components/event/EventCard";
-import React, { useEffect, useState } from "react";
+import { useUsuario } from "@/context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 function Home() {
   const [events, setEvents] = useState<EventResponse[]>([]);
   const [allEvents, setAllEvents] = useState<EventResponse[]>([]);
+  const [users, setUsers]= useState<User[]>([])
+  const [allUsers, setAllUsers]= useState<User[]>([])
+  const { user, contextLoading } = useUsuario();
 
   const onSearch = (query: string) => {
     setEvents(
@@ -15,22 +22,36 @@ function Home() {
     );
   };
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await getEvents();
-        setEvents(response);
-        setAllEvents(response);
-      } catch (error) {
-        if (error.code == "ERR_NETWORK")
-          alert(
-            "Error al conectar con el servidor, por favor intentalo mas tarde."
-          );
-      }
-    };
+  const fetchEvents = async () => {
+    try {
+      const response = await getEvents();
+      setEvents(response);
+      setAllEvents(response);
+    } catch (error) {
+      if (error.code == "ERR_NETWORK")
+        alert(
+          "Error al conectar con el servidor, por favor intentalo mas tarde."
+        );
+    }
+  };
 
-    fetchEvents();
-  }, []);
+  const fetchUsers = async () => {
+    try {
+      const response = await getUsers();
+      console.log("users: ", response)
+      setUsers(response);
+      setAllUsers(response);
+    } catch (error) {
+      toast.error(error.message); 
+    }
+  };
+
+  useEffect(() => {
+    if (contextLoading) return;
+
+    if (user?.rol == "admin") fetchUsers();
+    else fetchEvents();
+  }, [contextLoading, user]);
 
   return (
     <div className="flex flex-col items-center gap-10 p-4">

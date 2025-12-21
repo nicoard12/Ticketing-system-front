@@ -24,7 +24,7 @@ function Searcher({ onSearch }: SearcherProps) {
     <div className="md:absolute md:top-6 w-1/2 min-w-[250px] text-primary">
       <InputGroup className="bg-card shadow py-5">
         <InputGroupInput
-          placeholder="Buscar evento..."
+          placeholder="Buscar..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

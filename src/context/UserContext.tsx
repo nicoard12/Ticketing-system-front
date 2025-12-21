@@ -1,17 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUser, type Rol, type User } from "@/api/users";
 type ExtendedUser = (User & { picture: string }) | null;
 
 type ContextTypeUser = {
   user: ExtendedUser;
+  contextLoading: Boolean
 };
 
 const UserContext = createContext<ContextTypeUser | undefined>(undefined);
 
-export const UserProvider = ({ children }) => {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+export const UserProvider = ({ children }: { children: ReactNode }) => {
+  const { user, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
   const [extendedUser, setExtendedUser] = useState<ExtendedUser>(null);
+  const [contextLoading, setContextLoading]= useState(true)
 
   const register = async () => {
     if (!user) return;
@@ -34,7 +36,12 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  useEffect(() =>{
+    if (extendedUser) setContextLoading(false)
+  },[extendedUser])
+
   useEffect(() => {
+    if (isLoading) return
     if (isAuthenticated && user && !extendedUser) {
       getAccessTokenSilently().then((token) => {
         if (localStorage.getItem("app_token") !== token) {
@@ -43,11 +50,13 @@ export const UserProvider = ({ children }) => {
       });
 
       register();
+    }else{
+      setContextLoading(false)
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, isLoading]);
 
   return (
-    <UserContext.Provider value={{ user: extendedUser }}>
+    <UserContext.Provider value={{ user: extendedUser, contextLoading: contextLoading }}>
       {children}
     </UserContext.Provider>
   );
