@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button";
 
 // Se registra la compra en el sistema (ticket en estado pending_verification)
 
-// Se envía email de verificación
+// Se envía email de verificación (ingresar codigo 4 digitos)
 
-// Usuario confirma el email
+// Usuario confirma el email (en caso de no poder acceder al email hay que dar la posibilidad de enviarlo a otro email)
 
 // Se habilita el envío del QR definitivo
 
