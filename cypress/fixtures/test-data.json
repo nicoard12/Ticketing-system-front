@@ -1,0 +1,32 @@
+{
+  "validEvent": {
+    "titulo": "Un Evento",
+    "descripcion": "Descripción del evento",
+    "cantidadEntradas": "15000",
+    "precioEntrada": "60000",
+    "ubicacion": "Teatro Gran Rex",
+    "imagen": "test-image.webp",
+    "fecha": "2025-12-20T20:00:00",
+    "fecha2": "2025-12-21T20:00:00"
+  },
+  "invalidTicketsEvent": {
+    "titulo": "Un Evento 2",
+    "descripcion": "Descripción del evento 2",
+    "cantidadEntradas": "0",
+    "precioEntrada": "60000",
+    "ubicacion": "Estadio Velez",
+    "imagen": "test-image.webp",
+    "fecha": "2025-12-20T20:00:00",
+    "fecha2": "2025-12-21T20:00:00"
+  },
+    "invalidPriceEvent": {
+    "titulo": "Un Evento 2",
+    "descripcion": "Descripción del evento 2",
+    "cantidadEntradas": "15000",
+    "precioEntrada": "0",
+    "ubicacion": "Estadio Velez",
+    "imagen": "test-image.webp",
+    "fecha": "2025-12-20T20:00:00",
+    "fecha2": "2025-12-21T20:00:00"
+  }
+}
