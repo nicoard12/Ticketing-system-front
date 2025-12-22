@@ -10,8 +10,9 @@ import {
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import ModalUserConfirmation from "./ModalUserConfirmation";
+import RoleOption from "./RoleOption";
 
-const MAIN_ADMIN_EMAIL= "nico.ticketingsystem.iaw@gmail.com"
+const MAIN_ADMIN_EMAIL = "nico.ticketingsystem.iaw@gmail.com";
 
 function UserCard({ user }: { user: User }) {
   const [failedImage, setFailedImage] = useState(false);
@@ -42,6 +43,7 @@ function UserCard({ user }: { user: User }) {
       await changeRoleUser(user.idAuth, selectedRole);
       setOpenConfirmation(false);
       setCurrent_role(selectedRole);
+      toast.success("Rol cambiado con éxito");
     } catch (error) {
       toast.error(error.message);
     }
@@ -95,31 +97,15 @@ function UserCard({ user }: { user: User }) {
         </Button>
         {openRoles && (
           <div className="absolute right-0 bg-white border rounded shadow-lg z-10 text-sm">
-            <p
-              onClick={() => openModal("normal")}
-              className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-100 font-semibold"
-            >
-              {" "}
-              <LuUser /> Normal
-            </p>
-            <p
-              onClick={() => openModal("productor")}
-              className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-100 font-semibold"
-            >
-              <UserPen /> Productor
-            </p>
-            <p
-              onClick={() => openModal("staff")}
-              className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-100 font-semibold"
-            >
-              <UserStar /> Staff
-            </p>
-            <p
-              onClick={() => openModal("admin")}
-              className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-100 font-semibold"
-            >
-              <ShieldUser /> Admin
-            </p>
+            <RoleOption value="normal" current_role={current_role} Icon={LuUser} openModal={openModal} />
+            <RoleOption
+              value="productor"
+              current_role={current_role}
+              Icon={UserPen}
+              openModal={openModal}
+            />
+            <RoleOption value="staff" current_role={current_role} Icon={UserStar} openModal={openModal} />
+            <RoleOption value="admin" current_role={current_role} Icon={ShieldUser} openModal={openModal} />
           </div>
         )}
       </div>
@@ -127,6 +113,7 @@ function UserCard({ user }: { user: User }) {
       {openConfirmation && (
         <ModalUserConfirmation
           selectedRole={selectedRole}
+          current_role={current_role}
           user={user}
           confirm={changeRole}
           cancel={() => setOpenConfirmation(false)}

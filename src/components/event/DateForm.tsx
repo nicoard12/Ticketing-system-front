@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 import type { Event, EventDate } from "@/api/events";
 import DateAndTicketsForm from "./DateAndTicketsForm";
 
-type DateFormProps = {
+type DateFormProps = {    //TODO se si es edit si traigo eventoEditable
   setEvento: React.Dispatch<React.SetStateAction<Omit<Event, "_id">>>;
   fechasEditables?: EventDate[];
 };
 
 function DateForm({ setEvento, fechasEditables }: DateFormProps) {
-  const [fechas, setFechas] = useState<Omit<EventDate, "_id" | "titulo">[]>([
+  const [fechas, setFechas] = useState<EventDate[]>([
     {
       fecha: "",
       cantidadEntradas: "",
