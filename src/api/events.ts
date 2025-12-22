@@ -1,9 +1,10 @@
+import axios from "axios";
 import api from "./api";
 import { handleApiEventError } from "@/helpers/handleApiError";
 
 export type EventDate = {
   _id?: string;
-  fecha: Date | string; 
+  fecha: Date | string;
   cantidadEntradas: number | string;
 };
 
@@ -12,21 +13,29 @@ export type Event = {
   titulo: string;
   fechas: EventDate[];
   descripcion: string;
-  precioEntrada: string; 
+  precioEntrada: string;
   ubicacion: string;
   imagenUrl: string;
   createdBy: string;
 };
 
-
 export const getEvents = async () => {
   const response = await api.get<Event[]>("/events");
-  return response.data
+  return response.data;
 };
 
 export const getEventById = async (id: string) => {
-  const response = await api.get<Event>(`/events/${id}`);
-  return response.data
+  try {
+    const response = await api.get<Event>(`/events/${id}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Error al obtener el evento"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
 };
 
 export const createEvent = async (

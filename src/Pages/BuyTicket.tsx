@@ -2,6 +2,9 @@ import { getEventById, type EventDate, type Event } from "@/api/events";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { createTicket } from "@/api/tickets";
+import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
 
 //TODO:
 // Usuario hace checkout
@@ -23,13 +26,27 @@ function BuyTicket() {
     undefined
   );
   const [cantidad, setCantidad] = useState(1);
+  const [openVerificationCode, setOpenVerificationCode] = useState(false);
+
+  const comprar = async() => {
+    try {
+      await createTicket(id!, selectedDate!._id!, cantidad);
+      setOpenVerificationCode(true);
+    } catch (error) {
+      toast.error(error.message || "Error al procesar la compra. Intente nuevamente.");
+    }
+  }
 
   useEffect(() => {
     const getEvent = async () => {
-      const response = await getEventById(id!);
-      setEvent(response);
-      if (numFecha !== undefined) {
-        setSelectedDate(response.fechas[parseInt(numFecha) - 1]);
+      try {
+        const response = await getEventById(id!);
+        setEvent(response);
+        if (numFecha !== undefined) {
+          setSelectedDate(response.fechas[parseInt(numFecha) - 1]);
+        }
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Error al cargar el evento. Intente nuevamente.");
       }
     };
 
@@ -38,7 +55,7 @@ function BuyTicket() {
 
   return (
     <div className="w-full text-primary flex flex-col items-center justify-center p-4 ">
-      <div className="bg-white border border-gray-300 rounded shadow p-6 w/full sm:w-1/2 flex flex-col gap-4">
+      {event &&<div className="bg-white border border-gray-300 rounded shadow p-6 w/full sm:w-1/2 flex flex-col gap-4">
         <h1 className="text-2xl font-semibold text-center">
           Comprando entradas para {event?.titulo}
         </h1>
@@ -95,8 +112,10 @@ function BuyTicket() {
             ${cantidad * (Number(event?.precioEntrada) || 0)}
           </p>
         </div>
-        <Button className="w-full">Comprar</Button>
-      </div>
+        <Button onClick={comprar} className="w-full">Comprar</Button>
+      </div>}
+
+      {openVerificationCode && <ModalVerificationCode />}
     </div>
   );
 }

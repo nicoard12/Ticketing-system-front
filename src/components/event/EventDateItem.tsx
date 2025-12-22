@@ -17,7 +17,7 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
 
   const buyTicket = () => {
     if (!user) loginWithRedirect();
-    else navigate(`/evento/${eventId}/fecha/${index+1}`)
+    else navigate(`/evento/${eventId}/fecha/${index + 1}`);
   };
 
   return (
@@ -35,11 +35,15 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
       </p>
 
       <div className="flex gap-3 items-center ">
-        <span className="text-sm font-thin">
-          Quedan {date.cantidadEntradas} entradas
-        </span>
+        {Number(date.cantidadEntradas) > 0 ? (
+          <span className="text-sm font-thin">
+            Quedan {date.cantidadEntradas} entradas
+          </span>
+        ) : (
+          <span className="text-sm font-thin text-red-600">Agotadas</span>
+        )}
 
-        {(!user || user.rol == "normal") && (
+        {((!user || user.rol == "normal") && Number(date.cantidadEntradas) > 0 ) && (
           <Button onClick={buyTicket}>Comprar</Button>
         )}
       </div>
