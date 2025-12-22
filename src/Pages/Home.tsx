@@ -1,4 +1,4 @@
-import { getEvents, type EventResponse } from "@/api/events";
+import { getEvents, type Event } from "@/api/events";
 import { getUsers, type User } from "@/api/users";
 import Searcher from "@/components/Searcher";
 import EventCard from "@/components/event/EventCard";
@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 function Home() {
-  const [events, setEvents] = useState<EventResponse[]>([]);
-  const [allEvents, setAllEvents] = useState<EventResponse[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const { user, contextLoading } = useUsuario();

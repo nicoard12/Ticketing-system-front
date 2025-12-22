@@ -7,8 +7,7 @@ export type EventDate = {
   cantidadEntradas: number | string;
 };
 
-//Puede que tenga que remover esto y unificar solo en Event
-export type EventResponse = {
+export type Event = {
   _id: string;
   titulo: string;
   fechas: EventDate[];
@@ -19,28 +18,19 @@ export type EventResponse = {
   createdBy: string;
 };
 
-export type Event = {
-  _id: string;
-  titulo: string;
-  fechas: EventDate[];
-  descripcion: string;
-  precioEntrada: string; 
-  ubicacion: string;
-  imagenUrl: string;
-};
 
 export const getEvents = async () => {
-  const response = await api.get<EventResponse[]>("/events");
+  const response = await api.get<Event[]>("/events");
   return response.data
 };
 
 export const getEventById = async (id: string) => {
-  const response = await api.get<EventResponse>(`/events/${id}`);
+  const response = await api.get<Event>(`/events/${id}`);
   return response.data
 };
 
 export const createEvent = async (
-  event: Omit<Event, "_id">,
+  event: Omit<Event, "_id" | "createdBy">,
   imagen: File | null
 ) => {
   try {
@@ -67,7 +57,7 @@ export const createEvent = async (
 
 export const updateEvent = async (
   id: string,
-  event: Omit<Event, "_id">,
+  event: Omit<Event, "_id" | "createdBy">,
   imagen: File | null
 ) => {
   try {
@@ -83,7 +73,7 @@ export const updateEvent = async (
       formData.append("imagen", imagen);
     }
 
-    const response = await api.put<Event>(`/events/${id}`, formData, {
+    const response = await api.patch<Event>(`/events/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

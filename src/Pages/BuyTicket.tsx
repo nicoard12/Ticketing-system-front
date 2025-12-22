@@ -1,4 +1,4 @@
-import { getEventById, type EventDate, type EventResponse } from "@/api/events";
+import { getEventById, type EventDate, type Event } from "@/api/events";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 
 function BuyTicket() {
   const { id, numFecha } = useParams();
-  const [event, setEvent] = useState<EventResponse | null>(null);
+  const [event, setEvent] = useState<Event | null>(null);
   const [selectedDate, setSelectedDate] = useState<EventDate | undefined>(
     undefined
   );

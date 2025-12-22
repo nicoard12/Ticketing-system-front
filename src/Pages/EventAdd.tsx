@@ -8,7 +8,7 @@ function RegistrarEvento() {
   const [loading, setLoading]= useState(false)
   const navigate= useNavigate()
 
-  const newEvent= async (e: Omit<Event, "_id">, image?: File | null) =>{
+  const newEvent= async (e: Omit<Event, "_id" | "createdBy">, image?: File | null) =>{
     try {
       await createEvent(e, image);
       toast.success("Evento creado");

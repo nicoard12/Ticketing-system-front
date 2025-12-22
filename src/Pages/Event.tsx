@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteEvent, type EventResponse, getEventById } from "@/api/events";
+import { deleteEvent, type Event, getEventById } from "@/api/events";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import Modal from "@/components/Modal";
@@ -11,7 +11,7 @@ import EventDateItem from "@/components/event/EventDateItem";
 
 function Event() {
   const { id } = useParams();
-  const [evento, setEvento] = useState<EventResponse | null>(null);
+  const [evento, setEvento] = useState<Event | null>(null);
   const [modal, setModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const { isAuthenticated } = useAuth0();
