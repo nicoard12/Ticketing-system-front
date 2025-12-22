@@ -7,14 +7,12 @@ export type StatusTicket = {
 
 export type Ticket = {
   _id: string;
+  userId: string;
   eventId: string;
   eventDateId: string;
   quantity: number;
   purchaserEmail: string;
   status: StatusTicket;
-  qrCodeUrl: string;
-  verificationCode: string;
-  verificationCodeExpiresAt: string;
 };
 
 export const createTicket = async (
@@ -23,7 +21,7 @@ export const createTicket = async (
   quantity: number
 ) => {
   try {
-    const response = await api.post<Ticket[]>("/tickets", {
+    const response = await api.post<Ticket>("/tickets", {
       eventId,
       eventDateId,
       quantity,

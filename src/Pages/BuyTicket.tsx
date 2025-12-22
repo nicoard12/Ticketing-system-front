@@ -30,7 +30,8 @@ function BuyTicket() {
 
   const comprar = async() => {
     try {
-      await createTicket(id!, selectedDate!._id!, cantidad);
+      const ticket= await createTicket(id!, selectedDate!._id!, cantidad);
+      console.log("Ticket creado:", ticket);
       setOpenVerificationCode(true);
     } catch (error) {
       toast.error(error.message || "Error al procesar la compra. Intente nuevamente.");
