@@ -3,21 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { createTicket } from "@/api/tickets";
+import { createTicket, type Ticket } from "@/api/tickets";
 import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
 
-//TODO:
-// Usuario hace checkout
+//TODO: Pago aprobado por MercadoPago (lo dejo para el final)
 
-// Pago aprobado por MercadoPago (lo dejo para el final)
-
-// Se registra la compra en el sistema (ticket en estado pending_verification)
-
-// Se envía email de verificación (ingresar codigo 4 digitos)
-
-// Usuario confirma el email (en caso de no poder acceder al email hay que dar la posibilidad de enviarlo a otro email)
-
-// Se habilita el envío del QR definitivo
 
 function BuyTicket() {
   const { id, numFecha } = useParams();
@@ -27,11 +17,12 @@ function BuyTicket() {
   );
   const [cantidad, setCantidad] = useState(1);
   const [openVerificationCode, setOpenVerificationCode] = useState(false);
+  const [ticket, setTicket] = useState<null | Ticket>(null);
 
   const comprar = async() => {
     try {
       const ticket= await createTicket(id!, selectedDate!._id!, cantidad);
-      console.log("Ticket creado:", ticket);
+      setTicket(ticket);
       setOpenVerificationCode(true);
     } catch (error) {
       toast.error(error.message || "Error al procesar la compra. Intente nuevamente.");
@@ -116,7 +107,7 @@ function BuyTicket() {
         <Button onClick={comprar} className="w-full">Comprar</Button>
       </div>}
 
-      {openVerificationCode && <ModalVerificationCode />}
+      {openVerificationCode && <ModalVerificationCode ticket={ticket!} />}
     </div>
   );
 }
