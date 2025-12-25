@@ -20,6 +20,8 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
     else navigate(`/evento/${eventId}/fecha/${index + 1}`);
   };
 
+  if (new Date(date.fecha) < new Date()) return null;
+
   return (
     <div className="flex items-center justify-between w-full border border-2 rounded p-2">
       <p className=" font-semibold uppercase">

@@ -3,7 +3,7 @@ import api from "./api";
 import type { Event } from "./events";
 
 export type StatusTicket = {
-  status: "pending_verification" | "verified" | "cancelled";
+  status: "pending_verification" | "active" | "transferred" | "used";
 };
 
 export type Ticket = {
@@ -38,10 +38,10 @@ export const createTicket = async (
   }
 };
 
-export const verifyCodeTicket = async (ticketId: string, code: string) => {
+export const verifyTicketCode= async (ticketId: string, code: string) => {
   try {
-    const response = await api.patch<Ticket>(`/tickets/${ticketId}/verify`, {
-      code,
+    const response = await api.patch<boolean>(`/tickets/${ticketId}/verify`, {
+      code: Number(code),
     });
     return response.data;
   } catch (error) {
@@ -54,9 +54,9 @@ export const verifyCodeTicket = async (ticketId: string, code: string) => {
   }
 };
 
-export const sendCodeTicket = async (ticketId: string) => {
+export const sendTicketCode = async (ticketId: string) => {
   try {
-    const response = await api.patch<Ticket>(`/tickets/${ticketId}/send-code`);
+    const response = await api.patch<boolean>(`/tickets/${ticketId}/send-code`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -68,9 +68,9 @@ export const sendCodeTicket = async (ticketId: string) => {
   }
 };
 
-export const changeEmailTicket = async (ticketId: string, newEmail: string) => {
+export const changeTicketEmail = async (ticketId: string, newEmail: string) => {
   try {
-    const response = await api.patch<Ticket>(`/tickets/${ticketId}/email`, {
+    const response = await api.patch<boolean>(`/tickets/${ticketId}/email`, {
       newEmail,
     });
     return response.data;

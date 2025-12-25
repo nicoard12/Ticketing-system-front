@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { changeEmailTicket, sendCodeTicket, type Ticket } from "@/api/tickets";
+import {
+  changeTicketEmail,
+  sendTicketCode,
+  verifyTicketCode,
+  type Ticket,
+} from "@/api/tickets";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
@@ -12,33 +17,35 @@ function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
     ticket?.purchaserEmail || ""
   );
 
-  const confirmarEmail = () => {
-    console.log("Confirmando código:", code); //todo
+  const confirmarEmail = async () => {
+    try {
+      await verifyTicketCode(ticket!._id, code);
+      toast.success("Código verificado con éxito");
+    } catch (error) {
+      toast.error(error.message || "Error al verificar el código");
+    }
   };
 
   const reenviarCodigo = async () => {
     try {
-      await sendCodeTicket(ticket!._id);
+      await sendTicketCode(ticket!._id);
       toast.success("Código reenviado");
     } catch (error) {
       toast.error(error.message || "Error al reenviar el código");
-      return;
     }
   };
 
   const cambiarEmail = async () => {
     if (!newEmail || !confirmEmail) {
       toast.error("Por favor completa ambos campos de correo");
-      return;
     }
 
     if (newEmail !== confirmEmail) {
       toast.error("Los correos electrónicos no coinciden");
-      return;
     }
 
     try {
-      await changeEmailTicket(ticket!._id, newEmail);
+      await changeTicketEmail(ticket!._id, newEmail);
       setCurrentEmail(newEmail);
       toast.success("Un nuevo código se ha enviado a tu nuevo correo");
       setNewEmail("");
