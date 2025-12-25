@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   changeTicketEmail,
   sendTicketCode,
@@ -8,7 +8,13 @@ import {
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
-function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
+function ModalVerificationCode({
+  ticket,
+  onClose,
+}: {
+  ticket?: Ticket;
+  onClose: () => void;
+}) {
   const [showChangeEmail, setShowChangeEmail] = useState(false);
   const [code, setCode] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -20,7 +26,7 @@ function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
   const confirmarEmail = async () => {
     try {
       await verifyTicketCode(ticket!._id, code);
-      toast.success("Código verificado con éxito");
+      onClose()
     } catch (error) {
       toast.error(error.message || "Error al verificar el código");
     }
@@ -38,10 +44,12 @@ function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
   const cambiarEmail = async () => {
     if (!newEmail || !confirmEmail) {
       toast.error("Por favor completa ambos campos de correo");
+      return;
     }
 
     if (newEmail !== confirmEmail) {
       toast.error("Los correos electrónicos no coinciden");
+      return;
     }
 
     try {
@@ -69,22 +77,31 @@ function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
 
         <main className="flex flex-col gap-4 ">
           <div className="flex flex-col gap-3 ">
-            <input
-              id="code-input"
-              name="code"
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              maxLength={6}
-              placeholder="Código"
-              className="p-3 text-2xl rounded-lg border border-gray-200 outline-none"
-            />
-            <Button size={"lg"} variant={"secondary"} onClick={confirmarEmail}>
-              Confirmar
-            </Button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                confirmarEmail();
+              }}
+              className="flex flex-col gap-3"
+            >
+              <input
+                id="code-input"
+                name="code"
+                type="text"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                maxLength={6}
+                placeholder="Código"
+                className="p-3 text-2xl rounded-lg border border-gray-200 outline-none"
+              />
+              <Button type="submit" size={"lg"} variant={"secondary"}>
+                Confirmar
+              </Button>
+            </form>
           </div>
 
           <button
+            type="button"
             onClick={reenviarCodigo}
             className="bg-transparent border-0 text-blue-600 underline cursor-pointer p-0 text-sm"
           >
@@ -96,30 +113,39 @@ function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
               <p className="text-gray-800">
                 Escribe el nuevo correo para recibir el código
               </p>
-              <input
-                type="email"
-                placeholder="nuevo@correo.com"
-                value={newEmail}
-                onChange={(e) => setNewEmail(e.target.value)}
-                className=" py-2 px-3 rounded-lg border border-gray-200"
-                aria-label="Nuevo email"
-              />
-              <input
-                type="email"
-                placeholder="Confirma tu correo"
-                value={confirmEmail}
-                onChange={(e) => setConfirmEmail(e.target.value)}
-                className=" py-2 px-3 rounded-lg border border-gray-200"
-                aria-label="Confirmar email"
-              />
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  cambiarEmail();
+                }}
+                className="flex flex-col gap-2"
+              >
+                <input
+                  type="email"
+                  placeholder="nuevo@correo.com"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className=" py-2 px-3 rounded-lg border border-gray-200"
+                  aria-label="Nuevo email"
+                />
+                <input
+                  type="email"
+                  placeholder="Confirma tu correo"
+                  value={confirmEmail}
+                  onChange={(e) => setConfirmEmail(e.target.value)}
+                  className=" py-2 px-3 rounded-lg border border-gray-200"
+                  aria-label="Confirmar email"
+                />
 
-              <Button size={"lg"} variant={"secondary"} onClick={cambiarEmail}>
-                Confirmar cambio
-              </Button>
+                <Button type="submit" size={"lg"} variant={"secondary"}>
+                  Confirmar cambio
+                </Button>
+              </form>
             </section>
           )}
           {showChangeEmail ? (
             <button
+              type="button"
               onClick={() => setShowChangeEmail(false)}
               className="bg-transparent border-0 text-blue-600 underline cursor-pointer p-0 text-sm"
             >
@@ -127,6 +153,7 @@ function ModalVerificationCode({ ticket }: { ticket?: Ticket }) {
             </button>
           ) : (
             <button
+              type="button"
               onClick={() => setShowChangeEmail(true)}
               className="bg-transparent border-0 text-blue-600 underline cursor-pointer p-0 text-sm"
             >

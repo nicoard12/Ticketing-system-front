@@ -3,7 +3,7 @@ import api from "./api";
 import type { Event } from "./events";
 
 export type StatusTicket = {
-  status: "pending_verification" | "active" | "transferred" | "used";
+  status: "pending_verification" | "active" | "used";
 };
 
 export type Ticket = {
