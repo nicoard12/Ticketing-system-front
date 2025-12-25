@@ -14,16 +14,17 @@ export type Ticket = {
   purchaserEmail: string;
   status: StatusTicket;
   price: number;
+  dateCreated: Date;
 };
 
 export const createTicket = async (
-  eventId: string,
+  event: string,
   eventDateId: string,
   quantity: number
 ) => {
   try {
     const response = await api.post<Ticket>("/tickets", {
-      eventId,
+      event,
       eventDateId,
       quantity,
     });
@@ -38,7 +39,7 @@ export const createTicket = async (
   }
 };
 
-export const verifyTicketCode= async (ticketId: string, code: string) => {
+export const verifyTicketCode = async (ticketId: string, code: string) => {
   try {
     const response = await api.patch<boolean>(`/tickets/${ticketId}/verify`, {
       code: Number(code),
@@ -78,6 +79,21 @@ export const changeTicketEmail = async (ticketId: string, newEmail: string) => {
     if (axios.isAxiosError(error)) {
       throw new Error(
         error.response?.data?.message || "Error al cambiar el correo"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
+};
+
+export const getTicketsByUser = async () => {
+  try {
+    const response = await api.get<Ticket[]>("/tickets/user"); //Se obtienen los del respectivo usuario logueado
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ||
+          "Error al obtener los tickets del usuario"
       );
     }
     throw new Error("Error inesperado");
