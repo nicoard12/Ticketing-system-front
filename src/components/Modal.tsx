@@ -1,8 +1,8 @@
 import { Button } from "./ui/button";
-import type { EventResponse } from "@/api/events";
+import type { Event } from "@/api/events";
 
 type ModalProps = {
-  evento: EventResponse | null;
+  evento: Event | null;
   cancelar: () => void;
   confirmar: () => Promise<void>;
   deleting: boolean;

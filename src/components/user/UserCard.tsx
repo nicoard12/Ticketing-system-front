@@ -45,7 +45,8 @@ function UserCard({ user }: { user: User }) {
       setCurrent_role(selectedRole);
       toast.success("Rol cambiado con éxito");
     } catch (error) {
-      toast.error(error.message);
+      const errorMessage = error instanceof Error ? error.message : "Error al cambiar el rol";
+      toast.error(errorMessage);
     }
   };
 

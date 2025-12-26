@@ -12,12 +12,12 @@ function EventEdit() {
 
   const editarEvento= async (e: Omit<Event, "_id" | "createdBy">, image?: File | null) =>{
     try {
-      await updateEvent(event!._id, e, image); 
+      await updateEvent(event!._id, e, image!); 
       toast.success("Evento actualizado");
       navigate(`/evento/${id}`)              
-    } catch (err) {
-      toast.error(err.message);
-      setLoading(false)
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Error al editar el evento";
+      toast.error(errorMessage);
     }
   }
 

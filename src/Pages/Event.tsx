@@ -31,8 +31,8 @@ function Event() {
       toast.warning("Evento eliminado");
       navigate("/");
     } catch (error) {
-      toast.error(error.response?.data?.message);
-      if (error.response?.data?.statusCode == 403) navigate("/");
+      const errorMessage = error instanceof Error ? error.message : "Error al intentar eliminar el evento";
+      toast.error(errorMessage);
     }
   };
 

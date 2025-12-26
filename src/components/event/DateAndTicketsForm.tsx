@@ -20,15 +20,19 @@ function DateAndTicketsForm({
   eliminarFecha,
   deleteEnabled,
 }: DateAndTicketsProps) {
+  useEffect(() => {
+    const inputs = document.querySelectorAll<HTMLInputElement>(
+      'input[type="number"]'
+    );
 
-    useEffect(() => {
-    const inputs = document.querySelectorAll('input[type="number"]');
+    const disableScroll = (e: globalThis.WheelEvent) => {
+      e.preventDefault();
+    };
 
-    const disableScroll = (e: WheelEvent) => e.preventDefault();
+    inputs.forEach((input) =>
+      input.addEventListener("wheel", disableScroll, { passive: false })
+    );
 
-    inputs.forEach((input) => input.addEventListener("wheel", disableScroll));
-
-    // Limpieza para evitar fugas de eventos
     return () => {
       inputs.forEach((input) =>
         input.removeEventListener("wheel", disableScroll)

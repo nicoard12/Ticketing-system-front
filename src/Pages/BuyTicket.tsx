@@ -26,9 +26,8 @@ function BuyTicket() {
       setTicket(ticket);
       setOpenVerificationCode(true);
     } catch (error) {
-      toast.error(
-        error.message || "Error al procesar la compra. Intente nuevamente."
-      );
+      const errorMessage = error instanceof Error ? error.message : "Error al intentar comprar el ticket";
+      toast.error(errorMessage);
     }
   };
 

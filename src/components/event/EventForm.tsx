@@ -6,7 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 type EventFormProps = {
-  submit: (e: Omit<Event, "_id" | "createdBy">, imagen?: File | null) => Promise<void>;
+  submit: (
+    e: Omit<Event, "_id" | "createdBy">,
+    imagen?: File | null
+  ) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   eventoEditable?: Event | null;
@@ -40,7 +43,7 @@ function EventForm({
   };
 
   const changeImagen = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImagen(e.target.files[0]);
+    setImagen(e.target.files![0]);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -79,13 +82,18 @@ function EventForm({
   }, [eventoEditable]);
 
   useEffect(() => {
-    const inputs = document.querySelectorAll('input[type="number"]');
+    const inputs = document.querySelectorAll<HTMLInputElement>(
+      'input[type="number"]'
+    );
 
-    const disableScroll = (e: WheelEvent) => e.preventDefault();
+    const disableScroll = (e: globalThis.WheelEvent) => {
+      e.preventDefault();
+    };
 
-    inputs.forEach((input) => input.addEventListener("wheel", disableScroll));
+    inputs.forEach((input) =>
+      input.addEventListener("wheel", disableScroll, { passive: false })
+    );
 
-    // Limpieza para evitar fugas de eventos
     return () => {
       inputs.forEach((input) =>
         input.removeEventListener("wheel", disableScroll)

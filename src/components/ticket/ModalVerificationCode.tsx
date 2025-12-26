@@ -28,7 +28,8 @@ function ModalVerificationCode({
       await verifyTicketCode(ticket!._id, code);
       onClose()
     } catch (error) {
-      toast.error(error.message || "Error al verificar el código");
+      const errorMessage = error instanceof Error ? error.message : "Error al verificar el codigo";
+      toast.error(errorMessage);
     }
   };
 
@@ -37,7 +38,8 @@ function ModalVerificationCode({
       await sendTicketCode(ticket!._id);
       toast.success("Código reenviado");
     } catch (error) {
-      toast.error(error.message || "Error al reenviar el código");
+      const errorMessage = error instanceof Error ? error.message : "Error al reenviar el codigo";
+      toast.error(errorMessage);
     }
   };
 
@@ -60,7 +62,8 @@ function ModalVerificationCode({
       setConfirmEmail("");
       setShowChangeEmail(false);
     } catch (error) {
-      toast.error(error.message || "Error al cambiar el correo electrónico");
+      const errorMessage = error instanceof Error ? error.message : "Error al cambiar el correo electronico";
+      toast.error(errorMessage);
     }
   };
 

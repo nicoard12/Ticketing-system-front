@@ -10,11 +10,12 @@ function RegistrarEvento() {
 
   const newEvent= async (e: Omit<Event, "_id" | "createdBy">, image?: File | null) =>{
     try {
-      await createEvent(e, image);
+      await createEvent(e, image!);
       toast.success("Evento creado");
       navigate("/")
-    } catch (err) {
-      toast.error(err.message); 
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Error al añadir evento";
+      toast.error(errorMessage);
       setLoading(false)
     }
   }

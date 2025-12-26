@@ -17,9 +17,8 @@ function TransferInfo({ ticket }: { ticket: Ticket }) {
         setTransferUser(await getUserById(ticket.originalUserId));
       else setTransferUser(await getUserById(ticket.userId));
     } catch (error) {
-      toast.error(
-        error.message || "No se pudo obtener el usuario de transferencia"
-      );
+      const errorMessage = error instanceof Error ? error.message : "Error al obtener el usuario de transferencia";
+      toast.error(errorMessage);
     }
   };
 

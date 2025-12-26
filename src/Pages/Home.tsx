@@ -38,10 +38,16 @@ function Home() {
       setEvents(response);
       setAllEvents(response);
     } catch (error) {
-      if (error.code == "ERR_NETWORK")
-        alert(
-          "Error al conectar con el servidor, por favor intentalo mas tarde."
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        (error as any).code === "ERR_NETWORK"
+      ) {
+        toast.error(
+          "Error al conectar con el servidor, por favor intentalo más tarde."
         );
+      }
     }
   };
 
@@ -51,7 +57,9 @@ function Home() {
       setUsers(response);
       setAllUsers(response);
     } catch (error) {
-      toast.error(error.message);
+      const errorMessage =
+        error instanceof Error ? error.message : "Error al obtener los usuarios";
+      toast.error(errorMessage);
     }
   };
 

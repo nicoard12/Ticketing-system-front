@@ -33,7 +33,8 @@ function ModalTransfer({
       onClose()
       toast.success("Ticket transferido")
     } catch (error) {
-      toast.error(error.message || "Error al transferir el ticket");
+      const errorMessage = error instanceof Error ? error.message : "Error al transferir el ticket";
+      toast.error(errorMessage);
     }
   };
 

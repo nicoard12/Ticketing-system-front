@@ -27,7 +27,8 @@ function TicketCard({
     try {
       await sendTicketCode(ticket!._id);
     } catch (error) {
-      toast.error(error.message || "Error al enviar el código");
+      const errorMessage = error instanceof Error ? error.message : "Error al activar el ticket";
+      toast.error(errorMessage);
     }
     setOpenVerificationModal(true);
   };

@@ -42,7 +42,8 @@ function Tickets() {
       const response = await getTicketsByUser();
       setTickets(response);
     } catch (error) {
-      toast.error(error.message || "Error al obtener los tickets");
+      const errorMessage = error instanceof Error ? error.message : "Error al obtener los tickets";
+      toast.error(errorMessage);
     }
   };
 
