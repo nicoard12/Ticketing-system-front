@@ -38,3 +38,17 @@ export const changeRoleUser = async (userId: string, role: Rol) => {
     throw new Error("Error inesperado");
   }
 };
+
+export const getUserById = async (userId: string) => {
+  try {
+    const response = await api.get<User>(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Error al cambiar el rol"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
+};

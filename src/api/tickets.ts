@@ -8,6 +8,7 @@ export type Ticket = {
   _id: string;
   event: Event;
   eventDateId: string;
+  userId: string;
   originalUserId: string;
   quantity: number;
   purchaserEmail: string;

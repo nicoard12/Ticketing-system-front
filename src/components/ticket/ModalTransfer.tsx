@@ -7,9 +7,11 @@ import { toast } from "sonner";
 function ModalTransfer({
   ticket,
   onClose,
+  getTicketsAgain
 }: {
   ticket: Ticket;
   onClose: () => void;
+  getTicketsAgain: () => void;
 }) {
   const [quantity, setQuantity] = useState(1);
   const [email, setEmail] = useState("");
@@ -27,7 +29,8 @@ function ModalTransfer({
     }
     try {
       await transferTicket(ticket._id, quantity, email);
-      window.location.reload()
+      getTicketsAgain()
+      toast.success("Ticket transferido")
     } catch (error) {
       toast.error(error.message || "Error al transferir el ticket");
     }

@@ -22,6 +22,7 @@ function Tickets() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [filteredTickets, setFilteredTickets] = useState<Ticket[]>([]);
   const [currentTab, setCurrentTab] = useState("activados");
+  const [reload, setReload] = useState(false);
   const tabsOptions = [
     { label: "Activados", value: "activados" },
     { label: "Desactivados", value: "desactivados" },
@@ -30,6 +31,10 @@ function Tickets() {
 
   const esTransferido = (t: Ticket) => {
     return t.originalUserId && t.originalUserId == user?.idAuth;
+  };
+
+  const getTicketsAgain = () => {
+    setReload(!reload);
   };
 
   const fetchTickets = async () => {
@@ -43,7 +48,7 @@ function Tickets() {
 
   useEffect(() => {
     fetchTickets();
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     if (tickets.length == 0 || !user) return;
@@ -62,7 +67,10 @@ function Tickets() {
     } else {
       setFilteredTickets(
         tickets.filter(
-          (t) => t.status === "pending_verification" && !ticketVencido(t)
+          (t) =>
+            t.status === "pending_verification" &&
+            !ticketVencido(t) &&
+            !esTransferido(t)
         )
       );
     }
@@ -78,8 +86,28 @@ function Tickets() {
       {filteredTickets.length > 0 && (
         <div className="flex flex-col gap-3 p-2 sm:flex-row overflow-auto w-full">
           {filteredTickets.map((ticket) => (
-            <TicketCard key={ticket._id} ticket={ticket} currentTab={currentTab}/>
+            <TicketCard
+              key={ticket._id}
+              ticket={ticket}
+              currentTab={currentTab}
+              getTicketsAgain={getTicketsAgain}
+            />
           ))}
+        </div>
+      )}
+
+      {filteredTickets.length == 0 && (
+        <div className="text-gray-400 flex justify-center items-center mt-10 text-lg">
+          {currentTab == "activados" ? (
+            <p>Acá se mostrarán los tickets de tus próximos eventos.</p>
+          ) : currentTab == "desactivados" ? (
+            <p>Acá se mostrarán los tickets transferidos, usados o vencidos.</p>
+          ) : (
+            <p>
+              Acá se mostrarán tickets para los cuales te faltó verificar un
+              email.
+            </p>
+          )}
         </div>
       )}
     </div>
