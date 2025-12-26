@@ -46,7 +46,7 @@ function Event() {
   }, [id]);
 
   return (
-    <div className="lg:h-[500px] 2xl:h-[700px] text-primary flex flex-col lg:flex-row p-3 gap-5 bg-white border border-gray-300 m-4  rounded shadow">
+    <div className="lg:h-[500px] 2xl:h-[700px] text-primary flex flex-col lg:flex-row p-3 gap-5 bg-white border border-gray-300 rounded shadow">
       <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full lg:w-1/3 ">
         {evento && (
           <img

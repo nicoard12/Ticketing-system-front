@@ -14,41 +14,36 @@ function Header() {
   };
 
   return (
-    <div className=" text-primary-foreground p-5 py-7 text-lg sm:text-2xl flex flex-col gap-5">
-      <div className="flex justify-between">
-        <p
-          id="home-logo"
-          className="italic cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          TicketingSystem
-        </p>
-        {isLoading ? null : (
-          <div className="flex gap-5 items-center">
-            {isAuthenticated ? (
-              <>
-                {user?.rol == "productor" && (
-                  <Button
-                    size={"sm"}
-                    onClick={goRegistrarEvento}
-                    variant={"ghost"}
-                  >
-                    Crear evento
-                  </Button>
-                )}
-                <UserLogo />
-              </>
-            ) : (
-              <Button
-                variant={"outline"}
-                onClick={() => loginWithRedirect()}
-              >
-                Iniciar sesión
-              </Button>
-            )}
-          </div>
-        )}
-      </div>
+    <div className="text-primary-foreground p-5 py-7 text-lg sm:text-2xl flex justify-between gap-5">
+      <p
+        id="home-logo"
+        className="italic cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        TicketingSystem
+      </p>
+      {isLoading ? null : (
+        <div className="flex gap-5 items-center">
+          {isAuthenticated ? (
+            <>
+              {user?.rol == "productor" && (
+                <Button
+                  size={"sm"}
+                  onClick={goRegistrarEvento}
+                  variant={"ghost"}
+                >
+                  Crear evento
+                </Button>
+              )}
+              <UserLogo />
+            </>
+          ) : (
+            <Button variant={"outline"} onClick={() => loginWithRedirect()}>
+              Iniciar sesión
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

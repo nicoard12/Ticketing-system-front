@@ -2,14 +2,13 @@ import axios from "axios";
 import api from "./api";
 import type { Event } from "./events";
 
-export type StatusTicket = {
-  status: "pending_verification" | "active" | "used";
-};
+export type StatusTicket = "pending_verification" | "active" | "used";
 
 export type Ticket = {
   _id: string;
   event: Event;
   eventDateId: string;
+  originalUserId: string;
   quantity: number;
   purchaserEmail: string;
   status: StatusTicket;

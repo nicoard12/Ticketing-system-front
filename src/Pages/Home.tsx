@@ -63,7 +63,7 @@ function Home() {
   }, [contextLoading, user]);
 
   return (
-    <div className="flex flex-col items-center gap-10 p-4">
+    <div className="flex flex-col items-center gap-10">
       <Searcher onSearch={onSearch} />
 
       {events.length > 0 && (

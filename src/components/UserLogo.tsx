@@ -2,13 +2,15 @@ import { useState, useRef, useEffect } from "react";
 import { UserIcon, LogOutIcon, CircleUserRound, Ticket } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { useUsuario } from "@/context/UserContext";
 
 function UserLogo() {
   const [open, setOpen] = useState(false);
   const [failedImage, setFailedImage] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const { logout, user } = useAuth0();
+  const { logout } = useAuth0();
+  const {user}= useUsuario()
 
   const logoutUser = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
@@ -39,8 +41,8 @@ function UserLogo() {
           <CircleUserRound color="white" strokeWidth={1} size={64} />
         ) : (
           <img
-            src={user!.picture}
-            alt={user!.name}
+            src={user?.imagen}
+            alt={user?.nombre}
             onError={() => setFailedImage(true)}
             className="rounded-full"
           />
@@ -61,7 +63,7 @@ function UserLogo() {
                 Perfil
               </button>
             </li>
-            <li>
+            {user?.rol == "normal" && <li>
               <button
                 onClick={() => {
                   navigate("/tickets");
@@ -72,7 +74,7 @@ function UserLogo() {
                 <Ticket className="w-4 h-4" />
                 Tickets
               </button>
-            </li>
+            </li>}
             <li>
               <button
                 onClick={logoutUser}

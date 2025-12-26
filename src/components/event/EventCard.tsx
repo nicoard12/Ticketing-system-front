@@ -13,7 +13,7 @@ function EventCard({ event }: EventCardProps) {
   }
 
   return (
-    <div data-cy="evento-box" onClick={goToEvent} className='hover:outline-black outline outline-gray-900/70 bg-card text-card-foreground shadow rounded flex flex-col cursor-pointer hover:scale-[1.01] transition-transform max-w-[200px] sm:max-w-[220px] md:max-w-[240px] w-full'>
+    <div data-cy="evento-box" onClick={goToEvent} className='hover:outline-black  bg-card text-card-foreground shadow rounded flex flex-col cursor-pointer hover:scale-[1.01] transition-transform max-w-[200px] sm:max-w-[220px] md:max-w-[240px] w-full'>
       <div className='aspect-square flex items-center justify-center overflow-hidden rounded-t'>
         <img
           src={event.imagenUrl}
