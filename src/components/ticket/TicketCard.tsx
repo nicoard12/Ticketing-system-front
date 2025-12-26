@@ -76,6 +76,9 @@ function TicketCard({
           <span className="font-medium">Cantidad:</span> {ticket.quantity}
         </p>
         <p className="text-gray-600">
+          <span className="font-medium">Fecha del evento:</span> {new Date(ticket.event.fechas.find(f => f._id == ticket.eventDateId)!.fecha).toLocaleDateString()}
+        </p>
+        <p className="text-gray-600">
           <span className="font-medium">Fecha de compra:</span> {formattedDate}
         </p>
         <p className="text-gray-600">

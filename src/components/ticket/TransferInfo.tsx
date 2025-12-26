@@ -32,15 +32,15 @@ function TransferInfo({ ticket }: { ticket: Ticket }) {
 
   return (
     ticket.originalUserId && (
-      <div className="relative inline-block">
+      <div className="relative inline-block mt-[-8px]">
         <span 
-          className="flex items-center gap-1 text-sm font-semibold text-orange-400 cursor-pointer"
+          className="flex items-center gap-1 text-xs font-semibold text-orange-400 cursor-pointer"
           onMouseEnter={() => { if (!transferUser) getUser(); setShowTooltip(true); }}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <Info size={14} strokeWidth={3} /> Transferido
+          <Info size={12} strokeWidth={3} className="z-10" /> Transferido
         </span>
-        {showTooltip && transferUser && <span className="absolute top-0 left-full ml-2 text-gray-600 bg-white border border-gray-300 rounded px-2 py-1 shadow-md text-xs whitespace-nowrap">{transferReceived ? "Este ticket te lo transfirió" : "Transferiste este ticket a" } {transferUser.nombre}</span>}
+        {showTooltip && transferUser && <span className="absolute top-0 z-20 left-full ml-2 text-gray-600 bg-white border border-gray-300 rounded px-2 py-1 shadow-md text-xs whitespace-nowrap">{transferReceived ? "Este ticket te lo transfirió" : "Transferiste este ticket a" } {transferUser.nombre}</span>}
       </div>
     )
   );

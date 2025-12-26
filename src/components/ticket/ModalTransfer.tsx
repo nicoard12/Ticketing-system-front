@@ -30,6 +30,7 @@ function ModalTransfer({
     try {
       await transferTicket(ticket._id, quantity, email);
       getTicketsAgain()
+      onClose()
       toast.success("Ticket transferido")
     } catch (error) {
       toast.error(error.message || "Error al transferir el ticket");
