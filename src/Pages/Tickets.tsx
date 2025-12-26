@@ -78,7 +78,7 @@ function Tickets() {
       {filteredTickets.length > 0 && (
         <div className="flex flex-col gap-3 p-2 sm:flex-row overflow-auto w-full">
           {filteredTickets.map((ticket) => (
-            <TicketCard key={ticket._id} ticket={ticket}/>
+            <TicketCard key={ticket._id} ticket={ticket} currentTab={currentTab}/>
           ))}
         </div>
       )}

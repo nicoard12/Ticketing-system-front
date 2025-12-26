@@ -98,3 +98,24 @@ export const getTicketsByUser = async () => {
     throw new Error("Error inesperado");
   }
 };
+
+export const transferTicket = async (
+  ticketId: string,
+  quantity: number,
+  email: string
+) => {
+  try {
+    const response = await api.post<boolean>(`/tickets/${ticketId}/transfer`,{
+      quantity, email
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ||
+          "Error al obtener los tickets del usuario"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
+};
