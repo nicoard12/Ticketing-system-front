@@ -1,5 +1,4 @@
 import type { User } from '@/api/users';
-import React from 'react'
 import { Button } from '@/components/ui/button';
 
 type ModalUserConfirmation={

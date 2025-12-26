@@ -1,5 +1,5 @@
 import { changeRoleUser, type Rol, type User } from "@/api/users";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CircleUserRound,
   User as LuUser,

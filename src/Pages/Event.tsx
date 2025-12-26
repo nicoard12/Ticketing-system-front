@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteEvent, type Event, getEventById } from "@/api/events";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useUsuario } from "@/context/UserContext";
 import EventDateItem from "@/components/event/EventDateItem";
 
-function Event() {
+function EventPage() {
   const { id } = useParams();
   const [evento, setEvento] = useState<Event | null>(null);
   const [modal, setModal] = useState(false);
@@ -111,4 +111,4 @@ function Event() {
   );
 }
 
-export default Event;
+export default EventPage;
