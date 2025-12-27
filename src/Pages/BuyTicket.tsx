@@ -7,7 +7,7 @@ import { createTicket, type Ticket } from "@/api/tickets";
 import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
 import ModalTicketConfirmation from "@/components/ticket/ModalTicketConfirmation";
 
-//TODO: Pago aprobado por MercadoPago (lo dejo para el final)
+//TODO: Pago con MercadoPago (lo dejo para el final)
 
 function BuyTicket() {
   const { id, numFecha } = useParams();

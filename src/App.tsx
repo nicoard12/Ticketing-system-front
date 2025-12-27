@@ -7,7 +7,10 @@ import EventPage from "./Pages/Event";
 import Profile from "./Pages/Profile";
 import BuyTicket from "./Pages/BuyTicket";
 import Tickets from "./Pages/Tickets";
+import StaffPage from "./Pages/StaffPage";
 
+
+//Todo: eliminar redirect en cada ruta y agregar proteccion de rutas en este archivo
 export default function App() {
   return (
     <BrowserRouter>
@@ -16,6 +19,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="evento/:id" element={<EventPage />} />
           <Route path="evento/:id/fecha/:numFecha" element={<BuyTicket />} />
+          <Route path="evento/:id/fecha/:numFecha/staff" element={<StaffPage />} />
           <Route path="registrar-evento" element={<EventAdd />} />
           <Route path="editar-evento/:id" element={<EventEdit />} />
           <Route path="perfil" element={<Profile />} />

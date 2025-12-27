@@ -20,6 +20,10 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
     else navigate(`/evento/${eventId}/fecha/${index + 1}`);
   };
 
+  const goStaffPage= () =>{
+    navigate(`/evento/${eventId}/fecha/${index + 1}/staff`)
+  }
+
   if (new Date(date.fecha) < new Date()) return null;
 
   return (
@@ -36,7 +40,7 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
         })}
       </p>
 
-      <div className="flex gap-3 items-center ">
+      <div className="flex flex-col sm:flex-row gap-3 items-center ">
         {Number(date.cantidadEntradas) > 0 ? (
           <span className="text-sm font-thin">
             Quedan {date.cantidadEntradas} entradas
@@ -47,6 +51,10 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
 
         {((!user || user.rol == "normal") && Number(date.cantidadEntradas) > 0 ) && (
           <Button onClick={buyTicket}>Comprar</Button>
+        )}
+
+        {user?.rol == "staff" && (
+          <Button onClick={goStaffPage}>Comenzar</Button>
         )}
       </div>
     </div>
