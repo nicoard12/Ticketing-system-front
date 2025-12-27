@@ -10,12 +10,18 @@ function UserLogo() {
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { logout } = useAuth0();
-  const {user}= useUsuario()
+  const { user } = useUsuario();
 
   const logoutUser = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
     localStorage.removeItem("app_token");
   };
+
+  useEffect(() => {
+    window.addEventListener("auth:logout", logoutUser);
+
+    return () => window.removeEventListener("auth:logout", logoutUser);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -63,18 +69,20 @@ function UserLogo() {
                 Perfil
               </button>
             </li>
-            {user?.rol == "normal" && <li>
-              <button
-                onClick={() => {
-                  navigate("/tickets");
-                  setOpen(false);
-                }}
-                className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <Ticket className="w-4 h-4" />
-                Tickets
-              </button>
-            </li>}
+            {user?.rol == "normal" && (
+              <li>
+                <button
+                  onClick={() => {
+                    navigate("/tickets");
+                    setOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  <Ticket className="w-4 h-4" />
+                  Tickets
+                </button>
+              </li>
+            )}
             <li>
               <button
                 onClick={logoutUser}

@@ -8,9 +8,6 @@ function Profile() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [failedImage, setFailedImage] = useState(false);
 
-  useEffect(() => {
-    
-  }, [user]);
 
   if (isLoading || !user) {
     return <div>Loading ...</div>;

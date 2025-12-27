@@ -17,6 +17,10 @@ function ticketVencido(t: Ticket): boolean {
   return new Date(fechaEvento) < new Date();
 }
 
+function eventExist(t: Ticket) {
+  return !!t.event && t.event.fechas.find((f) => f._id == t.eventDateId);
+}
+
 function Tickets() {
   const { user } = useUsuario();
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -42,7 +46,8 @@ function Tickets() {
       const response = await getTicketsByUser();
       setTickets(response);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Error al obtener los tickets";
+      const errorMessage =
+        error instanceof Error ? error.message : "Error al obtener los tickets";
       toast.error(errorMessage);
     }
   };
@@ -56,13 +61,19 @@ function Tickets() {
     if (currentTab == "activados") {
       setFilteredTickets(
         tickets.filter(
-          (t) => t.status === "active" && !ticketVencido(t) && !esTransferido(t)
+          (t) =>
+            t.status === "active" &&
+            !ticketVencido(t) &&
+            !esTransferido(t) &&
+            eventExist(t)
         )
       );
     } else if (currentTab == "desactivados") {
       setFilteredTickets(
         tickets.filter(
-          (t) => t.status === "used" || ticketVencido(t) || esTransferido(t)
+          (t) =>
+            (t.status === "used" || ticketVencido(t) || esTransferido(t)) &&
+            eventExist(t)
         )
       );
     } else {
@@ -71,7 +82,8 @@ function Tickets() {
           (t) =>
             t.status === "pending_verification" &&
             !ticketVencido(t) &&
-            !esTransferido(t)
+            !esTransferido(t) &&
+            eventExist(t)
         )
       );
     }
@@ -100,12 +112,12 @@ function Tickets() {
       {filteredTickets.length == 0 && (
         <div className="text-gray-400 flex justify-center items-center mt-10 text-lg">
           {currentTab == "activados" ? (
-            <p>Acá se mostrarán los tickets de tus próximos eventos.</p>
+            <p>Aquí se mostrarán los tickets de tus próximos eventos.</p>
           ) : currentTab == "desactivados" ? (
-            <p>Acá se mostrarán los tickets transferidos, usados o vencidos.</p>
+            <p>Aquí se mostrarán los tickets transferidos, usados o vencidos.</p>
           ) : (
             <p>
-              Acá se mostrarán tickets para los cuales te faltó verificar un
+              Aquí se mostrarán tickets para los cuales te faltó verificar un
               email.
             </p>
           )}
