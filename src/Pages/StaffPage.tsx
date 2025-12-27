@@ -9,10 +9,19 @@ function StaffPage() {
   const { id, numFecha } = useParams();
   const { user, contextLoading } = useUsuario();
   const [event, setEvent] = useState<Event | null>(null);
+  const [showQRscanner, setShowQRscanner]= useState(true)
   const [selectedDate, setSelectedDate] = useState<EventDate | undefined>(
     undefined
   );
   const navigate = useNavigate();
+
+  const validate= (qrCode: string)=>{
+    toast.success(qrCode)
+    setShowQRscanner(false)
+    setTimeout(() =>{
+      setShowQRscanner(true)
+    },1000)
+  }
 
   useEffect(() => {
     const getEvent = async () => {
@@ -59,13 +68,7 @@ function StaffPage() {
         <p className="text-lg font-medium">{formattedDate}</p>
       </div>
 
-      <div>
-        asds
-      </div>
-
-      <QRScanner />
-
-      <p className="font-medium">Apunte con la cámara al QR para validar.</p>
+      {showQRscanner && <QRScanner validate={validate}/>}
     </div>
   );
 }
