@@ -22,7 +22,7 @@ function StaffPage() {
   const validate = async (qrCode: string) => {
     setShowQRscanner(false);
     try {
-      const response = await validateQR(qrCode);
+      const response = await validateQR(qrCode, event!._id, selectedDate!._id!);
       setValidation(response);
       setOpenQRConfirmation(true);
     } catch (error) {

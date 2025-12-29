@@ -112,35 +112,35 @@ export const transferTicket = async (
   email: string
 ) => {
   try {
-    const response = await api.post<boolean>(`/tickets/${ticketId}/transfer`,{
-      quantity, email
+    const response = await api.post<boolean>(`/tickets/${ticketId}/transfer`, {
+      quantity,
+      email,
     });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(
-        error.response?.data?.message ||
-          "Error al transferir el ticket"
+        error.response?.data?.message || "Error al transferir el ticket"
       );
     }
     throw new Error("Error inesperado");
   }
 };
 
-
-export const validateQR= async (qrCode: string) =>{
+export const validateQR = async (qrCode: string, eventId: string, eventDateId: string) => {
   try {
-    const response = await api.patch<Validation>(`/tickets/validate-qr`,{
-      qrCode
+    const response = await api.patch<Validation>(`/tickets/validate-qr`, {
+      qrCode,
+      eventId,
+      eventDateId
     });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(
-        error.response?.data?.message ||
-          "Error al validar el QR"
+        error.response?.data?.message || "Error al validar el QR"
       );
     }
     throw new Error("Error inesperado");
   }
-}
+};
