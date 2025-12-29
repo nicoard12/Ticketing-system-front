@@ -20,7 +20,7 @@ export type Ticket = {
 export type Validation = {
   isValid: boolean;
   message: string;
-  quantity: number;
+  quantity?: number;
 };
 
 export const createTicket = async (
