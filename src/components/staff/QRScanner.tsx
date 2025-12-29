@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr";
-import { toast } from "sonner";
 
 export default function QRScanner({validate}: {validate: (qrCode: string) => void}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -51,8 +50,6 @@ export default function QRScanner({validate}: {validate: (qrCode: string) => voi
       }
       animationFrameId = requestAnimationFrame(scanFrame);
     };
-
-    toast.warning(qrCode ?? "No hay qrcode")
 
     if (!qrCode) startCamera();
     else validate(qrCode)    

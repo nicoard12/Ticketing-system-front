@@ -17,6 +17,12 @@ export type Ticket = {
   dateCreated: Date;
 };
 
+export type Validation = {
+  isValid: boolean;
+  message: string;
+  quantity: number;
+};
+
 export const createTicket = async (
   event: string,
   eventDateId: string,
