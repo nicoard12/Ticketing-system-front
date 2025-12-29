@@ -1,5 +1,5 @@
 import { getEventById, type Event, type EventDate } from "@/api/events";
-import { type Validation } from "@/api/tickets";
+import { validateQR, type Validation } from "@/api/tickets";
 import QRConfirmation from "@/components/staff/QRConfirmation";
 import QRScanner from "@/components/staff/QRScanner";
 import { useUsuario } from "@/context/UserContext";
@@ -21,20 +21,17 @@ function StaffPage() {
 
   const validate = async (qrCode: string) => {
     setShowQRscanner(false);
-    console.log(qrCode)
-    setValidation({isValid:true, message:"Ticket valido", quantity: 2})
-    //TODO try{
-    // const response= await validateQR(qrCode) //devolver state isValid, message y ticket
-    // setValidation(response)
-    // setOpenQRConfirmation(true)
-    //} catch(error){
-    // toast.error(
-    //   error instanceof Error
-    //     ? error.message
-    //     : "Error al cargar el evento. Intente nuevamente."
-    // );
-    // }
-    setOpenQRConfirmation(true);
+    try {
+      const response = await validateQR(qrCode);
+      setValidation(response);
+      setOpenQRConfirmation(true);
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error al escanear el codigo QR. Intente nuevamente."
+      );
+    }
   };
 
   const closeQRConfirmation = () => {
@@ -70,7 +67,7 @@ function StaffPage() {
     if (!user || user.rol !== "staff") {
       navigate("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, contextLoading]);
 
   const formattedDate = selectedDate?.fecha
@@ -93,7 +90,9 @@ function StaffPage() {
 
       {showQRscanner && <QRScanner validate={validate} />}
 
-      {openQRConfirmation && <QRConfirmation validation={validation} close={closeQRConfirmation}/>}
+      {openQRConfirmation && (
+        <QRConfirmation validation={validation} close={closeQRConfirmation} />
+      )}
     </div>
   );
 }

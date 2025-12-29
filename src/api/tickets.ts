@@ -120,9 +120,27 @@ export const transferTicket = async (
     if (axios.isAxiosError(error)) {
       throw new Error(
         error.response?.data?.message ||
-          "Error al obtener los tickets del usuario"
+          "Error al transferir el ticket"
       );
     }
     throw new Error("Error inesperado");
   }
 };
+
+
+export const validateQR= async (qrCode: string) =>{
+  try {
+    const response = await api.patch<Validation>(`/tickets/validate-qr`,{
+      qrCode
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ||
+          "Error al validar el QR"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
+}
