@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { createTicket } from "@/api/tickets";
 import PaymentPendingOptions from "@/components/ticket/PaymentPendingOptions";
+import { Loader } from "lucide-react";
 
 function BuyTicket() {
   const { id, numFecha } = useParams();
@@ -14,11 +15,13 @@ function BuyTicket() {
   );
   const [cantidad, setCantidad] = useState(1);
   const [getEventNormally, setGetEventNormally] = useState<boolean>(false);
+  const [buying, setBuying] = useState(false);
 
   const comprar = async () => {
     try {
+      setBuying(true);
       const paymentUrl = await createTicket(id!, selectedDate!._id!, cantidad);
-      console.log("Este seria el url de pago: ", paymentUrl);
+      window.open(paymentUrl, "_blank", "noopener,noreferrer");
     } catch (error) {
       const errorMessage =
         error instanceof Error
@@ -107,9 +110,16 @@ function BuyTicket() {
           ${cantidad * (Number(event.precioEntrada) || 0)}
         </p>
       </div>
-      <Button onClick={comprar} className="w-full">
-        Comprar
-      </Button>
+
+      {buying ? (
+        <div className="w-full flex items-center justify-center"> {/*TODO: cambiar por mejor loader*/}
+          <Loader />
+        </div>
+      ) : (
+        <Button onClick={comprar} className="w-full">
+          Comprar
+        </Button>
+      )}
     </div>
   );
 }

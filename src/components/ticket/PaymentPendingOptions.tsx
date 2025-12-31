@@ -44,6 +44,10 @@ function PaymentPendingOptions({
     }
   };
 
+  const goToPay= () =>{
+    window.open(pendingTicket!.payment_url, "_blank", "noopener,noreferrer");
+  } 
+
   useEffect(() => {
     const getTicketPP = async () => {
       try {
@@ -93,7 +97,7 @@ function PaymentPendingOptions({
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-100 p-5">
       <div className="flex flex-col gap-3 p-6 sm:p-8 bg-white rounded-2xl text-black">
         <div className="flex items-center gap-4">
-          <div className="flex-none bg-amber-100 text-amber-700 rounded-full p-3">
+          <div className="flex bg-amber-100 text-amber-700 rounded-full p-3">
             <AlertCircle />
           </div>
           <h3 className="flex-1 text-lg font-semibold">
@@ -128,8 +132,8 @@ function PaymentPendingOptions({
             </div>
           </div>
 
-          <div className="bg-slate-50 border border-slate-100 p-4 rounded-lg flex items-end justify-between">
-            <div>
+          <div className="bg-slate-50 border border-slate-100 p-4 rounded-lg flex flex-col gap-2 sm:flex-row sm:items-end justify-between">
+            <div className="flex flex-row sm:flex-col items-end sm:items-start gap-2">
               <p className="text-sm text-slate-500">Cantidad</p>
               <p className="font-medium text-slate-800">
                 {pendingTicket?.quantity ?? "—"} entradas
@@ -149,8 +153,8 @@ function PaymentPendingOptions({
           </div>
         </div>
 
-        <div className="flex gap-3 ">
-          <Button variant={"secondary"}>Continuar con el pago</Button>
+        <div className="flex flex-col sm:flex-row gap-3 ">
+          <Button onClick={goToPay} variant={"secondary"}>Continuar con el pago</Button>
           <Button onClick={cancelPendingTicket} variant={"outline"}>
             Cancelar y empezar de nuevo
           </Button>
