@@ -19,6 +19,8 @@ export type Ticket = {
   status: StatusTicket;
   price: number;
   dateCreated: Date;
+  payment_url?: string;
+  paymentExpiresAt?: Date;
 };
 
 export type Validation = {
