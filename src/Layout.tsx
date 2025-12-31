@@ -18,7 +18,7 @@ function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className={`flex flex-col flex-1 p-3 ${bgClass}`}>
+      <main className={`flex flex-col flex-1 items-center p-3 ${bgClass}`}>
         <Outlet />
       </main>
       <Toaster position="bottom-right" richColors />

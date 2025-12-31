@@ -2,7 +2,11 @@ import axios from "axios";
 import api from "./api";
 import type { Event } from "./events";
 
-export type StatusTicket = "pending_verification" | "active" | "used";
+export type StatusTicket =
+  | "pending_payment"
+  | "pending_verification"
+  | "active"
+  | "used";
 
 export type Ticket = {
   _id: string;
@@ -21,6 +25,21 @@ export type Validation = {
   isValid: boolean;
   message: string;
   quantity?: number;
+};
+
+export const getPending_payment = async () => {
+  try {
+    const response = await api.get<Ticket | null>("/tickets/pending-payment");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ||
+          "Error al obtener ticket pendiente de pago"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
 };
 
 export const createTicket = async (
@@ -127,12 +146,16 @@ export const transferTicket = async (
   }
 };
 
-export const validateQR = async (qrCode: string, eventId: string, eventDateId: string) => {
+export const validateQR = async (
+  qrCode: string,
+  eventId: string,
+  eventDateId: string
+) => {
   try {
     const response = await api.patch<Validation>(`/tickets/validate-qr`, {
       qrCode,
       eventId,
-      eventDateId
+      eventDateId,
     });
     return response.data;
   } catch (error) {
