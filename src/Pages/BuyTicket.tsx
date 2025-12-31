@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { createTicket, getPending_payment, type Ticket } from "@/api/tickets";
-import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
-import ModalTicketConfirmation from "@/components/ticket/ModalTicketConfirmation";
+import { createTicket } from "@/api/tickets";
 import PaymentPendingOptions from "@/components/ticket/PaymentPendingOptions";
 
 function BuyTicket() {
@@ -15,16 +13,12 @@ function BuyTicket() {
     undefined
   );
   const [cantidad, setCantidad] = useState(1);
-  const [openVerificationCode, setOpenVerificationCode] = useState(false);
-  const [openTicketConfirmation, setOpenTicketConfirmation] = useState(false);
-  const [ticket, setTicket] = useState<Ticket | null>(null);
   const [getEventNormally, setGetEventNormally] = useState<boolean>(false);
 
   const comprar = async () => {
     try {
-      const ticket = await createTicket(id!, selectedDate!._id!, cantidad);
-      setTicket(ticket);
-      setOpenVerificationCode(true);
+      const paymentUrl = await createTicket(id!, selectedDate!._id!, cantidad);
+      console.log("Este seria el url de pago: ", paymentUrl);
     } catch (error) {
       const errorMessage =
         error instanceof Error
@@ -32,11 +26,6 @@ function BuyTicket() {
           : "Error al intentar comprar el ticket";
       toast.error(errorMessage);
     }
-  };
-
-  const closeVerification = () => {
-    setOpenVerificationCode(false);
-    setOpenTicketConfirmation(true);
   };
 
   useEffect(() => {
@@ -61,7 +50,7 @@ function BuyTicket() {
 
   if (!getEventNormally)
     return <PaymentPendingOptions setGetEventNormally={setGetEventNormally} />;
-  
+
   if (!event) return null;
   return (
     <div className="bg-white border border-gray-300 rounded shadow p-6 w/full sm:w-1/2 flex flex-col gap-4 text-black">
@@ -121,11 +110,6 @@ function BuyTicket() {
       <Button onClick={comprar} className="w-full">
         Comprar
       </Button>
-
-      {openVerificationCode && (
-        <ModalVerificationCode ticket={ticket!} onClose={closeVerification} />
-      )}
-      {openTicketConfirmation && <ModalTicketConfirmation />}
     </div>
   );
 }

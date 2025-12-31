@@ -48,7 +48,7 @@ export const createTicket = async (
   quantity: number
 ) => {
   try {
-    const response = await api.post<Ticket>("/tickets", {
+    const response = await api.post<string>("/tickets", {
       event,
       eventDateId,
       quantity,
