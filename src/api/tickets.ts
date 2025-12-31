@@ -29,6 +29,11 @@ export type Validation = {
   quantity?: number;
 };
 
+export type CreateTicketResponse = {
+  url: string;
+  ticketId: string;
+}
+
 export const getPending_payment = async () => {
   try {
     const response = await api.get<Ticket | null>("/tickets/pending-payment");
@@ -50,7 +55,7 @@ export const createTicket = async (
   quantity: number
 ) => {
   try {
-    const response = await api.post<string>("/tickets", {
+    const response = await api.post<CreateTicketResponse>("/tickets", {
       event,
       eventDateId,
       quantity,

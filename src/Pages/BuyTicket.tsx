@@ -20,8 +20,9 @@ function BuyTicket() {
   const comprar = async () => {
     try {
       setBuying(true);
-      const paymentUrl = await createTicket(id!, selectedDate!._id!, cantidad);
-      window.open(paymentUrl, "_blank", "noopener,noreferrer");
+      const response = await createTicket(id!, selectedDate!._id!, cantidad);
+      //TODO: crear socket con response.ticketId
+      window.open(response.url, "_blank", "noopener,noreferrer");
     } catch (error) {
       const errorMessage =
         error instanceof Error
