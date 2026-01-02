@@ -117,7 +117,7 @@ function BuyTicket() {
         <Spinner />
       ) : (
         <Button onClick={comprar} className="w-full">
-          Comprar
+          Confirmar compra
         </Button>
       )}
     </div>
