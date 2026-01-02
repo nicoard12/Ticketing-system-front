@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { UserIcon, LogOutIcon, CircleUserRound, Ticket } from "lucide-react";
+import { LogOutIcon, CircleUserRound, Ticket } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "@/context/UserContext";
@@ -57,18 +57,6 @@ function UserLogo() {
       {open && (
         <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10 text-sm">
           <ul className="py-1">
-            <li>
-              <button
-                onClick={() => {
-                  navigate("/perfil");
-                  setOpen(false);
-                }}
-                className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <UserIcon className="w-4 h-4" />
-                Perfil
-              </button>
-            </li>
             {user?.rol == "normal" && (
               <li>
                 <button

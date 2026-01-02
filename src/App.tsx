@@ -4,7 +4,6 @@ import Layout from "./Layout";
 import EventAdd from "./Pages/EventAdd";
 import EventEdit from "./Pages/EventEdit";
 import EventPage from "./Pages/Event";
-import Profile from "./Pages/Profile";
 import BuyTicket from "./Pages/BuyTicket";
 import Tickets from "./Pages/Tickets";
 import StaffPage from "./Pages/StaffPage";
@@ -24,7 +23,6 @@ export default function App() {
           <Route path="ticket/:id" element={<VerifyPayment />} />
           <Route path="registrar-evento" element={<EventAdd />} />
           <Route path="editar-evento/:id" element={<EventEdit />} />
-          <Route path="perfil" element={<Profile />} />
           <Route path="tickets" element={<Tickets />} />
         </Route>
       </Routes>
