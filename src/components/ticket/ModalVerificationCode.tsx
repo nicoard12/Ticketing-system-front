@@ -26,6 +26,7 @@ function ModalVerificationCode({
   const confirmarEmail = async () => {
     try {
       await verifyTicketCode(ticket!._id, code);
+      toast.success("Verificación exitosa")
       onClose()
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Error al verificar el codigo";
@@ -69,7 +70,7 @@ function ModalVerificationCode({
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-100 p-5">
-      <div className="bg-white rounded-xl p-7 flex flex-col items-center justify-between gap-5">
+      <div className="bg-white rounded-xl p-6 flex flex-col items-center justify-between gap-5 text-black">
         <header className="flex flex-col gap-1">
           <h2 className="text-3xl font-bold">Verificación de email</h2>
           <p className="text-gray-600">

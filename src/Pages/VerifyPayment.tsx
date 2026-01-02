@@ -1,37 +1,101 @@
 import Spinner from "@/components/Spinner";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { io } from "socket.io-client";
+import { getPending_payment, type Ticket } from "@/api/tickets";
+import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
+
+const socket = io(import.meta.env.VITE_API_URL);
+
+type SocketData = {
+  status: string;
+  ticket: Ticket;
+};
 
 function VerifyPayment() {
   const { id } = useParams();
+  const [paymentFailed, setPaymentFailed] = useState(false);
+  const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [openSocket, setOpenSocket] = useState(false);
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
 
   useEffect(() => {
-    const verifyPayment = async () => {
+    if (!id && !openSocket) return;
+
+    const ticketHandler = (data: SocketData) => {
+      console.log(data);
+      if (data.status === "PAID") {
+        setTicket(data.ticket);
+      } else {
+        setPaymentFailed(true);
+      }
+    };
+
+    const connectErrorHandler = () => {
+      toast.error("Error de conexión con el servidor.");
+      setPaymentFailed(true);
+    };
+
+    socket.on(`ticket-${id}`, ticketHandler);
+    socket.on("connect_error", connectErrorHandler);
+
+    return () => {
+      socket.off(`ticket-${id}`, ticketHandler);
+      socket.off("connect_error", connectErrorHandler);
+    };
+  }, [id, openSocket]);
+
+  useEffect(() => {
+    const getTicketPP = async () => {
       try {
-        //socket
+        const response = await getPending_payment();
+        if (response) {
+          if (id !== response._id) navigate("/tickets");
+          else setOpenSocket(true);
+        } else navigate("/tickets");
       } catch (error) {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Error al verificar el pago. Intente nuevamente."
+            : "Error. Por favor reinicia la pagina"
         );
       }
     };
-
-    if (id) verifyPayment();
+    if (!id) return;
+    getTicketPP();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  if (!openSocket) return null
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center p-8 bg-white rounded-xl shadow-lg text-center">
-      <Spinner />
-      <h1 className="text-2xl font-bold text-gray-900">
-        Procesando tu pago 💳
-      </h1>
-      <p className="text-gray-600 max-w-sm">
-        Estamos confirmando la operación. En segundos te mandamos al siguiente
-        paso.
-      </p>
+      {ticket ? (
+        <>
+          <h1 className="text-2xl font-bold text-gray-900">¡Pago exitoso!</h1>
+          <ModalVerificationCode ticket={ticket} onClose={goHome} />
+        </>
+      ) : paymentFailed ? (
+        <h1 className="text-2xl font-bold text-gray-900">
+          Hubo un error con el pago.
+        </h1>
+      ) : (
+        <>
+          <Spinner />
+          <h1 className="text-2xl font-bold text-gray-900">
+            Procesando tu pago 💳
+          </h1>
+          <p className="text-gray-600 max-w-sm">
+            Estamos confirmando la operación. En segundos te mandamos al
+            siguiente paso.
+          </p>
+        </>
+      )}
     </div>
   );
 }
