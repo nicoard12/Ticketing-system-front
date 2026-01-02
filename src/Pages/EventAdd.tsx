@@ -31,6 +31,7 @@ function RegistrarEvento() {
     if (!user || user.rol !== "productor") {
       navigate("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, contextLoading]);
 
   return (

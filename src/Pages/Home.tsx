@@ -42,6 +42,7 @@ function Home() {
         error &&
         typeof error === "object" &&
         "code" in error &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (error as any).code === "ERR_NETWORK"
       ) {
         toast.error(
@@ -83,7 +84,7 @@ function Home() {
       )}
 
       {users.length > 0 && (
-        <div className="flex flex-col gap-3 w-full sm:w-1/2">
+        <div className="flex flex-col gap-3 w-full">
           {users.map((user) => (
             <UserCard key={user.idAuth} user={user} />
           ))}
