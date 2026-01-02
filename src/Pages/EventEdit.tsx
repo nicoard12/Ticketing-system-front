@@ -45,7 +45,7 @@ function EventEdit() {
   }, [user, contextLoading]);
 
   return (
-    <div className="flex flex-col gap-6 justify-center items-center">
+    <div className="flex flex-col gap-6 justify-center items-center w-full">
       <h1 className="text-3xl font-semibold">Editar evento</h1>
       <EventForm
         submit={editarEvento}
