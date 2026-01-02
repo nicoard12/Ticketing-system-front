@@ -1,11 +1,11 @@
 import { getEventById, type EventDate, type Event } from "@/api/events";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { createTicket } from "@/api/tickets";
 import PaymentPendingOptions from "@/components/ticket/PaymentPendingOptions";
-import { Loader } from "lucide-react";
+import Spinner from "@/components/Spinner";
 
 function BuyTicket() {
   const { id, numFecha } = useParams();
@@ -16,13 +16,14 @@ function BuyTicket() {
   const [cantidad, setCantidad] = useState(1);
   const [getEventNormally, setGetEventNormally] = useState<boolean>(false);
   const [buying, setBuying] = useState(false);
+  const navigate = useNavigate();
 
   const comprar = async () => {
     try {
       setBuying(true);
       const response = await createTicket(id!, selectedDate!._id!, cantidad);
-      //TODO: crear socket con response.ticketId
       window.open(response.url, "_blank", "noopener,noreferrer");
+      navigate(`/ticket/${response.ticketId}`);
     } catch (error) {
       const errorMessage =
         error instanceof Error
@@ -113,9 +114,7 @@ function BuyTicket() {
       </div>
 
       {buying ? (
-        <div className="w-full flex items-center justify-center"> {/*TODO: cambiar por mejor loader*/}
-          <Loader />
-        </div>
+        <Spinner />
       ) : (
         <Button onClick={comprar} className="w-full">
           Comprar

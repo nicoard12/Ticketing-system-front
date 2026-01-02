@@ -43,8 +43,7 @@ export default function QRScanner({validate}: {validate: (qrCode: string) => voi
           const code = jsQR(imageData.data, canvas.width, canvas.height);
           if (code) {
             setQrCode(code.data);
-            console.log("QR detectado:", code.data);
-            return; // parar escaneo hasta que el componente se remonte
+            return;
           }
         }
       }

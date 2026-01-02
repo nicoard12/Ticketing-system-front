@@ -32,7 +32,7 @@ export type Validation = {
 export type CreateTicketResponse = {
   url: string;
   ticketId: string;
-}
+};
 
 export const getPending_payment = async () => {
   try {
@@ -164,6 +164,22 @@ export const validateQR = async (
       eventId,
       eventDateId,
     });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Error al validar el QR"
+      );
+    }
+    throw new Error("Error inesperado");
+  }
+};
+
+export const removePendingTicket = async (ticketId: string) => {
+  try {
+    const response = await api.delete<boolean>(
+      `/tickets/pending-payment/${ticketId}`
+    );
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -1,8 +1,13 @@
-import { getPending_payment, type Ticket } from "@/api/tickets";
+import {
+  getPending_payment,
+  removePendingTicket,
+  type Ticket,
+} from "@/api/tickets";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AlertCircle, Clock } from "lucide-react";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 type PaymentPendingOptionsProps = {
   setGetEventNormally: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +19,7 @@ function PaymentPendingOptions({
   const [open, setOpen] = useState(false);
   const [pendingTicket, setPendingTicket] = useState<Ticket | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const formatRemaining = (ms: number | null) => {
     if (ms === null) return "--";
@@ -33,7 +39,7 @@ function PaymentPendingOptions({
 
   const cancelPendingTicket = async () => {
     try {
-      //TODO: eliminar o poner en vencido pendingTicket
+      await removePendingTicket(pendingTicket!._id);
       setGetEventNormally(true);
     } catch (error) {
       toast.error(
@@ -44,9 +50,10 @@ function PaymentPendingOptions({
     }
   };
 
-  const goToPay= () =>{
+  const goToPay = () => {
     window.open(pendingTicket!.payment_url, "_blank", "noopener,noreferrer");
-  } 
+    navigate(`/ticket/${pendingTicket!._id}`);
+  };
 
   useEffect(() => {
     const getTicketPP = async () => {
@@ -55,7 +62,6 @@ function PaymentPendingOptions({
         if (response) {
           setOpen(true);
           setPendingTicket(response);
-          //abrir modal dando opciones de seguir con pago (redirigir a response.payment_url) o cancelar y empezar d nuevo
         } else setGetEventNormally(true);
       } catch (error) {
         toast.error(
@@ -66,6 +72,7 @@ function PaymentPendingOptions({
       }
     };
     getTicketPP();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -88,9 +95,10 @@ function PaymentPendingOptions({
     return () => clearInterval(id);
   }, [pendingTicket?.paymentExpiresAt]);
 
-  useEffect(() =>{
-    if (timeLeft == 0) setGetEventNormally(true)
-  },[timeLeft])
+  useEffect(() => {
+    if (timeLeft == 0) setGetEventNormally(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeLeft]);
 
   if (!open) return null;
   return (
@@ -148,13 +156,17 @@ function PaymentPendingOptions({
 
         <div className="flex itesm-start">
           <div className="flex items-center gap-2 bg-amber-50 text-amber-700 py-2 px-3 text-sm rounded-full font-medium">
-            <Clock size={14}/>
-            <span>{timeLeft == 0 ? "" : "Link vence en "} {formatRemaining(timeLeft)}</span>
+            <Clock size={14} />
+            <span>
+              {timeLeft == 0 ? "" : "Expira en "} {formatRemaining(timeLeft)}
+            </span>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 ">
-          <Button onClick={goToPay} variant={"secondary"}>Continuar con el pago</Button>
+          <Button onClick={goToPay} variant={"secondary"}>
+            Continuar con el pago
+          </Button>
           <Button onClick={cancelPendingTicket} variant={"outline"}>
             Cancelar y empezar de nuevo
           </Button>
