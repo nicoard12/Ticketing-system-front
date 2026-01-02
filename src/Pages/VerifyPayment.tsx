@@ -32,7 +32,9 @@ function VerifyPayment() {
       if (data.status === "PAID") {
         setTicket(data.ticket);
       } else {
+        toast.error("El pago expiró, vuelve a comprar tus tickets.")
         setPaymentFailed(true);
+        navigate("/")
       }
     };
 
@@ -48,6 +50,7 @@ function VerifyPayment() {
       socket.off(`ticket-${id}`, ticketHandler);
       socket.off("connect_error", connectErrorHandler);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, openSocket]);
 
   useEffect(() => {
