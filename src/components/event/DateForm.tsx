@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import type { Event, EventDate } from "@/api/events";
 import DateAndTicketsForm from "./DateAndTicketsForm";
 
-type DateFormProps = {    //TODO se si es edit si traigo eventoEditable
+type DateFormProps = {
   setEvento: React.Dispatch<React.SetStateAction<Omit<Event, "_id" | "createdBy">>>;
   fechasEditables?: EventDate[];
 };

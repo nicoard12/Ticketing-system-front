@@ -9,8 +9,6 @@ import Tickets from "./Pages/Tickets";
 import StaffPage from "./Pages/StaffPage";
 import VerifyPayment from "./Pages/VerifyPayment";
 
-
-//Todo: eliminar redirect en cada ruta y agregar proteccion de rutas en este archivo
 export default function App() {
   return (
     <BrowserRouter>
