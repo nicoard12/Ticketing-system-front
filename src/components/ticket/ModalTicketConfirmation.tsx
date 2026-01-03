@@ -1,16 +1,14 @@
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 
-function ModalTicketConfirmation() {
+function ModalTicketConfirmation({onClose}: {onClose: () => void}) {
   const navigate = useNavigate();
 
-  const finishBuying = () => {
-    navigate("/");
-  };
+
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-100 p-5">
-      <div className="bg-white rounded-xl p-7 flex flex-col items-center justify-between gap-5 max-w-md w-full">
+      <div className="bg-white rounded-xl p-7 flex flex-col items-center justify-between gap-5 max-w-md w-full text-black">
         <header className="flex flex-col gap-1 text-center">
           <h2 className="text-2xl font-bold">¡Listo!</h2>
         </header>
@@ -23,7 +21,7 @@ function ModalTicketConfirmation() {
         </main>
 
         <footer className="w-full flex justify-center">
-          <Button type="button" onClick={finishBuying} size="lg">
+          <Button type="button" onClick={onClose} size="lg">
             Aceptar
           </Button>
         </footer>

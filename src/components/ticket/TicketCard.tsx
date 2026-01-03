@@ -7,6 +7,7 @@ import ModalVerificationCode from "./ModalVerificationCode";
 import { toast } from "sonner";
 import ModalTransfer from "./ModalTransfer";
 import TransferInfo from "./TransferInfo";
+import ModalTicketConfirmation from "./ModalTicketConfirmation";
 
 function TicketCard({
   ticket,
@@ -18,6 +19,7 @@ function TicketCard({
   getTicketsAgain: () => void;
 }) {
   const [openVerificationModal, setOpenVerificationModal] = useState(false);
+  const [openTicketConfirmation, setOpenTicketConfirmation] = useState(false);
   const [openTransferModal, setOpenTransferModal] = useState(false);
   const [tab, setTab] = useState(currentTab);
   const totalPrice = ticket.price * ticket.quantity;
@@ -27,15 +29,16 @@ function TicketCard({
     try {
       await sendTicketCode(ticket!._id);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Error al activar el ticket";
+      const errorMessage =
+        error instanceof Error ? error.message : "Error al activar el ticket";
       toast.error(errorMessage);
     }
     setOpenVerificationModal(true);
   };
 
   const closeVerification = () => {
-    getTicketsAgain();
-    toast.success("Ticket activado");
+    setOpenVerificationModal(false)
+    setOpenTicketConfirmation(true);
   };
 
   useEffect(() => {
@@ -77,7 +80,10 @@ function TicketCard({
           <span className="font-medium">Cantidad:</span> {ticket.quantity}
         </p>
         <p className="text-gray-600">
-          <span className="font-medium">Fecha del evento:</span> {new Date(ticket.event.fechas.find(f => f._id == ticket.eventDateId)!.fecha).toLocaleDateString()}
+          <span className="font-medium">Fecha del evento:</span>{" "}
+          {new Date(
+            ticket.event.fechas.find((f) => f._id == ticket.eventDateId)!.fecha
+          ).toLocaleDateString()}
         </p>
         <p className="text-gray-600">
           <span className="font-medium">Fecha de compra:</span> {formattedDate}
@@ -97,6 +103,7 @@ function TicketCard({
       {openVerificationModal && (
         <ModalVerificationCode ticket={ticket} onClose={closeVerification} />
       )}
+      {openTicketConfirmation && <ModalTicketConfirmation onClose={() => getTicketsAgain()}/>}
 
       {openTransferModal && (
         <ModalTransfer

@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { io } from "socket.io-client";
 import { getPending_payment, type Ticket } from "@/api/tickets";
 import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
+import ModalTicketConfirmation from "@/components/ticket/ModalTicketConfirmation";
 
 const socket = io(import.meta.env.VITE_API_URL);
 
@@ -18,10 +19,11 @@ function VerifyPayment() {
   const [paymentFailed, setPaymentFailed] = useState(false);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [openSocket, setOpenSocket] = useState(false);
+  const [openTicketConfirmation, setOpenTicketConfirmation]= useState(false)
   const navigate = useNavigate();
 
-  const goHome = () => {
-    navigate("/");
+  const closeVerificationCode = () => {
+    setOpenTicketConfirmation(true)
   };
 
   useEffect(() => {
@@ -81,7 +83,8 @@ function VerifyPayment() {
       {ticket ? (
         <>
           <h1 className="text-2xl font-bold text-gray-900">¡Pago exitoso!</h1>
-          <ModalVerificationCode ticket={ticket} onClose={goHome} />
+          <ModalVerificationCode ticket={ticket} onClose={closeVerificationCode} />
+          {openTicketConfirmation && <ModalTicketConfirmation onClose={() => navigate("/")} />}
         </>
       ) : paymentFailed ? (
         <h1 className="text-2xl font-bold text-gray-900">
