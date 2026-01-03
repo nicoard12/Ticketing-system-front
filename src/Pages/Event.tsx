@@ -58,7 +58,7 @@ function EventPage() {
       </div>
 
       <div className="flex flex-col flex-1 gap-5 justify-between ">
-        <div>
+        <div className="flex flex-col gap-2">
           <div className="flex flex-col-reverse sm:flex-row justify-between gap-1">
             <h1 data-cy="title" className="font-semibold text-2xl">
               {evento?.titulo}
@@ -83,11 +83,11 @@ function EventPage() {
                 </div>
               )}
           </div>
-          <p className="text-base overflow-y-auto max-h-[200px] break-all">
+          <p className="text-base overflow-y-auto max-h-[200px] break-words">
             {evento?.descripcion}
           </p>
         </div>
-        <div className="flex flex-col gap-2 items-start w-full overflow-y-auto">
+        <div className="flex flex-col flex-1 gap-2 items-start w-full overflow-y-auto">
           <h2 className="text-lg font-semibold">Fechas</h2>
           <div className="flex flex-col gap-2 justify-start items-start pr-1 w-full">
             {evento?.fechas.map((f, index) => {

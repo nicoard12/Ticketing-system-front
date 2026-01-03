@@ -4,6 +4,7 @@ import type { Event } from "@/api/events";
 import DateForm from "./DateForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import Spinner from "../Spinner";
 
 type EventFormProps = {
   submit: (
@@ -207,9 +208,7 @@ function EventForm({
       </div>
 
       {loading ? (
-        <p className="bg-gray-100 rounded shadow p-3 mt-3">
-          {eventoEditable ? "Guardando..." : "Creando evento..."}
-        </p>
+        <Spinner />
       ) : (
         <div className="flex gap-3 mt-5">
           <Button
