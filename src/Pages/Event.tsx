@@ -31,20 +31,32 @@ function EventPage() {
       toast.warning("Evento eliminado");
       navigate("/");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Error al intentar eliminar el evento";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Error al intentar eliminar el evento";
       toast.error(errorMessage);
     }
   };
 
   useEffect(() => {
     const getEvent = async () => {
-      const response = await getEventById(id!);
-      setEvento(response);
+      try {
+        const response = await getEventById(id!);
+        setEvento(response);
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "Error al obtener el evento. Intente nuevamente."
+        );
+      }
     };
 
     if (id) getEvent();
   }, [id]);
 
+  if (!evento) return null
   return (
     <div className="lg:h-[500px] 2xl:h-[700px] text-primary flex flex-col lg:flex-row p-3 gap-5 bg-white border border-gray-300 rounded shadow">
       <div className="aspect-square flex items-center justify-center overflow-hidden rounded w-full lg:w-1/3 ">
@@ -92,7 +104,12 @@ function EventPage() {
           <div className="flex flex-col gap-2 justify-start items-start pr-1 w-full">
             {evento?.fechas.map((f, index) => {
               return (
-                <EventDateItem key={f._id} date={f} eventId={evento._id} index={index} />
+                <EventDateItem
+                  key={f._id}
+                  date={f}
+                  eventId={evento._id}
+                  index={index}
+                />
               );
             })}
           </div>
