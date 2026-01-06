@@ -19,10 +19,12 @@ function VerifyPayment() {
   const [paymentFailed, setPaymentFailed] = useState(false);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [openSocket, setOpenSocket] = useState(false);
+  const [openTicketVerification, setOpenTicketVerification]= useState(false)
   const [openTicketConfirmation, setOpenTicketConfirmation]= useState(false)
   const navigate = useNavigate();
 
   const closeVerificationCode = () => {
+    setOpenTicketVerification(false)
     setOpenTicketConfirmation(true)
   };
 
@@ -30,9 +32,9 @@ function VerifyPayment() {
     if (!id && !openSocket) return;
 
     const ticketHandler = (data: SocketData) => {
-      console.log(data);
       if (data.status === "PAID") {
         setTicket(data.ticket);
+        setOpenTicketVerification(true)
       } else {
         toast.error("El pago expiró, vuelve a comprar tus tickets.")
         setPaymentFailed(true);
@@ -83,7 +85,7 @@ function VerifyPayment() {
       {ticket ? (
         <>
           <h1 className="text-2xl font-bold text-gray-900">¡Pago exitoso!</h1>
-          <ModalVerificationCode ticket={ticket} onClose={closeVerificationCode} />
+          {openTicketVerification && <ModalVerificationCode ticket={ticket} onClose={closeVerificationCode} />}
           {openTicketConfirmation && <ModalTicketConfirmation onClose={() => navigate("/")} />}
         </>
       ) : paymentFailed ? (
