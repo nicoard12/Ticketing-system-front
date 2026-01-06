@@ -24,6 +24,7 @@ function EventEdit() {
       const errorMessage =
         error instanceof Error ? error.message : "Error al editar el evento";
       toast.error(errorMessage);
+      setLoading(false);
     }
   };
 
