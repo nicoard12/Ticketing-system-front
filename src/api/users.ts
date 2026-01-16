@@ -1,4 +1,5 @@
 import api from "./api";
+import axios from "axios";
 
 export type Rol = "productor" | "normal" | "staff" | "admin";
 
@@ -20,8 +21,6 @@ export const getUsers = async () => {
   const response = await api.get<User[]>("/users");
   return response.data;
 };
-
-import axios from "axios";
 
 export const changeRoleUser = async (userId: string, role: Rol) => {
   try {
