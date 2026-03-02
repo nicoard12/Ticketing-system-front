@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import UserLogo from "./UserLogo";
 import { Button } from "./ui/button";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 
 function Header() {
   const navigate = useNavigate();

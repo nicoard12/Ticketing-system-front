@@ -1,10 +1,6 @@
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
 
 function ModalTicketConfirmation({onClose}: {onClose: () => void}) {
-  const navigate = useNavigate();
-
-
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-100 p-5">

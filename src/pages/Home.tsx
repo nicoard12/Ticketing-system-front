@@ -1,9 +1,9 @@
 import { getEvents, type Event } from "@/api/events";
 import { getUsers, type User } from "@/api/users";
-import Searcher from "@/components/Searcher";
 import EventCard from "@/components/event/EventCard";
+import Searchbar from "@/components/SearchBar";
 import UserCard from "@/components/user/UserCard";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -73,7 +73,7 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center gap-10">
-      <Searcher onSearch={onSearch} />
+      <Searchbar onSearch={onSearch} />
 
       {events.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">

@@ -6,7 +6,7 @@ import { Edit, Trash2 } from "lucide-react";
 import Modal from "@/components/Modal";
 import { toast } from "sonner";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import EventDateItem from "@/components/event/EventDateItem";
 
 function EventPage() {

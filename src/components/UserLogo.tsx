@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { LogOutIcon, CircleUserRound, Ticket } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 
 function UserLogo() {
   const [open, setOpen] = useState(false);

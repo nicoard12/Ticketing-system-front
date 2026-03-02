@@ -1,6 +1,6 @@
 import { getEventById, updateEvent, type Event } from "@/api/events";
 import EventForm from "@/components/event/EventForm";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";

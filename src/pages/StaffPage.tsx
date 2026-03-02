@@ -2,7 +2,7 @@ import { getEventById, type Event, type EventDate } from "@/api/events";
 import { validateQR, type Validation } from "@/api/tickets";
 import QRConfirmation from "@/components/staff/QRConfirmation";
 import QRScanner from "@/components/staff/QRScanner";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";

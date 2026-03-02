@@ -1,6 +1,6 @@
 import type { EventDate } from "@/api/events";
 import { Button } from "../ui/button";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import { isPast } from "date-fns";

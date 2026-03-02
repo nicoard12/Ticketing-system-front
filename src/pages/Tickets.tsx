@@ -1,7 +1,7 @@
 import { getTicketsByUser, type Ticket } from "@/api/tickets";
 import Tabs from "@/components/ticket/Tabs";
 import TicketCard from "@/components/ticket/TicketCard";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 

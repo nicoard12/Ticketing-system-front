@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
+import Home from "./pages/Home";
 import Layout from "./Layout";
-import EventAdd from "./Pages/EventAdd";
-import EventEdit from "./Pages/EventEdit";
-import EventPage from "./Pages/Event";
-import BuyTicket from "./Pages/BuyTicket";
-import Tickets from "./Pages/Tickets";
-import StaffPage from "./Pages/StaffPage";
-import VerifyPayment from "./Pages/VerifyPayment";
+import EventAdd from "./pages/EventAdd";
+import EventEdit from "./pages/EventEdit";
+import EventPage from "./pages/Event";
+import BuyTicket from "./pages/BuyTicket";
+import Tickets from "./pages/Tickets";
+import StaffPage from "./pages/StaffPage";
+import VerifyPayment from "./pages/VerifyPayment";
 
 export default function App() {
   return (

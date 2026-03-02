@@ -1,6 +1,6 @@
 import type { Ticket } from "@/api/tickets";
 import { getUserById, type User } from "@/api/users";
-import { useUsuario } from "@/context/UserContext";
+import { useUsuario } from "@/context/userContext";
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";

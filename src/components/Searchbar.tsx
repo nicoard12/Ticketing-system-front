@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/input-group";
 import { useEffect, useState } from "react";
 
-type SearcherProps = {
+type SearchbarProps = {
   onSearch: (query: string) => void;
 };
 
-function Searcher({ onSearch }: SearcherProps) {
+function Searchbar({ onSearch }: SearchbarProps) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -36,4 +36,4 @@ function Searcher({ onSearch }: SearcherProps) {
   );
 }
 
-export default Searcher;
+export default Searchbar;
