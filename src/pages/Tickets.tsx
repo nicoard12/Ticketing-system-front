@@ -90,14 +90,14 @@ function Tickets() {
   }, [tickets, currentTab, user]);
 
   return (
-    <div className="flex flex-col items-center gap-2 text-black w-full">
+    <div className="flex flex-col items-center gap-2 text-black w-full bg-gray-100 min-h-full p-3 flex-1">
       <Tabs
         tabsOptions={tabsOptions}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
       {filteredTickets.length > 0 && (
-        <div className="flex flex-col gap-3 p-2 sm:flex-row overflow-auto w-full">
+        <div className="flex flex-col gap-5 p-2 sm:flex-row overflow-x-auto overflow-y-visible w-full pb-8">
           {filteredTickets.map((ticket) => (
             <TicketCard
               key={ticket._id}

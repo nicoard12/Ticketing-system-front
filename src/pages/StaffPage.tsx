@@ -72,17 +72,17 @@ function StaffPage() {
 
   const formattedDate = selectedDate?.fecha
     ? new Date(selectedDate.fecha).toLocaleString("es-AR", {
-        timeZone: "America/Argentina/Buenos_Aires",
-        year: "2-digit",
-        month: "numeric",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
+      timeZone: "America/Argentina/Buenos_Aires",
+      year: "2-digit",
+      month: "numeric",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
     : "";
 
   return (
-    <div className="flex flex-col gap-10 items-center text-black w-full flex-1">
+    <div className="flex flex-col gap-10 items-center text-black w-full flex-1 bg-gray-100 p-3">
       <div className="flex flex-col gap-2 items-center">
         <h2 className="text-3xl font-bold">{event?.titulo}</h2>
         <p className="text-lg font-medium">{formattedDate}</p>

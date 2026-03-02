@@ -1,36 +1,50 @@
 import { getEvents, type Event } from "@/api/events";
 import { getUsers, type User } from "@/api/users";
 import EventCard from "@/components/event/EventCard";
-import Searchbar from "@/components/SearchBar";
+import Searchbar from "@/components/Searchbar";
 import UserCard from "@/components/user/UserCard";
 import { useUsuario } from "@/context/userContext";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { createPortal } from "react-dom";
 
 function Home() {
   const [events, setEvents] = useState<Event[]>([]);
   const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [search, setSearch] = useState("");
   const { user, contextLoading } = useUsuario();
 
-  const onSearch = (query: string) => {
+  useEffect(() => {
+    const mainContent = document.getElementById("main-content");
+    const handleScroll = () => {
+      if (mainContent) {
+        setIsScrolled(mainContent.scrollTop > 30);
+      }
+    };
+    mainContent?.addEventListener("scroll", handleScroll);
+    return () => mainContent?.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     if (user?.rol == "admin") {
       setUsers(
         allUsers.filter(
-          (user) =>
-            user.nombre.toLowerCase().includes(query.toLowerCase()) ||
-            user.email.toLowerCase().includes(query.toLowerCase())
+          (u) =>
+            u.nombre.toLowerCase().includes(search.toLowerCase()) ||
+            u.email.toLowerCase().includes(search.toLowerCase())
         )
       );
     } else {
       setEvents(
         allEvents.filter((event) =>
-          event.titulo.toLowerCase().includes(query.toLowerCase())
+          event.titulo.toLowerCase().includes(search.toLowerCase())
         )
       );
     }
-  };
+  }, [search, allEvents, allUsers, user]);
 
   const fetchEvents = async () => {
     try {
@@ -72,8 +86,15 @@ function Home() {
   }, [contextLoading, user]);
 
   return (
-    <div className="flex flex-col items-center gap-10">
-      <Searchbar onSearch={onSearch} />
+    <div className="flex flex-col items-center gap-10 w-full max-w-7xl mx-auto mt-6 p-3 flex-1">
+      <div className="w-full px-4 sm:px-0 h-[64px] max-w-2xl mx-auto">
+        {isScrolled && document.getElementById("header-search-portal")
+          ? createPortal(
+            <Searchbar search={search} setSearch={setSearch} />,
+            document.getElementById("header-search-portal")!
+          )
+          : <Searchbar search={search} setSearch={setSearch} />}
+      </div>
 
       {events.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">

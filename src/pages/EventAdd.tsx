@@ -31,11 +31,11 @@ function RegistrarEvento() {
     if (!user || user.rol !== "productor") {
       navigate("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, contextLoading]);
 
   return (
-    <div className="flex flex-col gap-6 justify-center items-center w-full">
+    <div className="flex-1 flex flex-col gap-6 items-center w-full p-3">
       <h1 className="text-3xl font-semibold">Crear evento</h1>
       <EventForm submit={newEvent} loading={loading} setLoading={setLoading} />
     </div>

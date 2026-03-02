@@ -81,29 +81,31 @@ function VerifyPayment() {
   if (!openSocket) return null
 
   return (
-    <div className="flex flex-col gap-4 items-center justify-center p-8 bg-white rounded-xl shadow-lg text-center">
-      {ticket ? (
-        <>
-          <h1 className="text-2xl font-bold text-gray-900">¡Pago exitoso!</h1>
-          {openTicketVerification && <VerificationCodeModal ticket={ticket} onClose={closeVerificationCode} />}
-          {openTicketConfirmation && <ConfirmationModal onClose={() => navigate("/")} />}
-        </>
-      ) : paymentFailed ? (
-        <h1 className="text-2xl font-bold text-gray-900">
-          Hubo un error con el pago.
-        </h1>
-      ) : (
-        <>
-          <Spinner />
+    <div className="flex-1 flex flex-col items-center p-3 w-full">
+      <div className="flex flex-col gap-4 items-center justify-center p-8 bg-white rounded-xl shadow-lg text-center w-full max-w-lg">
+        {ticket ? (
+          <>
+            <h1 className="text-2xl font-bold text-gray-900">¡Pago exitoso!</h1>
+            {openTicketVerification && <VerificationCodeModal ticket={ticket} onClose={closeVerificationCode} />}
+            {openTicketConfirmation && <ConfirmationModal onClose={() => navigate("/")} />}
+          </>
+        ) : paymentFailed ? (
           <h1 className="text-2xl font-bold text-gray-900">
-            Procesando tu pago 💳
+            Hubo un error con el pago.
           </h1>
-          <p className="text-gray-600 max-w-sm">
-            Estamos confirmando la operación. En segundos te mandamos al
-            siguiente paso.
-          </p>
-        </>
-      )}
+        ) : (
+          <>
+            <Spinner />
+            <h1 className="text-2xl font-bold text-gray-900">
+              Procesando tu pago 💳
+            </h1>
+            <p className="text-gray-600 max-w-sm">
+              Estamos confirmando la operación. En segundos te mandamos al
+              siguiente paso.
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }

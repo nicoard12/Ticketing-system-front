@@ -48,49 +48,57 @@ function TicketCard({
   }, [currentTab]);
 
   return (
-    <div className="flex flex-col gap-2 bg-white border border-gray-200 rounded-lg shadow p-4 flex-shrink-0">
-      <div className="flex justify-between items-center">
-        <div className="flex flex-col">
+    <div className="flex flex-col gap-4 bg-white border border-gray-200 rounded-xl shadow-sm p-5 sm:max-w-md h-fit shrink-0 overflow-visible transition-all">
+      <div className="flex justify-between items-start gap-2">
+        <div className="flex flex-col flex-1 min-w-0">
           <TransferInfo ticket={ticket} />
-          <div className="flex items-center gap-1">
-            <TicketIcon className="w-8 h-8 text-blue-500" />
-            <h3 className="text-lg font-semibold text-gray-800">Ticket</h3>
+          <div className="flex items-center gap-2 mt-1">
+            <TicketIcon className="w-6 h-6 text-blue-600 shrink-0" />
+            <h3 className="text-lg font-bold text-gray-900 break-words">Ticket</h3>
           </div>
         </div>
 
-        {tab == "pendientes" && (
-          <Button onClick={activarTicket} variant={"secondary"} size={"sm"}>
-            Activar
-          </Button>
-        )}
+        <div className="shrink-0">
+          {tab == "pendientes" && (
+            <Button onClick={activarTicket} variant={"secondary"} size={"sm"} className="h-8">
+              Activar
+            </Button>
+          )}
 
-        {tab == "activados" && !ticket.originalUserId && (
-          <Button
-            onClick={() => setOpenTransferModal(true)}
-            size={"sm"}
-            className="text-blue-800"
-            variant={"link"}
-          >
-            Transferir
-          </Button>
-        )}
+          {tab == "activados" && !ticket.originalUserId && (
+            <Button
+              onClick={() => setOpenTransferModal(true)}
+              size={"sm"}
+              className="text-blue-700 h-8 px-2"
+              variant={"link"}
+            >
+              Transferir
+            </Button>
+          )}
+        </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-gray-600">
-          <span className="font-medium">Cantidad:</span> {ticket.quantity}
-        </p>
-        <p className="text-gray-600">
-          <span className="font-medium">Fecha del evento:</span>{" "}
-          {new Date(
-            ticket.event.fechas.find((f) => f._id == ticket.eventDateId)!.fecha
-          ).toLocaleDateString()}
-        </p>
-        <p className="text-gray-600">
-          <span className="font-medium">Fecha de compra:</span> {formattedDate}
-        </p>
-        <p className="text-gray-600">
-          <span className="font-medium">Precio total:</span> ${totalPrice}
-        </p>
+
+      <div className="space-y-1.5 text-sm">
+        <div className="text-gray-600 flex justify-between gap-2 flex-wrap">
+          <span className="font-medium text-gray-500">Cantidad:</span>
+          <span className="text-gray-900">{ticket.quantity}</span>
+        </div>
+        <div className="text-gray-600 flex justify-between gap-2 flex-wrap">
+          <span className="font-medium text-gray-500">Fecha evento:</span>
+          <span className="text-gray-900 break-words text-right">
+            {new Date(
+              ticket.event.fechas.find((f) => f._id == ticket.eventDateId)!.fecha
+            ).toLocaleDateString()}
+          </span>
+        </div>
+        <div className="text-gray-600 flex justify-between gap-2 flex-wrap">
+          <span className="font-medium text-gray-500">Compra:</span>
+          <span className="text-gray-900">{formattedDate}</span>
+        </div>
+        <div className="text-gray-600 flex justify-between gap-2 pt-1 border-t border-gray-100 flex-wrap">
+          <span className="font-medium text-gray-500">Precio total:</span>
+          <span className="text-blue-600 font-bold">${totalPrice}</span>
+        </div>
       </div>
       {ticket.event ? (
         <div className="w-full flex items-center justify-center mt-2">

@@ -7,23 +7,26 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useEffect, useState } from "react";
+
+import { useEffect, useRef } from "react";
 
 type SearchbarProps = {
-  onSearch: (query: string) => void;
+  search: string;
+  setSearch: (query: string) => void;
 };
 
-function Searchbar({ onSearch }: SearchbarProps) {
-  const [search, setSearch] = useState("");
+function Searchbar({ search, setSearch }: SearchbarProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    onSearch(search);
-  }, [search]);
+    inputRef.current?.focus();
+  }, []);
 
   return (
-    <div className="md:absolute md:top-6 w-1/2 min-w-[250px] text-primary">
-      <InputGroup className="bg-card shadow py-5">
+    <div className="w-full text-primary">
+      <InputGroup className="bg-card shadow-sm py-2 sm:py-4">
         <InputGroupInput
+          ref={inputRef}
           placeholder="Buscar..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
