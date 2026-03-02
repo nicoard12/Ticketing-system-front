@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-import ModalUserConfirmation from "./ModalUserConfirmation";
+import UserConfirmationModal from "./UserConfirmationModal";
 import RoleOption from "./RoleOption";
 
 const MAIN_ADMIN_EMAIL = "nico.ticketingsystem.iaw@gmail.com";
@@ -112,7 +112,7 @@ function UserCard({ user }: { user: User }) {
       </div>
 
       {openConfirmation && (
-        <ModalUserConfirmation
+        <UserConfirmationModal
           selectedRole={selectedRole}
           current_role={current_role}
           user={user}

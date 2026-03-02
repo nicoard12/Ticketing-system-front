@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 
-function ModalTicketConfirmation({onClose}: {onClose: () => void}) {
+function ConfirmationModal({onClose}: {onClose: () => void}) {
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-100 p-5">
@@ -26,4 +26,4 @@ function ModalTicketConfirmation({onClose}: {onClose: () => void}) {
   );
 }
 
-export default ModalTicketConfirmation;
+export default ConfirmationModal;

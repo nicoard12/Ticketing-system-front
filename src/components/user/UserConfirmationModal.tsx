@@ -1,7 +1,7 @@
 import type { User } from '@/api/users';
 import { Button } from '@/components/ui/button';
 
-type ModalUserConfirmation={
+type UserConfirmationModalProps ={
     selectedRole: string;
     current_role: string;
     user: User
@@ -9,7 +9,7 @@ type ModalUserConfirmation={
     cancel: () => void;
 }
 
-function ModalUserConfirmation({selectedRole, user, current_role, confirm, cancel} : ModalUserConfirmation) {
+function UserConfirmationModal({selectedRole, user, current_role, confirm, cancel} : UserConfirmationModalProps) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -39,4 +39,4 @@ function ModalUserConfirmation({selectedRole, user, current_role, confirm, cance
   )
 }
 
-export default ModalUserConfirmation
+export default UserConfirmationModal

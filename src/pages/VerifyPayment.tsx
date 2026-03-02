@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { io } from "socket.io-client";
 import { getPending_payment, type Ticket } from "@/api/tickets";
-import ModalVerificationCode from "@/components/ticket/ModalVerificationCode";
-import ModalTicketConfirmation from "@/components/ticket/ModalTicketConfirmation";
+import VerificationCodeModal from "@/components/ticket/VerificationCodeModal";
+import ConfirmationModal from "@/components/ticket/ConfirmationModal";
 
 const socket = io(import.meta.env.VITE_API_URL);
 
@@ -19,8 +19,8 @@ function VerifyPayment() {
   const [paymentFailed, setPaymentFailed] = useState(false);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [openSocket, setOpenSocket] = useState(false);
-  const [openTicketVerification, setOpenTicketVerification]= useState(false)
-  const [openTicketConfirmation, setOpenTicketConfirmation]= useState(false)
+  const [openTicketVerification, setOpenTicketVerification] = useState(false)
+  const [openTicketConfirmation, setOpenTicketConfirmation] = useState(false)
   const navigate = useNavigate();
 
   const closeVerificationCode = () => {
@@ -54,7 +54,7 @@ function VerifyPayment() {
       socket.off(`ticket-${id}`, ticketHandler);
       socket.off("connect_error", connectErrorHandler);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, openSocket]);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function VerifyPayment() {
     };
     if (!id) return;
     getTicketPP();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (!openSocket) return null
@@ -85,8 +85,8 @@ function VerifyPayment() {
       {ticket ? (
         <>
           <h1 className="text-2xl font-bold text-gray-900">¡Pago exitoso!</h1>
-          {openTicketVerification && <ModalVerificationCode ticket={ticket} onClose={closeVerificationCode} />}
-          {openTicketConfirmation && <ModalTicketConfirmation onClose={() => navigate("/")} />}
+          {openTicketVerification && <VerificationCodeModal ticket={ticket} onClose={closeVerificationCode} />}
+          {openTicketConfirmation && <ConfirmationModal onClose={() => navigate("/")} />}
         </>
       ) : paymentFailed ? (
         <h1 className="text-2xl font-bold text-gray-900">

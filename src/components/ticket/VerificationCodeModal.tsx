@@ -8,7 +8,7 @@ import {
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
-function ModalVerificationCode({
+function VerificationCodeModal({
   ticket,
   onClose,
 }: {
@@ -170,4 +170,4 @@ function ModalVerificationCode({
   );
 }
 
-export default ModalVerificationCode;
+export default VerificationCodeModal;

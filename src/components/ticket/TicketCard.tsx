@@ -3,11 +3,11 @@ import EventCard from "@/components/event/EventCard";
 import { Ticket as TicketIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import ModalVerificationCode from "./ModalVerificationCode";
+import VerificationCodeModal from "./VerificationCodeModal";
 import { toast } from "sonner";
-import ModalTransfer from "./ModalTransfer";
+import TransferModal from "./TransferModal";
 import TransferInfo from "./TransferInfo";
-import ModalTicketConfirmation from "./ModalTicketConfirmation";
+import ConfirmationModal from "./ConfirmationModal";
 
 function TicketCard({
   ticket,
@@ -101,12 +101,12 @@ function TicketCard({
       )}
 
       {openVerificationModal && (
-        <ModalVerificationCode ticket={ticket} onClose={closeVerification} />
+        <VerificationCodeModal ticket={ticket} onClose={closeVerification} />
       )}
-      {openTicketConfirmation && <ModalTicketConfirmation onClose={() => getTicketsAgain()}/>}
+      {openTicketConfirmation && <ConfirmationModal onClose={() => getTicketsAgain()} />}
 
       {openTransferModal && (
-        <ModalTransfer
+        <TransferModal
           ticket={ticket}
           onClose={() => setOpenTransferModal(false)}
           getTicketsAgain={getTicketsAgain}

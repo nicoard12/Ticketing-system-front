@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
 
-function ModalTransfer({
+function TransferModal({
   ticket,
   onClose,
   getTicketsAgain
@@ -96,4 +96,4 @@ function ModalTransfer({
   );
 }
 
-export default ModalTransfer;
+export default TransferModal;
