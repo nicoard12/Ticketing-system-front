@@ -1,7 +1,8 @@
 import type { EventDate } from "@/api/events";
 import { convertirUTC } from "@/helpers/fechas";
-import { Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { Trash2, Calendar, Ticket } from "lucide-react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 type DateAndTicketsProps = {
   index: number;
@@ -20,65 +21,48 @@ function DateAndTicketsForm({
   eliminarFecha,
   deleteEnabled,
 }: DateAndTicketsProps) {
-  useEffect(() => {
-    const inputs = document.querySelectorAll<HTMLInputElement>(
-      'input[type="number"]'
-    );
-
-    const disableScroll = (e: globalThis.WheelEvent) => {
-      e.preventDefault();
-    };
-
-    inputs.forEach((input) =>
-      input.addEventListener("wheel", disableScroll, { passive: false })
-    );
-
-    return () => {
-      inputs.forEach((input) =>
-        input.removeEventListener("wheel", disableScroll)
-      );
-    };
-  }, []);
-
   return (
     <div
-      className={`w-full flex flex-col sm:flex-row justify-center items-start sm:items-center gap-3 sm:gap-5 md:gap-10 lg:gap-30 px-2 sm:py-2 sm:px-4 rounded hover:bg-gray-100/70`}
+      className="w-full flex flex-col sm:flex-row items-end gap-4 p-4 rounded-xl bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-colors group/row"
     >
-      <div className="flex flex-col">
-        <label htmlFor="fecha" className="font-medium p-1 text-sm">
-          Fecha {index + 1}
+      <div className="flex flex-col flex-1 w-full gap-2">
+        <label className="text-xs font-bold flex items-center gap-1.5 text-slate-600 ml-1">
+          <Calendar size={12} className="text-primary" /> Fecha y Hora
         </label>
-        <input
+        <Input
           type="datetime-local"
-          className="p-2 border rounded "
+          className="bg-white border-gray-300 focus:border-primary/50 text-black placeholder:text-gray-400"
           value={convertirUTC(fecha.fecha)}
           name="fecha"
           onChange={(e) => cambiarFecha(index, e.target.value)}
         />
       </div>
 
-      <div className="flex flex-col">
-        <label htmlFor="cantEntradas" className="font-medium p-1 text-sm">
-          N° Entradas
+      <div className="flex flex-col w-full sm:w-32 gap-2">
+        <label className="text-xs font-bold flex items-center gap-1.5 text-slate-600 ml-1">
+          <Ticket size={12} className="text-primary" /> Entradas
         </label>
-        <input
+        <Input
           type="number"
-          className="p-2 border rounded "
+          className="bg-white border-gray-300 focus:border-primary/50 text-black placeholder:text-gray-400"
           value={fecha.cantidadEntradas}
           name="cantEntradas"
-          placeholder="Cantidad de entradas"
+          placeholder="0"
           onChange={(e) => cambiarEntradas(index, e.target.value)}
         />
       </div>
 
       {deleteEnabled && (
-        <button
+        <Button
           type="button"
-          className="flex items-center gap-1 bg-red-500 text-white text-sm font-medium cursor-pointer rounded p-2 sm:mt-6"
+          variant="ghost"
+          size="icon-sm"
+          className="text-slate-400 hover:text-destructive hover:bg-destructive/10 transition-all opacity-0 group-hover/row:opacity-100 focus:opacity-100"
           onClick={() => eliminarFecha(index)}
+          title="Eliminar esta fecha"
         >
-          <Trash2 size={14} /> Eliminar
-        </button>
+          <Trash2 size={16} />
+        </Button>
       )}
     </div>
   );

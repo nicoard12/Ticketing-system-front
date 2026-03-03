@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Event, EventDate } from "@/api/events";
 import DateAndTicketsForm from "./DateAndTicketsForm";
+import { CalendarPlus, CalendarDays } from "lucide-react";
 
 type DateFormProps = {
   setEvento: React.Dispatch<React.SetStateAction<Omit<Event, "_id" | "createdBy">>>;
@@ -65,13 +66,18 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
 
 
   return (
-    <div className="flex flex-col items-start w-full gap-1">
-      <label htmlFor="fecha" className="font-semibold">
-        Fechas
-      </label>
-      <hr className="w-full mb-2"/>
-      <div className="flex flex-col items-start w-full gap-3">
-        <div className="flex flex-col w-full items-start lg:items-center gap-4 sm:gap-2 overflow-auto max-h-90">
+    <div className="flex flex-col items-start w-full gap-4">
+      <div className="flex items-center justify-between w-full border-b border-gray-100 pb-2">
+        <label className="font-bold text-lg flex items-center gap-2 text-slate-800">
+          <CalendarDays size={20} className="text-secondary" /> Fechas y Entradas
+        </label>
+        <span className="text-xs font-bold text-secondary bg-secondary/10 border border-secondary/20 px-3 py-1 rounded-full shadow-sm">
+          {fechas.length} {fechas.length === 1 ? "fecha" : "fechas"}
+        </span>
+      </div>
+
+      <div className="flex flex-col items-start w-full gap-4">
+        <div className="flex flex-col w-full gap-3 overflow-y-auto max-h-[400px] pr-2 scrollbar-thin">
           {fechas.map((fecha, i) => (
             <DateAndTicketsForm
               key={i}
@@ -86,12 +92,14 @@ function DateForm({ setEvento, fechasEditables }: DateFormProps) {
         </div>
 
         <Button
-          variant="default"
+          variant="outline"
           type="button"
           data-cy="add-date-button"
           onClick={agregarFecha}
+          className="w-full border-2 border-secondary/20 text-secondary bg-secondary/10 hover:bg-secondary/20 hover:border-secondary/30 transition-all py-6 gap-2 font-bold shadow-sm"
         >
-          Agregar fecha
+          <CalendarPlus size={18} />
+          Agregar otra fecha
         </Button>
       </div>
     </div>

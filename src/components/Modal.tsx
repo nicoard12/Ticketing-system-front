@@ -1,3 +1,4 @@
+import Spinner from "./Spinner";
 import { Button } from "./ui/button";
 import type { Event } from "@/api/events";
 
@@ -19,9 +20,7 @@ function Modal({ evento, cancelar, confirmar, deleting }: ModalProps) {
         </p>
         <div className="flex justify-end gap-3">
           {deleting ? (
-            <p className="bg-gray-100 rounded shadow p-3">
-              Eliminando...
-            </p>
+            <Spinner size="md" className="text-secondary" />
           ) : (
             <>
               <Button

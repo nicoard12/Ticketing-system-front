@@ -1,8 +1,26 @@
-function Spinner({ size = 8 }: { size?: number }) {
+import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface SpinnerProps {
+  className?: string;
+  size?: "sm" | "md" | "lg" | "xl";
+}
+
+function Spinner({ className, size = "md" }: SpinnerProps) {
+  const sizeClasses = {
+    sm: "w-4 h-4",
+    md: "w-8 h-8",
+    lg: "w-12 h-12",
+    xl: "w-16 h-16",
+  };
+
   return (
-    <div className="w-full flex items-center justify-center">
-      <div
-        className={`w-${size} h-${size} border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin`}
+    <div className={cn("flex items-center justify-center p-4", className)}>
+      <Loader2
+        className={cn(
+          "animate-spin text-primary opacity-80",
+          sizeClasses[size]
+        )}
       />
     </div>
   );
