@@ -90,10 +90,10 @@ function Home() {
       <div className="w-full px-4 sm:px-0 h-[64px] max-w-2xl mx-auto">
         {isScrolled && document.getElementById("header-search-portal")
           ? createPortal(
-            <Searchbar search={search} setSearch={setSearch} />,
+            <Searchbar search={search} setSearch={setSearch} placeholder={user  ?.rol == "admin" ? "Buscar usuarios..." : "Buscar eventos, artistas o lugares..."} />,
             document.getElementById("header-search-portal")!
           )
-          : <Searchbar search={search} setSearch={setSearch} />}
+          : <Searchbar search={search} setSearch={setSearch} placeholder={user?.rol == "admin" ? "Buscar usuarios..." : "Buscar eventos, artistas o lugares..."} />}
       </div>
 
       {events.length > 0 && (

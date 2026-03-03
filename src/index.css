@@ -113,12 +113,34 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) transparent;
   }
   body {
     @apply text-foreground;
-    /* Deep dark blue/slate radial gradient for a premium feel */
     background: radial-gradient(circle at top, #1e293b 0%, #0f172a 40%, #020617 100%);
     background-attachment: fixed;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--muted-foreground);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+    background-clip: padding-box;
   }
 }
 
