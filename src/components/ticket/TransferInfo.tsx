@@ -40,7 +40,7 @@ function TransferInfo({ ticket }: { ticket: Ticket }) {
           <Info size={12} strokeWidth={3} className="z-10" /> Transferido
         </span>
         {showTooltip && transferUser && (
-          <span className="absolute bottom-full left-0 mb-2 z-50 w-max max-w-[200px] whitespace-normal bg-gray-900 text-white border border-gray-700 rounded px-3 py-2 shadow-xl text-[10px] leading-tight">
+          <span className="absolute top-full left-0 mb-2 z-50 w-max max-w-[200px] whitespace-normal bg-gray-900 text-white border border-gray-700 rounded px-3 py-2 shadow-xl text-[10px] leading-tight">
             {transferReceived ? "Este ticket te lo transfirió" : "Transferiste este ticket a"}{" "}
             <span className="font-bold">{transferUser.nombre}</span>
           </span>
