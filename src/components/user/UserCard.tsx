@@ -12,7 +12,6 @@ import { toast } from "sonner";
 import UserConfirmationModal from "./UserConfirmationModal";
 import RoleOption from "./RoleOption";
 
-const MAIN_ADMIN_EMAIL = "nico.ticketingsystem.iaw@gmail.com";
 
 function UserCard({ user }: { user: User }) {
   const [failedImage, setFailedImage] = useState(false);
@@ -22,14 +21,8 @@ function UserCard({ user }: { user: User }) {
   const [selectedRole, setSelectedRole] = useState(user.rol);
   const ref = useRef<HTMLDivElement>(null);
 
-  const esAdminPrincipal = () => {
-    return user.email == MAIN_ADMIN_EMAIL;
-  };
-
   const showRoles = () => {
-    if (esAdminPrincipal()) {
-      toast.warning("No podés modificar el rol del admin principal");
-    } else setOpenRoles(!openRoles);
+    setOpenRoles(!openRoles);
   };
 
   const openModal = (role: Rol) => {
@@ -92,7 +85,6 @@ function UserCard({ user }: { user: User }) {
           onClick={showRoles}
           size={"sm"}
           variant={"outline"}
-          className={esAdminPrincipal() ? "cursor-not-allowed" : ""}
         >
           Cambiar rol
         </Button>

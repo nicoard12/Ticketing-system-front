@@ -33,7 +33,7 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
   }, [date]);
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full p-4 sm:p-5 gap-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full p-4 sm:p-5 gap-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-lg duration-300">
 
       {/* Información de Fecha */}
       <div className="flex items-center gap-4">
@@ -59,7 +59,7 @@ function EventDateItem({ date, eventId, index }: EventDateItemProps) {
       </div>
 
       {/* Estado y Acciones */}
-      <div className="flex flex-row sm:flex-col lg:flex-row items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-0 border-white/10">
+      <div className="flex flex-col  lg:flex-row items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-0 border-white/10">
 
         {dateExpired ? (
           <span className="px-4 py-1.5 bg-red-100 text-red-700 font-bold text-sm rounded-full w-full sm:w-auto text-center">

@@ -155,7 +155,7 @@ function BuyTicket() {
 
           {/* Checkout Footer */}
           <section className="flex flex-col gap-6 pt-4">
-            <div className="flex items-center justify-between border-t border-gray-100 pt-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between border-t border-gray-100 pt-2 gap-2">
               <div>
                 <p className="text-sm font-medium text-slate-500">Monto Total</p>
                 <div className="flex items-center gap-1 text-primary">
@@ -166,7 +166,7 @@ function BuyTicket() {
                 </div>
               </div>
 
-              <div className="flex items-start justify-end gap-1.5 text-slate-400 max-w-[150px]">
+              <div className="flex items-center gap-1.5 text-slate-400">
                 <Info size={14} className="mt-0.5 shrink-0" />
                 <p className="text-[10px] leading-tight font-medium text-left">
                   Serás redirigido a Mercado Pago para completar el pago de forma segura.

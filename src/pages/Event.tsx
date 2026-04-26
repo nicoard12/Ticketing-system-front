@@ -107,18 +107,18 @@ function EventPage() {
               )}
             </div>
 
-            <div className="mt-4">
+            <div>
               <h3 className="text-lg font-bold text-white mb-2">Acerca de este evento</h3>
               <p className="text-base text-white/80 leading-relaxed font-normal whitespace-pre-wrap">
                 {evento.descripcion}
               </p>
             </div>
 
-            <hr className="my-6 border-white/10" />
+            <hr className="my-2 border-white/10" />
 
             <div className="flex flex-col gap-4">
               <h2 className="text-xl font-extrabold text-white">Fechas y Disponibilidad</h2>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 pb-3">
                 {evento.fechas.map((f, index) => (
                   <EventDateItem
                     key={f._id}

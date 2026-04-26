@@ -16,13 +16,13 @@ function EventCard({ event }: EventCardProps) {
     <div
       data-cy="evento-box"
       onClick={goToEvent}
-      className='group relative bg-card text-card-foreground shadow-md rounded-xl flex flex-col cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out max-w-[200px] sm:max-w-[220px] md:max-w-[240px] w-full overflow-hidden'
+      className='group relative bg-card text-card-foreground shadow-md rounded-xl flex flex-col cursor-pointer hover:shadow-lg transition-all duration-300 ease-out max-w-[200px] sm:max-w-[220px] md:max-w-[240px] w-full overflow-hidden'
     >
       <div className='aspect-square flex items-center justify-center overflow-hidden'>
         <img
           src={event.imagenUrl}
           alt={`Imagen de : ${event.titulo}`}
-          className='object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-110'
+          className='object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.02]'
         />
         <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
       </div>
